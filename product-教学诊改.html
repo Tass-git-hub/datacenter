@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>教学诊改 - DataCenter V3.2 智慧校园数字基座</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { background: #eef2f5; font-family: 'Segoe UI', 'Roboto', 'Noto Sans', system-ui, -apple-system, sans-serif; min-height: 100vh; padding: 0.8rem; }
+        .page-container { max-width: 231mm; width: 100%; margin: 0 auto; background: white; box-shadow: 0 20px 30px rgba(0,0,0,0.1); border-radius: 6px; padding: 6mm 7mm 7mm 7mm; }
+        .top-nav { display: flex; justify-content: space-between; align-items: center; padding: 0.5rem 0; margin-bottom: 0.5rem; border-bottom: 1px solid #e2e8f0; }
+        .back-home { display: inline-flex; align-items: center; gap: 0.3rem; color: #3182ce; text-decoration: none; font-size: 0.7rem; font-weight: 600; padding: 0.3rem 0.8rem; border-radius: 20px; background: #ebf8ff; transition: all 0.2s; }
+        .back-home:hover { background: #bee3f8; transform: translateX(-3px); }
+        .nav-brand { font-size: 0.65rem; color: #718096; font-weight: 600; }
+        .product-hero { background: linear-gradient(135deg, #0b2b44 0%, #1a4a6f 50%, #2c5282 100%); border-radius: 1rem; padding: 2rem 1.5rem; color: white; margin-bottom: 1rem; position: relative; overflow: hidden; }
+        .product-hero::before { content: ''; position: absolute; top: -30%; right: -5%; width: 400px; height: 400px; background: rgba(99, 179, 237, 0.08); border-radius: 50%; }
+        .product-hero::after { content: ''; position: absolute; bottom: -20%; left: -10%; width: 300px; height: 300px; background: rgba(246, 173, 85, 0.06); border-radius: 50%; }
+        .hero-content { position: relative; z-index: 1; }
+        .hero-badge { display: inline-block; background: linear-gradient(135deg, #f6ad55, #ed8936); color: #1a2c3e; font-weight: 800; font-size: 0.65rem; padding: 0.25rem 0.8rem; border-radius: 20px; margin-bottom: 0.8rem; }
+        .product-hero h1 { font-size: 2rem; font-weight: 800; margin-bottom: 0.5rem; }
+        .product-hero .subtitle { font-size: 0.9rem; opacity: 0.95; margin-bottom: 1rem; line-height: 1.5; max-width: 80%; }
+        .hero-stats { display: flex; flex-wrap: wrap; gap: 0.6rem; }
+        .hero-stat { background: rgba(255,255,255,0.12); border-radius: 1.5rem; padding: 0.3rem 0.8rem; font-size: 0.7rem; }
+        .hero-stat strong { font-size: 1rem; font-weight: 800; }
+        .section-title { font-size: 1.1rem; font-weight: 700; margin: 1.2rem 0 0.8rem 0; border-left: 4px solid #2b6cb0; padding-left: 0.6rem; color: #1e3a5f; display: flex; align-items: center; gap: 0.4rem; }
+        .section-title .icon { font-size: 1.2rem; }
+        .value-section { background: linear-gradient(145deg, #f7fafc, #edf2f7); border-radius: 1rem; padding: 1.2rem; margin-bottom: 1rem; }
+        .value-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; }
+        .value-item { background: white; border-radius: 1rem; padding: 1.2rem; box-shadow: 0 4px 12px rgba(0,0,0,0.08); border-top: 4px solid #3182ce; transition: all 0.3s; position: relative; overflow: hidden; }
+        .value-item:hover { transform: translateY(-5px); box-shadow: 0 8px 24px rgba(0,0,0,0.12); }
+        .value-item::before { content: ''; position: absolute; top: 0; right: 0; width: 60px; height: 60px; background: linear-gradient(135deg, rgba(49,130,206,0.08), transparent); border-radius: 0 0 0 60px; }
+        .value-icon-big { font-size: 2rem; margin-bottom: 0.6rem; display: block; }
+        .value-item h4 { font-size: 0.85rem; color: #1e3a5f; margin-bottom: 0.5rem; font-weight: 800; }
+        .value-item p { font-size: 0.7rem; color: #4a5568; line-height: 1.6; }
+        .data-highlights { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0.8rem; margin-bottom: 1rem; }
+        .data-card { background: linear-gradient(135deg, #0b2b44, #1a4a6f); border-radius: 1rem; padding: 1rem; text-align: center; color: white; transition: all 0.3s; }
+        .data-card:hover { transform: scale(1.03); }
+        .data-number { font-size: 1.8rem; font-weight: 800; background: linear-gradient(135deg, #f6ad55, #ed8936); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+        .data-label { font-size: 0.65rem; opacity: 0.9; margin-top: 0.2rem; }
+        .flow-section { background: linear-gradient(145deg, #0f2b3d, #1a4a6f); border-radius: 1rem; padding: 1.5rem; margin-bottom: 1rem; color: white; position: relative; overflow: hidden; }
+        .flow-section::before { content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.03'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E"); opacity: 0.5; }
+        .flow-steps { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.5rem; position: relative; z-index: 1; }
+        .flow-step { text-align: center; flex: 1; min-width: 100px; background: rgba(255,255,255,0.08); border-radius: 1rem; padding: 1rem 0.5rem; transition: all 0.3s; }
+        .flow-step:hover { background: rgba(255,255,255,0.15); transform: translateY(-3px); }
+        .flow-step-icon { font-size: 2rem; margin-bottom: 0.5rem; display: block; }
+        .flow-step-title { font-size: 0.75rem; font-weight: 700; margin-bottom: 0.2rem; }
+        .flow-step-desc { font-size: 0.6rem; opacity: 0.8; }
+        .flow-arrow { font-size: 1.5rem; color: #f6ad55; font-weight: 800; }
+        .feature-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1rem; margin-bottom: 1rem; }
+        .feature-card { background: white; border-radius: 1rem; padding: 1.2rem; box-shadow: 0 2px 8px rgba(0,0,0,0.06); border: 1px solid #e2e8f0; transition: all 0.3s; position: relative; overflow: hidden; }
+        .feature-card:hover { transform: translateY(-3px); box-shadow: 0 8px 20px rgba(0,0,0,0.1); border-color: #3182ce; }
+        .feature-card::before { content: ''; position: absolute; top: 0; left: 0; width: 4px; height: 100%; background: linear-gradient(180deg, #3182ce, #2b6cb0); }
+        .feature-header { display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.6rem; }
+        .feature-icon { font-size: 1.5rem; }
+        .feature-title { font-size: 0.9rem; font-weight: 800; color: #1e3a5f; }
+        .feature-desc { font-size: 0.7rem; color: #4a5568; line-height: 1.6; margin-bottom: 0.5rem; }
+        .feature-list { padding-left: 1.2rem; }
+        .feature-list li { font-size: 0.65rem; color: #718096; margin-bottom: 0.2rem; line-height: 1.4; }
+        .feature-list li::marker { color: #3182ce; }
+        .compare-section { margin-bottom: 1rem; }
+        .compare-table { background: #f1f5f9; border-radius: 1rem; overflow: hidden; box-shadow: 0 2px 8px rgba(0,0,0,0.06); }
+        table { width: 100%; border-collapse: collapse; font-size: 0.7rem; }
+        th { background: linear-gradient(135deg, #1a4a6f, #2c5282); color: white; padding: 0.7rem 0.8rem; text-align: left; font-weight: 700; }
+        td { padding: 0.7rem 0.8rem; text-align: left; border-bottom: 1px solid #e2e8f0; }
+        tr:hover td { background: #f7fafc; }
+        .highlight { background: linear-gradient(135deg, #e6f7ff, #ebf8ff); font-weight: 600; }
+        .vs-tag { display: inline-block; background: #fed7d7; color: #c53030; padding: 0.15rem 0.5rem; border-radius: 20px; font-size: 0.6rem; font-weight: 700; margin-right: 0.3rem; }
+        .win-tag { display: inline-block; background: #c6f6d5; color: #276749; padding: 0.15rem 0.5rem; border-radius: 20px; font-size: 0.6rem; font-weight: 700; margin-right: 0.3rem; }
+        .case-section { background: linear-gradient(145deg, #fff9e6, #fff4d5); border-radius: 1rem; padding: 1.2rem; margin-bottom: 1rem; border: 1px solid #f5c842; }
+        .case-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; }
+        .case-card { background: white; border-radius: 0.8rem; padding: 1rem; box-shadow: 0 2px 8px rgba(0,0,0,0.06); text-align: center; }
+        .case-icon { font-size: 2rem; margin-bottom: 0.5rem; }
+        .case-title { font-weight: 800; font-size: 0.8rem; color: #1e3a5f; margin-bottom: 0.3rem; }
+        .case-desc { font-size: 0.65rem; color: #4a5568; line-height: 1.5; }
+        .case-result { margin-top: 0.5rem; padding-top: 0.5rem; border-top: 1px dashed #f5c842; font-size: 0.65rem; color: #c2410c; font-weight: 700; }
+        .scenario-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; margin-bottom: 1rem; }
+        .scenario-card { background: linear-gradient(135deg, #fff9e6, #fff4d5); border-radius: 1rem; padding: 1.2rem; text-align: center; border: 1px solid #f5c842; transition: all 0.3s; }
+        .scenario-card:hover { transform: translateY(-5px); box-shadow: 0 8px 20px rgba(245,158,11,0.2); }
+        .scenario-icon { font-size: 2.5rem; margin-bottom: 0.5rem; display: block; }
+        .scenario-title { font-weight: 800; font-size: 0.85rem; color: #c2410c; margin-bottom: 0.4rem; }
+        .scenario-desc { font-size: 0.7rem; color: #9b4a0e; line-height: 1.5; }
+        .cta { background: linear-gradient(115deg, #0b2b44, #1a4a6f); border-radius: 1rem; padding: 1.5rem; text-align: center; color: white; margin-top: 1rem; position: relative; overflow: hidden; }
+        .cta::before { content: ''; position: absolute; top: -50%; right: -10%; width: 300px; height: 300px; background: rgba(99, 179, 237, 0.1); border-radius: 50%; }
+        .cta-content { position: relative; z-index: 1; }
+        .cta .main-text { font-weight: 800; font-size: 1.2rem; margin-bottom: 0.4rem; }
+        .cta .sub-text { font-size: 0.8rem; margin-bottom: 0.8rem; opacity: 0.9; }
+        .btn { display: inline-block; background: linear-gradient(135deg, #f6ad55, #ed8936); color: #1a2c3e; font-weight: 800; padding: 0.5rem 1.5rem; border-radius: 40px; text-decoration: none; font-size: 0.9rem; transition: all 0.3s; box-shadow: 0 4px 12px rgba(246, 173, 85, 0.4); }
+        .btn:hover { transform: scale(1.05); box-shadow: 0 6px 20px rgba(246, 173, 85, 0.6); }
+        .contact { font-size: 0.7rem; margin-top: 0.8rem; display: flex; justify-content: center; gap: 1.5rem; }
+        footer { text-align: center; font-size: 0.6rem; margin-top: 0.8rem; color: #718096; }
+        @media print { body { background: white; padding: 0; } .page-container { box-shadow: none; max-width: 100%; } }
+        @media (max-width: 700px) { .value-grid { grid-template-columns: 1fr; } .data-highlights { grid-template-columns: repeat(2, 1fr); } .feature-grid { grid-template-columns: 1fr; } .case-grid { grid-template-columns: 1fr; } .scenario-grid { grid-template-columns: 1fr; } .flow-steps { flex-direction: column; } .flow-arrow { transform: rotate(90deg); } }
+    </style>
+</head>
+<body>
+<div class="page-container">
+    <div class="top-nav">
+        <a href="样例清单v6.HTML" class="back-home">← 返回产品清单</a>
+        <span class="nav-brand">DataCenter V3.2 智慧校园数字基座</span>
+    </div>
+
+    <div class="product-hero">
+        <div class="hero-content">
+            <span class="hero-badge">🏆 超越级能力产品</span>
+            <h1>📊 教学诊改</h1>
+            <div class="subtitle">目标链+标准链螺旋改进，8字质量改进螺旋，智能预警+数据画像驱动提升。让教学质量改进从"经验驱动"升级为"数据驱动"</div>
+            <div class="hero-stats">
+                <div class="hero-stat"><strong>8字</strong> 螺旋改进</div>
+                <div class="hero-stat"><strong>智能</strong> 预警引擎</div>
+                <div class="hero-stat"><strong>数据</strong> 画像驱动</div>
+                <div class="hero-stat"><strong>双链</strong> 目标标准</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="section-title"><span class="icon">📊</span> 产品数据亮点</div>
+    <div class="data-highlights">
+        <div class="data-card"><div class="data-number">8字</div><div class="data-label">质量改进螺旋</div></div>
+        <div class="data-card"><div class="data-number">AI</div><div class="data-label">智能预警引擎</div></div>
+        <div class="data-card"><div class="data-number">双链</div><div class="data-label">目标+标准链</div></div>
+        <div class="data-card"><div class="data-number">画像</div><div class="data-label">数据驱动提升</div></div>
+    </div>
+
+    <div class="section-title"><span class="icon">💎</span> 三大核心价值</div>
+    <div class="value-section">
+        <div class="value-grid">
+            <div class="value-item">
+                <span class="value-icon-big">🌀</span>
+                <h4>8字质量改进螺旋</h4>
+                <p>基于"计划-实施-检查-改进"的PDCA循环，构建8字质量改进螺旋模型，形成目标链与标准链的双链驱动机制</p>
+            </div>
+            <div class="value-item">
+                <span class="value-icon-big">⚠️</span>
+                <h4>智能预警引擎</h4>
+                <p>AI驱动的教学质量预警系统，自动识别教学异常、学生学业风险、专业建设短板，提前干预精准帮扶</p>
+            </div>
+            <div class="value-item">
+                <span class="value-icon-big">📈</span>
+                <h4>数据画像驱动</h4>
+                <p>多维度教学质量数据画像，从专业、课程、教师、学生四个层面生成诊断报告，数据驱动持续改进</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="section-title"><span class="icon">🔄</span> 业务流程闭环</div>
+    <div class="flow-section">
+        <div class="flow-steps">
+            <div class="flow-step"><span class="flow-step-icon">🎯</span><div class="flow-step-title">目标设定</div><div class="flow-step-desc">链式目标体系</div></div>
+            <div class="flow-arrow">→</div>
+            <div class="flow-step"><span class="flow-step-icon">📏</span><div class="flow-step-title">标准制定</div><div class="flow-step-desc">标准链支撑</div></div>
+            <div class="flow-arrow">→</div>
+            <div class="flow-step"><span class="flow-step-icon">🔍</span><div class="flow-step-title">诊断分析</div><div class="flow-step-desc">数据画像</div></div>
+            <div class="flow-arrow">→</div>
+            <div class="flow-step"><span class="flow-step-icon">⚠️</span><div class="flow-step-title">预警改进</div><div class="flow-step-desc">智能预警</div></div>
+            <div class="flow-arrow">→</div>
+            <div class="flow-step"><span class="flow-step-icon">🔄</span><div class="flow-step-title">螺旋提升</div><div class="flow-step-desc">PDCA循环</div></div>
+        </div>
+    </div>
+
+    <div class="section-title"><span class="icon">📦</span> 六大核心功能模块</div>
+    <div class="feature-grid">
+        <div class="feature-card">
+            <div class="feature-header"><span class="feature-icon">🎯</span><span class="feature-title">目标链管理</span></div>
+            <div class="feature-desc">学校-专业-课程-教师-学生五级目标链体系，目标层层分解、逐级落实、动态调整</div>
+            <ul class="feature-list"><li>五级目标链体系搭建</li><li>目标分解与责任到人</li><li>目标达成度实时监测</li><li>目标动态调整机制</li></ul>
+        </div>
+        <div class="feature-card">
+            <div class="feature-header"><span class="feature-icon">📏</span><span class="feature-title">标准链管理</span></div>
+            <div class="feature-desc">专业建设标准、课程标准、教学标准、评价标准等标准链体系，为诊断改进提供依据</div>
+            <ul class="feature-list"><li>标准体系分类管理</li><li>标准与目标自动关联</li><li>标准执行进度跟踪</li><li>标准版本迭代管理</li></ul>
+        </div>
+        <div class="feature-card">
+            <div class="feature-header"><span class="feature-icon">🔍</span><span class="feature-title">诊断分析</span></div>
+            <div class="feature-desc">多维度教学质量诊断，专业、课程、教师、学生四层诊断报告自动生成，问题精准定位</div>
+            <ul class="feature-list"><li>四层诊断模型</li><li>诊断报告自动生成</li><li>问题精准定位</li><li>改进建议智能推荐</li></ul>
+        </div>
+        <div class="feature-card">
+            <div class="feature-header"><span class="feature-icon">⚠️</span><span class="feature-title">智能预警</span></div>
+            <div class="feature-desc">AI驱动的教学质量预警系统，学业风险、教学异常、专业短板自动识别，提前预警干预</div>
+            <ul class="feature-list"><li>学业风险预警</li><li>教学异常监测</li><li>专业建设短板识别</li><li>预警信息自动推送</li></ul>
+        </div>
+        <div class="feature-card">
+            <div class="feature-header"><span class="feature-icon">📈</span><span class="feature-title">数据画像</span></div>
+            <div class="feature-desc">专业画像、课程画像、教师画像、学生画像四维数据画像，可视化呈现教学质量全貌</div>
+            <ul class="feature-list"><li>四维数据画像</li><li>可视化质量看板</li><li>趋势分析与对比</li><li>画像报告导出</li></ul>
+        </div>
+        <div class="feature-card">
+            <div class="feature-header"><span class="feature-icon">🔄</span><span class="feature-title">改进跟踪</span></div>
+            <div class="feature-desc">改进任务分解、执行跟踪、效果评估全流程管理，形成PDCA闭环，确保持续改进落地</div>
+            <ul class="feature-list"><li>改进任务分解下达</li><li>执行进度实时跟踪</li><li>改进效果量化评估</li><li>PDCA闭环管理</li></ul>
+        </div>
+    </div>
+
+    <div class="section-title"><span class="icon">⚖️</span> 与传统方案对比</div>
+    <div class="compare-section">
+        <div class="compare-table">
+            <table>
+                <thead><tr><th style="width:18%">对比维度</th><th style="width:41%">传统诊改平台（尚强等）</th><th style="width:41%">DataCenter 教学诊改</th></tr></thead>
+                <tbody>
+                    <tr><td><strong>改进模型</strong></td><td><span class="vs-tag">静态报表</span>以报表展示为主，缺乏系统改进方法论</td><td class="highlight"><span class="win-tag">8字螺旋</span>目标链+标准链双链驱动，PDCA闭环</td></tr>
+                    <tr><td><strong>预警能力</strong></td><td><span class="vs-tag">阈值预警</span>简单阈值判断，误报率高</td><td class="highlight"><span class="win-tag">AI预警</span>机器学习驱动，精准识别风险与异常</td></tr>
+                    <tr><td><strong>数据画像</strong></td><td><span class="vs-tag">固定报表</span>预设报表，灵活性差</td><td class="highlight"><span class="win-tag">四维画像</span>专业/课程/教师/学生四维动态画像</td></tr>
+                    <tr><td><strong>数据打通</strong></td><td><span class="vs-tag">接口对接</span>与教务等系统需额外开发接口</td><td class="highlight"><span class="win-tag">原生一体</span>与23个模块数据实时互通</td></tr>
+                    <tr><td><strong>改进跟踪</strong></td><td><span class="vs-tag">弱</span>缺乏改进任务跟踪与效果评估机制</td><td class="highlight"><span class="win-tag">全流程</span>任务分解/执行跟踪/效果评估全闭环</td></tr>
+                    <tr><td><strong>系统升级</strong></td><td><span class="vs-tag">功能缩水</span>升级后功能反而减少，兼容性差</td><td class="highlight"><span class="win-tag">只增不减</span>五年向前兼容承诺，功能持续迭代增强</td></tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div class="section-title"><span class="icon">🏆</span> 客户成功案例</div>
+    <div class="case-section">
+        <div class="case-grid">
+            <div class="case-card">
+                <span class="case-icon">🏫</span>
+                <div class="case-title">某高职院校</div>
+                <div class="case-desc">诊改工作依赖人工收集数据，诊断报告编制耗时2周，改进措施跟踪困难</div>
+                <div class="case-result">✅ 诊断报告自动生成，改进跟踪闭环管理，效率提升5倍</div>
+            </div>
+            <div class="case-card">
+                <span class="case-icon">🔧</span>
+                <div class="case-title">某职业技术学院</div>
+                <div class="case-desc">学生学业风险发现滞后，补考率高，退学率逐年上升</div>
+                <div class="case-result">✅ AI学业预警提前干预，补考率下降30%，退学率下降50%</div>
+            </div>
+            <div class="case-card">
+                <span class="case-icon">📚</span>
+                <div class="case-title">某中等职业学校</div>
+                <div class="case-desc">专业建设缺乏数据支撑，专业调整决策主观性强</div>
+                <div class="case-result">✅ 专业画像数据驱动，专业调整决策准确率大幅提升</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="section-title"><span class="icon">🎯</span> 适用场景</div>
+    <div class="scenario-grid">
+        <div class="scenario-card"><span class="scenario-icon">🏫</span><div class="scenario-title">高等院校</div><div class="scenario-desc">支持专业认证、审核评估，数据驱动的教学质量持续改进</div></div>
+        <div class="scenario-card"><span class="scenario-icon">🔧</span><div class="scenario-title">职业院校</div><div class="scenario-desc">契合职业教育诊改要求，8字螺旋+五纵五横一平台</div></div>
+        <div class="scenario-card"><span class="scenario-icon">📚</span><div class="scenario-title">中等职业学校</div><div class="scenario-desc">简化诊改操作流程，降低数据收集门槛，聚焦改进落地</div></div>
+    </div>
+
+    <div class="cta">
+        <div class="cta-content">
+            <div class="main-text">获取教学诊改完整方案</div>
+            <div class="sub-text">了解如何构建数据驱动的教学质量改进体系<br>数据零丢失 · 功能越用越精简 · 五年向前兼容承诺</div>
+            <a href="contact.html" class="btn">立即咨询 ｜ 获取方案</a>
+            <div class="contact"><span>📞 15102940626</span><span>💬 微信 18392084341</span></div>
+        </div>
+    </div>
+    <footer>DataCenter V3.2 智慧校园数字基座 · 统一配置中心驱动 · 本地/云原生部署</footer>
+</div>
+</body>
+</html>

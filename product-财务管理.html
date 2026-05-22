@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>财务管理 - DataCenter V3.2 智慧校园数字基座</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { background: #eef2f5; font-family: 'Segoe UI', 'Roboto', 'Noto Sans', system-ui, -apple-system, sans-serif; min-height: 100vh; padding: 0.8rem; }
+        .page-container { max-width: 231mm; width: 100%; margin: 0 auto; background: white; box-shadow: 0 20px 30px rgba(0,0,0,0.1); border-radius: 6px; padding: 6mm 7mm 7mm 7mm; }
+        .top-nav { display: flex; justify-content: space-between; align-items: center; padding: 0.5rem 0; margin-bottom: 0.5rem; border-bottom: 1px solid #e2e8f0; }
+        .back-home { display: inline-flex; align-items: center; gap: 0.3rem; color: #3182ce; text-decoration: none; font-size: 0.7rem; font-weight: 600; padding: 0.3rem 0.8rem; border-radius: 20px; background: #ebf8ff; transition: all 0.2s; }
+        .back-home:hover { background: #bee3f8; transform: translateX(-3px); }
+        .nav-brand { font-size: 0.65rem; color: #718096; font-weight: 600; }
+        .product-hero { background: linear-gradient(135deg, #0b2b44 0%, #1a4a6f 50%, #2c5282 100%); border-radius: 1rem; padding: 2rem 1.5rem; color: white; margin-bottom: 1rem; position: relative; overflow: hidden; }
+        .product-hero::before { content: ''; position: absolute; top: -30%; right: -5%; width: 400px; height: 400px; background: rgba(99, 179, 237, 0.08); border-radius: 50%; }
+        .product-hero::after { content: ''; position: absolute; bottom: -20%; left: -10%; width: 300px; height: 300px; background: rgba(246, 173, 85, 0.06); border-radius: 50%; }
+        .hero-content { position: relative; z-index: 1; }
+        .hero-badge { display: inline-block; background: linear-gradient(135deg, #63b3ed, #4299e1); color: #1a2c3e; font-weight: 800; font-size: 0.65rem; padding: 0.25rem 0.8rem; border-radius: 20px; margin-bottom: 0.8rem; }
+        .product-hero h1 { font-size: 2rem; font-weight: 800; margin-bottom: 0.5rem; }
+        .product-hero .subtitle { font-size: 0.9rem; opacity: 0.95; margin-bottom: 1rem; line-height: 1.5; max-width: 80%; }
+        .hero-stats { display: flex; flex-wrap: wrap; gap: 0.6rem; }
+        .hero-stat { background: rgba(255,255,255,0.12); border-radius: 1.5rem; padding: 0.3rem 0.8rem; font-size: 0.7rem; }
+        .hero-stat strong { font-size: 1rem; font-weight: 800; }
+        .section-title { font-size: 1.1rem; font-weight: 700; margin: 1.2rem 0 0.8rem 0; border-left: 4px solid #2b6cb0; padding-left: 0.6rem; color: #1e3a5f; display: flex; align-items: center; gap: 0.4rem; }
+        .section-title .icon { font-size: 1.2rem; }
+        .value-section { background: linear-gradient(145deg, #f7fafc, #edf2f7); border-radius: 1rem; padding: 1.2rem; margin-bottom: 1rem; }
+        .value-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; }
+        .value-item { background: white; border-radius: 1rem; padding: 1.2rem; box-shadow: 0 4px 12px rgba(0,0,0,0.08); border-top: 4px solid #3182ce; transition: all 0.3s; position: relative; overflow: hidden; }
+        .value-item:hover { transform: translateY(-5px); box-shadow: 0 8px 24px rgba(0,0,0,0.12); }
+        .value-item::before { content: ''; position: absolute; top: 0; right: 0; width: 60px; height: 60px; background: linear-gradient(135deg, rgba(49,130,206,0.08), transparent); border-radius: 0 0 0 60px; }
+        .value-icon-big { font-size: 2rem; margin-bottom: 0.6rem; display: block; }
+        .value-item h4 { font-size: 0.85rem; color: #1e3a5f; margin-bottom: 0.5rem; font-weight: 800; }
+        .value-item p { font-size: 0.7rem; color: #4a5568; line-height: 1.6; }
+        .data-highlights { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0.8rem; margin-bottom: 1rem; }
+        .data-card { background: linear-gradient(135deg, #0b2b44, #1a4a6f); border-radius: 1rem; padding: 1rem; text-align: center; color: white; transition: all 0.3s; }
+        .data-card:hover { transform: scale(1.03); }
+        .data-number { font-size: 1.8rem; font-weight: 800; background: linear-gradient(135deg, #f6ad55, #ed8936); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+        .data-label { font-size: 0.65rem; opacity: 0.9; margin-top: 0.2rem; }
+        .flow-section { background: linear-gradient(145deg, #0f2b3d, #1a4a6f); border-radius: 1rem; padding: 1.5rem; margin-bottom: 1rem; color: white; position: relative; overflow: hidden; }
+        .flow-section::before { content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.03'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E"); opacity: 0.5; }
+        .flow-steps { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.5rem; position: relative; z-index: 1; }
+        .flow-step { text-align: center; flex: 1; min-width: 100px; background: rgba(255,255,255,0.08); border-radius: 1rem; padding: 1rem 0.5rem; transition: all 0.3s; }
+        .flow-step:hover { background: rgba(255,255,255,0.15); transform: translateY(-3px); }
+        .flow-step-icon { font-size: 2rem; margin-bottom: 0.5rem; display: block; }
+        .flow-step-title { font-size: 0.75rem; font-weight: 700; margin-bottom: 0.2rem; }
+        .flow-step-desc { font-size: 0.6rem; opacity: 0.8; }
+        .flow-arrow { font-size: 1.5rem; color: #f6ad55; font-weight: 800; }
+        .feature-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1rem; margin-bottom: 1rem; }
+        .feature-card { background: white; border-radius: 1rem; padding: 1.2rem; box-shadow: 0 2px 8px rgba(0,0,0,0.06); border: 1px solid #e2e8f0; transition: all 0.3s; position: relative; overflow: hidden; }
+        .feature-card:hover { transform: translateY(-3px); box-shadow: 0 8px 20px rgba(0,0,0,0.1); border-color: #3182ce; }
+        .feature-card::before { content: ''; position: absolute; top: 0; left: 0; width: 4px; height: 100%; background: linear-gradient(180deg, #3182ce, #2b6cb0); }
+        .feature-header { display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.6rem; }
+        .feature-icon { font-size: 1.5rem; }
+        .feature-title { font-size: 0.9rem; font-weight: 800; color: #1e3a5f; }
+        .feature-desc { font-size: 0.7rem; color: #4a5568; line-height: 1.6; margin-bottom: 0.5rem; }
+        .feature-list { padding-left: 1.2rem; }
+        .feature-list li { font-size: 0.65rem; color: #718096; margin-bottom: 0.2rem; line-height: 1.4; }
+        .feature-list li::marker { color: #3182ce; }
+        .compare-section { margin-bottom: 1rem; }
+        .compare-table { background: #f1f5f9; border-radius: 1rem; overflow: hidden; box-shadow: 0 2px 8px rgba(0,0,0,0.06); }
+        table { width: 100%; border-collapse: collapse; font-size: 0.7rem; }
+        th { background: linear-gradient(135deg, #1a4a6f, #2c5282); color: white; padding: 0.7rem 0.8rem; text-align: left; font-weight: 700; }
+        td { padding: 0.7rem 0.8rem; text-align: left; border-bottom: 1px solid #e2e8f0; }
+        tr:hover td { background: #f7fafc; }
+        .highlight { background: linear-gradient(135deg, #e6f7ff, #ebf8ff); font-weight: 600; }
+        .vs-tag { display: inline-block; background: #fed7d7; color: #c53030; padding: 0.15rem 0.5rem; border-radius: 20px; font-size: 0.6rem; font-weight: 700; margin-right: 0.3rem; }
+        .win-tag { display: inline-block; background: #c6f6d5; color: #276749; padding: 0.15rem 0.5rem; border-radius: 20px; font-size: 0.6rem; font-weight: 700; margin-right: 0.3rem; }
+        .case-section { background: linear-gradient(145deg, #fff9e6, #fff4d5); border-radius: 1rem; padding: 1.2rem; margin-bottom: 1rem; border: 1px solid #f5c842; }
+        .case-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; }
+        .case-card { background: white; border-radius: 0.8rem; padding: 1rem; box-shadow: 0 2px 8px rgba(0,0,0,0.06); text-align: center; }
+        .case-icon { font-size: 2rem; margin-bottom: 0.5rem; }
+        .case-title { font-weight: 800; font-size: 0.8rem; color: #1e3a5f; margin-bottom: 0.3rem; }
+        .case-desc { font-size: 0.65rem; color: #4a5568; line-height: 1.5; }
+        .case-result { margin-top: 0.5rem; padding-top: 0.5rem; border-top: 1px dashed #f5c842; font-size: 0.65rem; color: #c2410c; font-weight: 700; }
+        .scenario-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; margin-bottom: 1rem; }
+        .scenario-card { background: linear-gradient(135deg, #fff9e6, #fff4d5); border-radius: 1rem; padding: 1.2rem; text-align: center; border: 1px solid #f5c842; transition: all 0.3s; }
+        .scenario-card:hover { transform: translateY(-5px); box-shadow: 0 8px 20px rgba(245,158,11,0.2); }
+        .scenario-icon { font-size: 2.5rem; margin-bottom: 0.5rem; display: block; }
+        .scenario-title { font-weight: 800; font-size: 0.85rem; color: #c2410c; margin-bottom: 0.4rem; }
+        .scenario-desc { font-size: 0.7rem; color: #9b4a0e; line-height: 1.5; }
+        .cta { background: linear-gradient(115deg, #0b2b44, #1a4a6f); border-radius: 1rem; padding: 1.5rem; text-align: center; color: white; margin-top: 1rem; position: relative; overflow: hidden; }
+        .cta::before { content: ''; position: absolute; top: -50%; right: -10%; width: 300px; height: 300px; background: rgba(99, 179, 237, 0.1); border-radius: 50%; }
+        .cta-content { position: relative; z-index: 1; }
+        .cta .main-text { font-weight: 800; font-size: 1.2rem; margin-bottom: 0.4rem; }
+        .cta .sub-text { font-size: 0.8rem; margin-bottom: 0.8rem; opacity: 0.9; }
+        .btn { display: inline-block; background: linear-gradient(135deg, #f6ad55, #ed8936); color: #1a2c3e; font-weight: 800; padding: 0.5rem 1.5rem; border-radius: 40px; text-decoration: none; font-size: 0.9rem; transition: all 0.3s; box-shadow: 0 4px 12px rgba(246, 173, 85, 0.4); }
+        .btn:hover { transform: scale(1.05); box-shadow: 0 6px 20px rgba(246, 173, 85, 0.6); }
+        .contact { font-size: 0.7rem; margin-top: 0.8rem; display: flex; justify-content: center; gap: 1.5rem; }
+        footer { text-align: center; font-size: 0.6rem; margin-top: 0.8rem; color: #718096; }
+        @media print { body { background: white; padding: 0; } .page-container { box-shadow: none; max-width: 100%; } }
+        @media (max-width: 700px) { .value-grid { grid-template-columns: 1fr; } .data-highlights { grid-template-columns: repeat(2, 1fr); } .feature-grid { grid-template-columns: 1fr; } .case-grid { grid-template-columns: 1fr; } .scenario-grid { grid-template-columns: 1fr; } .flow-steps { flex-direction: column; } .flow-arrow { transform: rotate(90deg); } }
+    </style>
+</head>
+<body>
+<div class="page-container">
+    <div class="top-nav">
+        <a href="样例清单v6.HTML" class="back-home">← 返回产品清单</a>
+        <span class="nav-brand">DataCenter V3.2 智慧校园数字基座</span>
+    </div>
+    <div class="product-hero">
+        <div class="hero-content">
+            <span class="hero-badge">🔷 对标级能力产品</span>
+            <h1>💰 财务管理</h1>
+            <div class="subtitle">预算→报销→支付闭环，审计规则引擎自动拦截违规支出。让财务从"事后审计"变为"事前防控"，每一笔支出合规可控</div>
+            <div class="hero-stats">
+                <div class="hero-stat"><strong>6</strong> 大核心模块</div>
+                <div class="hero-stat"><strong>闭环</strong> 预算报销支付</div>
+                <div class="hero-stat"><strong>自动</strong> 违规拦截</div>
+                <div class="hero-stat"><strong>实时</strong> 财务监控</div>
+            </div>
+        </div>
+    </div>
+    <div class="section-title"><span class="icon">📊</span> 产品数据亮点</div>
+    <div class="data-highlights">
+        <div class="data-card"><div class="data-number">100%</div><div class="data-label">报销在线化</div></div>
+        <div class="data-card"><div class="data-number">95%</div><div class="data-label">违规自动拦截</div></div>
+        <div class="data-card"><div class="data-number">3天</div><div class="data-label">报销周期</div></div>
+        <div class="data-card"><div class="data-number">0</div><div class="data-label">预算超支</div></div>
+    </div>
+    <div class="section-title"><span class="icon">💎</span> 三大核心价值</div>
+    <div class="value-section">
+        <div class="value-grid">
+            <div class="value-item">
+                <span class="value-icon-big">🔄</span>
+                <h4>预算报销支付闭环</h4>
+                <p>从预算编制、费用报销到资金支付全流程在线化，数据在各个环节无缝流转，财务效率大幅提升</p>
+            </div>
+            <div class="value-item">
+                <span class="value-icon-big">🛡️</span>
+                <h4>智能审计规则引擎</h4>
+                <p>预设审计规则自动校验每笔支出，超标、重复、虚假报销自动拦截，从源头防控财务风险</p>
+            </div>
+            <div class="value-item">
+                <span class="value-icon-big">📊</span>
+                <h4>实时财务监控</h4>
+                <p>预算执行进度实时看板，资金流向透明可追溯，财务决策有据可依</p>
+            </div>
+        </div>
+    </div>
+    <div class="section-title"><span class="icon">🔄</span> 业务流程闭环</div>
+    <div class="flow-section">
+        <div class="flow-steps">
+            <div class="flow-step"><span class="flow-step-icon">📋</span><div class="flow-step-title">预算编制</div><div class="flow-step-desc">年度预算分解</div></div>
+            <div class="flow-arrow">→</div>
+            <div class="flow-step"><span class="flow-step-icon">📝</span><div class="flow-step-title">费用报销</div><div class="flow-step-desc">在线提交审批</div></div>
+            <div class="flow-arrow">→</div>
+            <div class="flow-step"><span class="flow-step-icon">🛡️</span><div class="flow-step-title">规则审计</div><div class="flow-step-desc">自动拦截违规</div></div>
+            <div class="flow-arrow">→</div>
+            <div class="flow-step"><span class="flow-step-icon">💳</span><div class="flow-step-title">资金支付</div><div class="flow-step-desc">银企直联付款</div></div>
+            <div class="flow-arrow">→</div>
+            <div class="flow-step"><span class="flow-step-icon">📊</span><div class="flow-step-title">凭证归档</div><div class="flow-step-desc">自动记账归档</div></div>
+        </div>
+    </div>
+    <div class="section-title"><span class="icon">📦</span> 六大核心功能模块</div>
+    <div class="feature-grid">
+        <div class="feature-card">
+            <div class="feature-header"><span class="feature-icon">📋</span><span class="feature-title">预算管理</span></div>
+            <div class="feature-desc">年度预算编制、分解、执行监控，预算调整在线审批，执行进度实时追踪</div>
+            <ul class="feature-list">
+                <li>多维度预算编制与分解</li>
+                <li>预算执行进度实时监控</li>
+                <li>预算调整在线审批流程</li>
+                <li>预算执行率自动分析</li>
+            </ul>
+        </div>
+        <div class="feature-card">
+            <div class="feature-header"><span class="feature-icon">📝</span><span class="feature-title">费用报销</span></div>
+            <div class="feature-desc">差旅、办公、采购等费用在线报销，发票自动识别，审批流程灵活配置</div>
+            <ul class="feature-list">
+                <li>多种费用类型在线报销</li>
+                <li>发票OCR自动识别验真</li>
+                <li>审批流程可视化配置</li>
+                <li>报销进度实时推送</li>
+            </ul>
+        </div>
+        <div class="feature-card">
+            <div class="feature-header"><span class="feature-icon">🛡️</span><span class="feature-title">审计规则引擎</span></div>
+            <div class="feature-desc">预设审计规则自动校验，违规支出实时拦截，风险预警主动推送</div>
+            <ul class="feature-list">
+                <li>超标/重复报销自动拦截</li>
+                <li>发票真伪自动核验</li>
+                <li>敏感支出风险预警</li>
+                <li>审计规则灵活配置</li>
+            </ul>
+        </div>
+        <div class="feature-card">
+            <div class="feature-header"><span class="feature-icon">💳</span><span class="feature-title">资金支付</span></div>
+            <div class="feature-desc">银企直联在线支付，付款审批流程管控，资金流水自动对账</div>
+            <ul class="feature-list">
+                <li>银企直联在线付款</li>
+                <li>付款审批多级管控</li>
+                <li>资金流水自动对账</li>
+                <li>支付状态实时查询</li>
+            </ul>
+        </div>
+        <div class="feature-card">
+            <div class="feature-header"><span class="feature-icon">📊</span><span class="feature-title">财务核算</span></div>
+            <div class="feature-desc">会计凭证自动生成，总账明细账自动汇总，财务报表一键输出</div>
+            <ul class="feature-list">
+                <li>凭证自动生成与审核</li>
+                <li>总账/明细账自动汇总</li>
+                <li>财务报表一键生成</li>
+                <li>多账套管理与切换</li>
+            </ul>
+        </div>
+        <div class="feature-card">
+            <div class="feature-header"><span class="feature-icon">📈</span><span class="feature-title">财务分析大屏</span></div>
+            <div class="feature-desc">财务数据可视化呈现，预算执行、费用趋势、资金状况一屏掌握</div>
+            <ul class="feature-list">
+                <li>预算执行率可视化</li>
+                <li>费用结构趋势分析</li>
+                <li>资金状况实时监控</li>
+                <li>财务风险预警看板</li>
+            </ul>
+        </div>
+    </div>
+    <div class="section-title"><span class="icon">⚖️</span> 与传统方案对比</div>
+    <div class="compare-section">
+        <div class="compare-table">
+            <table>
+                <thead><tr><th style="width:18%">对比维度</th><th style="width:41%">传统财务系统</th><th style="width:41%">DataCenter 财务管理</th></tr></thead>
+                <tbody>
+                    <tr><td><strong>预算管控</strong></td><td><span class="vs-tag">事后统计</span>预算与执行脱节，超支后才发现</td><td class="highlight"><span class="win-tag">事前控制</span>报销时实时校验预算余额，超支拦截</td></tr>
+                    <tr><td><strong>报销流程</strong></td><td><span class="vs-tag">纸质单据</span>填单贴票跑审批，周期长易丢失</td><td class="highlight"><span class="win-tag">全程在线</span>手机拍照上传，审批流转电子化</td></tr>
+                    <tr><td><strong>审计合规</strong></td><td><span class="vs-tag">人工抽查</span>审计覆盖面窄，问题发现滞后</td><td class="highlight"><span class="win-tag">规则引擎</span>每笔支出自动审计，违规实时拦截</td></tr>
+                    <tr><td><strong>支付效率</strong></td><td><span class="vs-tag">手工录入</span>网银逐笔录入，效率低易出错</td><td class="highlight"><span class="win-tag">银企直联</span>审批通过自动付款，一键对账</td></tr>
+                    <tr><td><strong>数据打通</strong></td><td><span class="vs-tag">信息孤岛</span>财务与业务系统割裂，对账困难</td><td class="highlight"><span class="win-tag">原生一体</span>与资产、后勤、人事数据互通</td></tr>
+                    <tr><td><strong>决策支持</strong></td><td><span class="vs-tag">报表滞后</span>月度报表，无法支撑实时决策</td><td class="highlight"><span class="win-tag">实时大屏</span>财务数据实时可视化，即时决策</td></tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="section-title"><span class="icon">🏆</span> 客户成功案例</div>
+    <div class="case-section">
+        <div class="case-grid">
+            <div class="case-card"><span class="case-icon">🏫</span><div class="case-title">某省属重点大学</div><div class="case-desc">报销流程纸质化，审批周期长，预算超支频繁</div><div class="case-result">✅ 报销周期从2周缩短至3天，预算超支减少90%</div></div>
+            <div class="case-card"><span class="case-icon">🔧</span><div class="case-title">某职业技术学院</div><div class="case-desc">财务与业务系统割裂，对账工作量大</div><div class="case-result">✅ 数据打通后对账时间减少80%，财务月结提前5天</div></div>
+            <div class="case-card"><span class="case-icon">📚</span><div class="case-title">某高级中学</div><div class="case-desc">缺乏审计规则，违规支出难以发现</div><div class="case-result">✅ 规则引擎上线后，违规支出自动拦截率95%</div></div>
+        </div>
+    </div>
+    <div class="section-title"><span class="icon">🎯</span> 适用场景</div>
+    <div class="scenario-grid">
+        <div class="scenario-card"><span class="scenario-icon">🏫</span><div class="scenario-title">高等院校</div><div class="scenario-desc">多校区财务统一管理，科研经费专项管控，预算执行精细化</div></div>
+        <div class="scenario-card"><span class="scenario-icon">🔧</span><div class="scenario-title">职业院校</div><div class="scenario-desc">实训耗材费用管控，项目经费跟踪，财务流程规范化</div></div>
+        <div class="scenario-card"><span class="scenario-icon">📚</span><div class="scenario-title">中小学</div><div class="scenario-desc">教育经费合规使用，报销流程简化，财务透明公开</div></div>
+    </div>
+    <div class="cta">
+        <div class="cta-content">
+            <div class="main-text">获取财务管理完整方案</div>
+            <div class="sub-text">了解如何实现预算报销支付闭环，让每笔支出合规可控<br>数据零丢失 · 功能越用越精简 · 五年向前兼容承诺</div>
+            <a href="contact.html" class="btn">立即咨询 ｜ 获取方案</a>
+            <div class="contact"><span>📞 15102940626</span><span>💬 微信 18392084341</span></div>
+        </div>
+    </div>
+    <footer>DataCenter V3.2 智慧校园数字基座 · 统一配置中心驱动 · 本地/云原生部署</footer>
+</div>
+</body>
+</html>

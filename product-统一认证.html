@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>统一认证 - DataCenter V3.2 智慧校园数字基座</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { background: #eef2f5; font-family: 'Segoe UI', 'Roboto', 'Noto Sans', system-ui, -apple-system, sans-serif; min-height: 100vh; padding: 0.8rem; }
+        .page-container { max-width: 231mm; width: 100%; margin: 0 auto; background: white; box-shadow: 0 20px 30px rgba(0,0,0,0.1); border-radius: 6px; padding: 6mm 7mm 7mm 7mm; }
+        .top-nav { display: flex; justify-content: space-between; align-items: center; padding: 0.5rem 0; margin-bottom: 0.5rem; border-bottom: 1px solid #e2e8f0; }
+        .back-home { display: inline-flex; align-items: center; gap: 0.3rem; color: #3182ce; text-decoration: none; font-size: 0.7rem; font-weight: 600; padding: 0.3rem 0.8rem; border-radius: 20px; background: #ebf8ff; transition: all 0.2s; }
+        .back-home:hover { background: #bee3f8; transform: translateX(-3px); }
+        .nav-brand { font-size: 0.65rem; color: #718096; font-weight: 600; }
+        .product-hero { background: linear-gradient(135deg, #0b2b44 0%, #1a4a6f 50%, #2c5282 100%); border-radius: 1rem; padding: 2rem 1.5rem; color: white; margin-bottom: 1rem; position: relative; overflow: hidden; }
+        .product-hero::before { content: ''; position: absolute; top: -30%; right: -5%; width: 400px; height: 400px; background: rgba(99, 179, 237, 0.08); border-radius: 50%; }
+        .product-hero::after { content: ''; position: absolute; bottom: -20%; left: -10%; width: 300px; height: 300px; background: rgba(246, 173, 85, 0.06); border-radius: 50%; }
+        .hero-content { position: relative; z-index: 1; }
+        .hero-badge { display: inline-block; background: linear-gradient(135deg, #f6ad55, #ed8936); color: #1a2c3e; font-weight: 800; font-size: 0.65rem; padding: 0.25rem 0.8rem; border-radius: 20px; margin-bottom: 0.8rem; }
+        .product-hero h1 { font-size: 2rem; font-weight: 800; margin-bottom: 0.5rem; }
+        .product-hero .subtitle { font-size: 0.9rem; opacity: 0.95; margin-bottom: 1rem; line-height: 1.5; max-width: 80%; }
+        .hero-stats { display: flex; flex-wrap: wrap; gap: 0.6rem; }
+        .hero-stat { background: rgba(255,255,255,0.12); border-radius: 1.5rem; padding: 0.3rem 0.8rem; font-size: 0.7rem; }
+        .hero-stat strong { font-size: 1rem; font-weight: 800; }
+        .section-title { font-size: 1.1rem; font-weight: 700; margin: 1.2rem 0 0.8rem 0; border-left: 4px solid #2b6cb0; padding-left: 0.6rem; color: #1e3a5f; display: flex; align-items: center; gap: 0.4rem; }
+        .section-title .icon { font-size: 1.2rem; }
+        .value-section { background: linear-gradient(145deg, #f7fafc, #edf2f7); border-radius: 1rem; padding: 1.2rem; margin-bottom: 1rem; }
+        .value-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; }
+        .value-item { background: white; border-radius: 1rem; padding: 1.2rem; box-shadow: 0 4px 12px rgba(0,0,0,0.08); border-top: 4px solid #3182ce; transition: all 0.3s; position: relative; overflow: hidden; }
+        .value-item:hover { transform: translateY(-5px); box-shadow: 0 8px 24px rgba(0,0,0,0.12); }
+        .value-item::before { content: ''; position: absolute; top: 0; right: 0; width: 60px; height: 60px; background: linear-gradient(135deg, rgba(49,130,206,0.08), transparent); border-radius: 0 0 0 60px; }
+        .value-icon-big { font-size: 2rem; margin-bottom: 0.6rem; display: block; }
+        .value-item h4 { font-size: 0.85rem; color: #1e3a5f; margin-bottom: 0.5rem; font-weight: 800; }
+        .value-item p { font-size: 0.7rem; color: #4a5568; line-height: 1.6; }
+        .data-highlights { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0.8rem; margin-bottom: 1rem; }
+        .data-card { background: linear-gradient(135deg, #0b2b44, #1a4a6f); border-radius: 1rem; padding: 1rem; text-align: center; color: white; transition: all 0.3s; }
+        .data-card:hover { transform: scale(1.03); }
+        .data-number { font-size: 1.8rem; font-weight: 800; background: linear-gradient(135deg, #f6ad55, #ed8936); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+        .data-label { font-size: 0.65rem; opacity: 0.9; margin-top: 0.2rem; }
+        .flow-section { background: linear-gradient(145deg, #0f2b3d, #1a4a6f); border-radius: 1rem; padding: 1.5rem; margin-bottom: 1rem; color: white; position: relative; overflow: hidden; }
+        .flow-section::before { content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.03'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E"); opacity: 0.5; }
+        .flow-steps { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.5rem; position: relative; z-index: 1; }
+        .flow-step { text-align: center; flex: 1; min-width: 100px; background: rgba(255,255,255,0.08); border-radius: 1rem; padding: 1rem 0.5rem; transition: all 0.3s; }
+        .flow-step:hover { background: rgba(255,255,255,0.15); transform: translateY(-3px); }
+        .flow-step-icon { font-size: 2rem; margin-bottom: 0.5rem; display: block; }
+        .flow-step-title { font-size: 0.75rem; font-weight: 700; margin-bottom: 0.2rem; }
+        .flow-step-desc { font-size: 0.6rem; opacity: 0.8; }
+        .flow-arrow { font-size: 1.5rem; color: #f6ad55; font-weight: 800; }
+        .feature-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1rem; margin-bottom: 1rem; }
+        .feature-card { background: white; border-radius: 1rem; padding: 1.2rem; box-shadow: 0 2px 8px rgba(0,0,0,0.06); border: 1px solid #e2e8f0; transition: all 0.3s; position: relative; overflow: hidden; }
+        .feature-card:hover { transform: translateY(-3px); box-shadow: 0 8px 20px rgba(0,0,0,0.1); border-color: #3182ce; }
+        .feature-card::before { content: ''; position: absolute; top: 0; left: 0; width: 4px; height: 100%; background: linear-gradient(180deg, #3182ce, #2b6cb0); }
+        .feature-header { display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.6rem; }
+        .feature-icon { font-size: 1.5rem; }
+        .feature-title { font-size: 0.9rem; font-weight: 800; color: #1e3a5f; }
+        .feature-desc { font-size: 0.7rem; color: #4a5568; line-height: 1.6; margin-bottom: 0.5rem; }
+        .feature-list { padding-left: 1.2rem; }
+        .feature-list li { font-size: 0.65rem; color: #718096; margin-bottom: 0.2rem; line-height: 1.4; }
+        .feature-list li::marker { color: #3182ce; }
+        .compare-section { margin-bottom: 1rem; }
+        .compare-table { background: #f1f5f9; border-radius: 1rem; overflow: hidden; box-shadow: 0 2px 8px rgba(0,0,0,0.06); }
+        table { width: 100%; border-collapse: collapse; font-size: 0.7rem; }
+        th { background: linear-gradient(135deg, #1a4a6f, #2c5282); color: white; padding: 0.7rem 0.8rem; text-align: left; font-weight: 700; }
+        td { padding: 0.7rem 0.8rem; text-align: left; border-bottom: 1px solid #e2e8f0; }
+        tr:hover td { background: #f7fafc; }
+        .highlight { background: linear-gradient(135deg, #e6f7ff, #ebf8ff); font-weight: 600; }
+        .vs-tag { display: inline-block; background: #fed7d7; color: #c53030; padding: 0.15rem 0.5rem; border-radius: 20px; font-size: 0.6rem; font-weight: 700; margin-right: 0.3rem; }
+        .win-tag { display: inline-block; background: #c6f6d5; color: #276749; padding: 0.15rem 0.5rem; border-radius: 20px; font-size: 0.6rem; font-weight: 700; margin-right: 0.3rem; }
+        .case-section { background: linear-gradient(145deg, #fff9e6, #fff4d5); border-radius: 1rem; padding: 1.2rem; margin-bottom: 1rem; border: 1px solid #f5c842; }
+        .case-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; }
+        .case-card { background: white; border-radius: 0.8rem; padding: 1rem; box-shadow: 0 2px 8px rgba(0,0,0,0.06); text-align: center; }
+        .case-icon { font-size: 2rem; margin-bottom: 0.5rem; }
+        .case-title { font-weight: 800; font-size: 0.8rem; color: #1e3a5f; margin-bottom: 0.3rem; }
+        .case-desc { font-size: 0.65rem; color: #4a5568; line-height: 1.5; }
+        .case-result { margin-top: 0.5rem; padding-top: 0.5rem; border-top: 1px dashed #f5c842; font-size: 0.65rem; color: #c2410c; font-weight: 700; }
+        .scenario-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; margin-bottom: 1rem; }
+        .scenario-card { background: linear-gradient(135deg, #fff9e6, #fff4d5); border-radius: 1rem; padding: 1.2rem; text-align: center; border: 1px solid #f5c842; transition: all 0.3s; }
+        .scenario-card:hover { transform: translateY(-5px); box-shadow: 0 8px 20px rgba(245,158,11,0.2); }
+        .scenario-icon { font-size: 2.5rem; margin-bottom: 0.5rem; display: block; }
+        .scenario-title { font-weight: 800; font-size: 0.85rem; color: #c2410c; margin-bottom: 0.4rem; }
+        .scenario-desc { font-size: 0.7rem; color: #9b4a0e; line-height: 1.5; }
+        .cta { background: linear-gradient(115deg, #0b2b44, #1a4a6f); border-radius: 1rem; padding: 1.5rem; text-align: center; color: white; margin-top: 1rem; position: relative; overflow: hidden; }
+        .cta::before { content: ''; position: absolute; top: -50%; right: -10%; width: 300px; height: 300px; background: rgba(99, 179, 237, 0.1); border-radius: 50%; }
+        .cta-content { position: relative; z-index: 1; }
+        .cta .main-text { font-weight: 800; font-size: 1.2rem; margin-bottom: 0.4rem; }
+        .cta .sub-text { font-size: 0.8rem; margin-bottom: 0.8rem; opacity: 0.9; }
+        .btn { display: inline-block; background: linear-gradient(135deg, #f6ad55, #ed8936); color: #1a2c3e; font-weight: 800; padding: 0.5rem 1.5rem; border-radius: 40px; text-decoration: none; font-size: 0.9rem; transition: all 0.3s; box-shadow: 0 4px 12px rgba(246, 173, 85, 0.4); }
+        .btn:hover { transform: scale(1.05); box-shadow: 0 6px 20px rgba(246, 173, 85, 0.6); }
+        .contact { font-size: 0.7rem; margin-top: 0.8rem; display: flex; justify-content: center; gap: 1.5rem; }
+        footer { text-align: center; font-size: 0.6rem; margin-top: 0.8rem; color: #718096; }
+        @media print { body { background: white; padding: 0; } .page-container { box-shadow: none; max-width: 100%; } }
+        @media (max-width: 700px) { .value-grid { grid-template-columns: 1fr; } .data-highlights { grid-template-columns: repeat(2, 1fr); } .feature-grid { grid-template-columns: 1fr; } .case-grid { grid-template-columns: 1fr; } .scenario-grid { grid-template-columns: 1fr; } .flow-steps { flex-direction: column; } .flow-arrow { transform: rotate(90deg); } }
+    </style>
+</head>
+<body>
+<div class="page-container">
+    <div class="top-nav">
+        <a href="样例清单v6.HTML" class="back-home">← 返回产品清单</a>
+        <span class="nav-brand">DataCenter V3.2 智慧校园数字基座</span>
+    </div>
+
+    <div class="product-hero">
+        <div class="hero-content">
+            <span class="hero-badge">🏆 超越级能力产品</span>
+            <h1>🔐 统一认证</h1>
+            <div class="subtitle">ABAC零信任细粒度管控，"谁·何时·什么设备·什么数据"精准授权</div>
+            <div class="hero-stats">
+                <div class="hero-stat"><strong>ABAC</strong> 零信任架构</div>
+                <div class="hero-stat"><strong>4维</strong> 精准授权</div>
+                <div class="hero-stat"><strong>单点</strong> 全系统登录</div>
+                <div class="hero-stat"><strong>全链路</strong> 安全审计</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="section-title"><span class="icon">📊</span> 产品数据亮点</div>
+    <div class="data-highlights">
+        <div class="data-card"><div class="data-number">1</div><div class="data-label">账号全系统通行</div></div>
+        <div class="data-card"><div class="data-number">4维</div><div class="data-label">ABAC授权粒度</div></div>
+        <div class="data-card"><div class="data-number">零信任</div><div class="data-label">安全架构</div></div>
+        <div class="data-card"><div class="data-number">全链路</div><div class="data-label">操作审计</div></div>
+    </div>
+
+    <div class="section-title"><span class="icon">💎</span> 三大核心价值</div>
+    <div class="value-section">
+        <div class="value-grid">
+            <div class="value-item">
+                <span class="value-icon-big">🛡️</span>
+                <h4>零信任安全架构</h4>
+                <p>基于ABAC属性访问控制模型，不再默认信任任何访问请求，每次访问都进行多维身份校验与权限判定</p>
+            </div>
+            <div class="value-item">
+                <span class="value-icon-big">🎯</span>
+                <h4>四维精准授权</h4>
+                <p>"谁（身份）·何时（时间）·什么设备（终端）·什么数据（资源）"四维组合授权，权限控制精细到字段级</p>
+            </div>
+            <div class="value-item">
+                <span class="value-icon-big">🔍</span>
+                <h4>全链路安全审计</h4>
+                <p>每一次登录、每一次数据访问、每一次权限变更全程留痕，支持行为回溯与异常检测</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="section-title"><span class="icon">🔄</span> 业务流程闭环</div>
+    <div class="flow-section">
+        <div class="flow-steps">
+            <div class="flow-step"><span class="flow-step-icon">👤</span><div class="flow-step-title">身份认证</div><div class="flow-step-desc">多因子验证</div></div>
+            <div class="flow-arrow">→</div>
+            <div class="flow-step"><span class="flow-step-icon">🎯</span><div class="flow-step-title">权限判定</div><div class="flow-step-desc">ABAC引擎</div></div>
+            <div class="flow-arrow">→</div>
+            <div class="flow-step"><span class="flow-step-icon">📋</span><div class="flow-step-title">访问授权</div><div class="flow-step-desc">细粒度控制</div></div>
+            <div class="flow-arrow">→</div>
+            <div class="flow-step"><span class="flow-step-icon">📝</span><div class="flow-step-title">操作记录</div><div class="flow-step-desc">全程留痕</div></div>
+            <div class="flow-arrow">→</div>
+            <div class="flow-step"><span class="flow-step-icon">🔍</span><div class="flow-step-title">审计分析</div><div class="flow-step-desc">异常检测</div></div>
+        </div>
+    </div>
+
+    <div class="section-title"><span class="icon">📦</span> 六大核心功能模块</div>
+    <div class="feature-grid">
+        <div class="feature-card">
+            <div class="feature-header"><span class="feature-icon">👤</span><span class="feature-title">统一身份管理</span></div>
+            <div class="feature-desc">全校师生统一身份库，支持多种身份源同步，一人一号全系统通行</div>
+            <ul class="feature-list">
+                <li>师生统一身份库集中管理</li>
+                <li>支持AD/LDAP/HR系统同步</li>
+                <li>身份生命周期自动管理</li>
+                <li>入职/入学/离职/毕业自动触发</li>
+            </ul>
+        </div>
+        <div class="feature-card">
+            <div class="feature-header"><span class="feature-icon">🔐</span><span class="feature-title">单点登录SSO</span></div>
+            <div class="feature-desc">一次登录全系统通行，支持SAML/OAuth2.0/CAS标准协议，兼容主流应用</div>
+            <ul class="feature-list">
+                <li>支持SAML/OAuth2.0/CAS协议</li>
+                <li>一次登录全系统免密访问</li>
+                <li>应用接入配置化，无需改造</li>
+                <li>会话管理与安全退出</li>
+            </ul>
+        </div>
+        <div class="feature-card">
+            <div class="feature-header"><span class="feature-icon">🎯</span><span class="feature-title">ABAC权限引擎</span></div>
+            <div class="feature-desc">基于属性的访问控制引擎，支持身份、时间、地点、设备、行为等多维授权策略</div>
+            <ul class="feature-list">
+                <li>身份/时间/设备/资源四维策略</li>
+                <li>权限控制精细到字段级</li>
+                <li>策略规则可视化配置</li>
+                <li>动态权限变更实时生效</li>
+            </ul>
+        </div>
+        <div class="feature-card">
+            <div class="feature-header"><span class="feature-icon">🛡️</span><span class="feature-title">多因子认证</span></div>
+            <div class="feature-desc">支持密码、短信、邮箱、企业微信、钉钉、硬件Key等多种认证方式灵活组合</div>
+            <ul class="feature-list">
+                <li>密码+短信/邮箱双因子认证</li>
+                <li>企业微信/钉钉扫码登录</li>
+                <li>硬件Key/USBKey支持</li>
+                <li>风险场景自动提升认证等级</li>
+            </ul>
+        </div>
+        <div class="feature-card">
+            <div class="feature-header"><span class="feature-icon">📝</span><span class="feature-title">安全审计中心</span></div>
+            <div class="feature-desc">全链路操作审计，登录行为、数据访问、权限变更全程留痕，支持异常检测</div>
+            <ul class="feature-list">
+                <li>登录/访问/操作全量日志</li>
+                <li>异常行为自动检测与告警</li>
+                <li>审计报表自动生成与导出</li>
+                <li>日志留存与合规归档</li>
+            </ul>
+        </div>
+        <div class="feature-card">
+            <div class="feature-header"><span class="feature-icon">⚙️</span><span class="feature-title">权限自助服务</span></div>
+            <div class="feature-desc">用户权限申请、审批、变更全流程在线化，减少IT运维负担</div>
+            <ul class="feature-list">
+                <li>权限申请在线提交</li>
+                <li>审批流程可视化配置</li>
+                <li>权限变更自动同步</li>
+                <li>定期权限复核与回收</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="section-title"><span class="icon">⚖️</span> 与传统方案对比</div>
+    <div class="compare-section">
+        <div class="compare-table">
+            <table>
+                <thead><tr><th style="width:18%">对比维度</th><th style="width:41%">传统身份认证</th><th style="width:41%">DataCenter 统一认证</th></tr></thead>
+                <tbody>
+                    <tr><td><strong>认证方式</strong></td><td><span class="vs-tag">账号密码</span>单一认证方式，安全性低，易被盗用</td><td class="highlight"><span class="win-tag">多因子</span>密码+短信/扫码/Key灵活组合</td></tr>
+                    <tr><td><strong>权限模型</strong></td><td><span class="vs-tag">RBAC</span>基于角色的粗粒度控制，灵活性差</td><td class="highlight"><span class="win-tag">ABAC</span>属性访问控制，四维精准授权</td></tr>
+                    <tr><td><strong>系统登录</strong></td><td><span class="vs-tag">多账号</span>各系统独立账号，记忆负担重</td><td class="highlight"><span class="win-tag">单点登录</span>一次登录全系统通行</td></tr>
+                    <tr><td><strong>安全审计</strong></td><td><span class="vs-tag">日志分散</span>各系统日志独立，难以关联分析</td><td class="highlight"><span class="win-tag">统一审计</span>全链路日志集中，异常自动检测</td></tr>
+                    <tr><td><strong>权限管理</strong></td><td><span class="vs-tag">IT运维</span>权限变更需提工单，响应慢</td><td class="highlight"><span class="win-tag">自助服务</span>在线申请审批，实时生效</td></tr>
+                    <tr><td><strong>零信任</strong></td><td><span class="vs-tag">边界信任</span>内网默认信任，安全隐患大</td><td class="highlight"><span class="win-tag">零信任</span>每次访问都验证，永不信任</td></tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div class="section-title"><span class="icon">🏆</span> 客户成功案例</div>
+    <div class="case-section">
+        <div class="case-grid">
+            <div class="case-card">
+                <span class="case-icon">🏫</span>
+                <div class="case-title">某省属重点大学</div>
+                <div class="case-desc">原有系统各自独立账号，师生需记忆10+套密码，账号被盗事件频发</div>
+                <div class="case-result">✅ 统一认证后单点登录全覆盖，安全事件下降90%</div>
+            </div>
+            <div class="case-card">
+                <span class="case-icon">🔧</span>
+                <div class="case-title">某职业技术学院</div>
+                <div class="case-desc">权限管理依赖IT手工操作，权限变更响应慢，离职人员权限回收不及时</div>
+                <div class="case-result">✅ 权限自助服务上线，变更实时生效，零滞后回收</div>
+            </div>
+            <div class="case-card">
+                <span class="case-icon">📚</span>
+                <div class="case-title">某医科类高校</div>
+                <div class="case-desc">对数据安全要求高，需要细粒度权限控制与完整审计追溯能力</div>
+                <div class="case-result">✅ ABAC字段级授权落地，全链路审计满足等保要求</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="section-title"><span class="icon">🎯</span> 适用场景</div>
+    <div class="scenario-grid">
+        <div class="scenario-card">
+            <span class="scenario-icon">🏫</span>
+            <div class="scenario-title">全校统一认证</div>
+            <div class="scenario-desc">构建全校统一身份认证体系，消除多账号痛点，提升用户体验与安全性</div>
+        </div>
+        <div class="scenario-card">
+            <span class="scenario-icon">🛡️</span>
+            <div class="scenario-title">等保合规建设</div>
+            <div class="scenario-desc">满足等保2.0要求，实现身份鉴别、访问控制、安全审计合规</div>
+        </div>
+        <div class="scenario-card">
+            <span class="scenario-icon">🔍</span>
+            <div class="scenario-title">数据安全治理</div>
+            <div class="scenario-desc">细粒度数据访问控制，防止数据泄露，满足数据安全法合规要求</div>
+        </div>
+    </div>
+
+    <div class="cta">
+        <div class="cta-content">
+            <div class="main-text">获取统一认证完整方案</div>
+            <div class="sub-text">了解如何构建零信任安全认证体系<br>数据零丢失 · 功能越用越精简 · 五年向前兼容承诺</div>
+            <a href="contact.html" class="btn">立即咨询 ｜ 获取方案</a>
+            <div class="contact"><span>📞 15102940626</span><span>💬 微信 18392084341</span></div>
+        </div>
+    </div>
+    <footer>DataCenter V3.2 智慧校园数字基座 · 统一配置中心驱动 · 本地/云原生部署</footer>
+</div>
+</body>
+</html>

@@ -1,0 +1,873 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>后勤管理 - DataCenter V3.2 智慧校园数字基座</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: #eef2f5;
+            font-family: 'Segoe UI', 'Roboto', 'Noto Sans', system-ui, -apple-system, sans-serif;
+            min-height: 100vh;
+            padding: 0.8rem;
+        }
+
+        .page-container {
+            max-width: 231mm;
+            width: 100%;
+            margin: 0 auto;
+            background: white;
+            box-shadow: 0 20px 30px rgba(0,0,0,0.1);
+            border-radius: 6px;
+            padding: 6mm 7mm 7mm 7mm;
+        }
+
+        /* 顶部导航栏 */
+        .top-nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.5rem 0;
+            margin-bottom: 0.5rem;
+            border-bottom: 1px solid #e2e8f0;
+        }
+        .back-home {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.3rem;
+            color: #3182ce;
+            text-decoration: none;
+            font-size: 0.7rem;
+            font-weight: 600;
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            background: #ebf8ff;
+            transition: all 0.2s;
+        }
+        .back-home:hover {
+            background: #bee3f8;
+            transform: translateX(-3px);
+        }
+        .nav-brand {
+            font-size: 0.65rem;
+            color: #718096;
+            font-weight: 600;
+        }
+
+        /* 产品头部 */
+        .product-hero {
+            background: linear-gradient(135deg, #0b2b44 0%, #1a4a6f 50%, #2c5282 100%);
+            border-radius: 1rem;
+            padding: 2rem 1.5rem;
+            color: white;
+            margin-bottom: 1rem;
+            position: relative;
+            overflow: hidden;
+        }
+        .product-hero::before {
+            content: '';
+            position: absolute;
+            top: -30%;
+            right: -5%;
+            width: 400px;
+            height: 400px;
+            background: rgba(99, 179, 237, 0.08);
+            border-radius: 50%;
+        }
+        .product-hero::after {
+            content: '';
+            position: absolute;
+            bottom: -20%;
+            left: -10%;
+            width: 300px;
+            height: 300px;
+            background: rgba(246, 173, 85, 0.06);
+            border-radius: 50%;
+        }
+        .hero-content {
+            position: relative;
+            z-index: 1;
+        }
+        .hero-badge {
+            display: inline-block;
+            background: linear-gradient(135deg, #63b3ed, #4299e1);
+            color: #1a2c3e;
+            font-weight: 800;
+            font-size: 0.65rem;
+            padding: 0.25rem 0.8rem;
+            border-radius: 20px;
+            margin-bottom: 0.8rem;
+        }
+        .product-hero h1 {
+            font-size: 2rem;
+            font-weight: 800;
+            margin-bottom: 0.5rem;
+        }
+        .product-hero .subtitle {
+            font-size: 0.9rem;
+            opacity: 0.95;
+            margin-bottom: 1rem;
+            line-height: 1.5;
+            max-width: 80%;
+        }
+        .hero-stats {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.6rem;
+        }
+        .hero-stat {
+            background: rgba(255,255,255,0.12);
+            border-radius: 1.5rem;
+            padding: 0.3rem 0.8rem;
+            font-size: 0.7rem;
+        }
+        .hero-stat strong {
+            font-size: 1rem;
+            font-weight: 800;
+        }
+
+        /* 区块标题 */
+        .section-title {
+            font-size: 1.1rem;
+            font-weight: 700;
+            margin: 1.2rem 0 0.8rem 0;
+            border-left: 4px solid #2b6cb0;
+            padding-left: 0.6rem;
+            color: #1e3a5f;
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+        }
+        .section-title .icon {
+            font-size: 1.2rem;
+        }
+
+        /* 核心价值 - 大卡片 */
+        .value-section {
+            background: linear-gradient(145deg, #f7fafc, #edf2f7);
+            border-radius: 1rem;
+            padding: 1.2rem;
+            margin-bottom: 1rem;
+        }
+        .value-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1rem;
+        }
+        .value-item {
+            background: white;
+            border-radius: 1rem;
+            padding: 1.2rem;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+            border-top: 4px solid #3182ce;
+            transition: all 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+        .value-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 24px rgba(0,0,0,0.12);
+        }
+        .value-item::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, rgba(49,130,206,0.08), transparent);
+            border-radius: 0 0 0 60px;
+        }
+        .value-icon-big {
+            font-size: 2rem;
+            margin-bottom: 0.6rem;
+            display: block;
+        }
+        .value-item h4 {
+            font-size: 0.85rem;
+            color: #1e3a5f;
+            margin-bottom: 0.5rem;
+            font-weight: 800;
+        }
+        .value-item p {
+            font-size: 0.7rem;
+            color: #4a5568;
+            line-height: 1.6;
+        }
+
+        /* 数据亮点 */
+        .data-highlights {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 0.8rem;
+            margin-bottom: 1rem;
+        }
+        .data-card {
+            background: linear-gradient(135deg, #0b2b44, #1a4a6f);
+            border-radius: 1rem;
+            padding: 1rem;
+            text-align: center;
+            color: white;
+            transition: all 0.3s;
+        }
+        .data-card:hover {
+            transform: scale(1.03);
+        }
+        .data-number {
+            font-size: 1.8rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #f6ad55, #ed8936);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .data-label {
+            font-size: 0.65rem;
+            opacity: 0.9;
+            margin-top: 0.2rem;
+        }
+
+        /* 业务流程 */
+        .flow-section {
+            background: linear-gradient(145deg, #0f2b3d, #1a4a6f);
+            border-radius: 1rem;
+            padding: 1.5rem;
+            margin-bottom: 1rem;
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+        .flow-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.03'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+            opacity: 0.5;
+        }
+        .flow-steps {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            position: relative;
+            z-index: 1;
+        }
+        .flow-step {
+            text-align: center;
+            flex: 1;
+            min-width: 100px;
+            background: rgba(255,255,255,0.08);
+            border-radius: 1rem;
+            padding: 1rem 0.5rem;
+            transition: all 0.3s;
+        }
+        .flow-step:hover {
+            background: rgba(255,255,255,0.15);
+            transform: translateY(-3px);
+        }
+        .flow-step-icon {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+            display: block;
+        }
+        .flow-step-title {
+            font-size: 0.75rem;
+            font-weight: 700;
+            margin-bottom: 0.2rem;
+        }
+        .flow-step-desc {
+            font-size: 0.6rem;
+            opacity: 0.8;
+        }
+        .flow-arrow {
+            font-size: 1.5rem;
+            color: #f6ad55;
+            font-weight: 800;
+        }
+
+        /* 功能模块 */
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+        .feature-card {
+            background: white;
+            border-radius: 1rem;
+            padding: 1.2rem;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+            border: 1px solid #e2e8f0;
+            transition: all 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+        .feature-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+            border-color: #3182ce;
+        }
+        .feature-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 4px;
+            height: 100%;
+            background: linear-gradient(180deg, #3182ce, #2b6cb0);
+        }
+        .feature-header {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 0.6rem;
+        }
+        .feature-icon {
+            font-size: 1.5rem;
+        }
+        .feature-title {
+            font-size: 0.9rem;
+            font-weight: 800;
+            color: #1e3a5f;
+        }
+        .feature-desc {
+            font-size: 0.7rem;
+            color: #4a5568;
+            line-height: 1.6;
+            margin-bottom: 0.5rem;
+        }
+        .feature-list {
+            padding-left: 1.2rem;
+        }
+        .feature-list li {
+            font-size: 0.65rem;
+            color: #718096;
+            margin-bottom: 0.2rem;
+            line-height: 1.4;
+        }
+        .feature-list li::marker {
+            color: #3182ce;
+        }
+
+        /* 优势对比 */
+        .compare-section {
+            margin-bottom: 1rem;
+        }
+        .compare-table {
+            background: #f1f5f9;
+            border-radius: 1rem;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.7rem;
+        }
+        th {
+            background: linear-gradient(135deg, #1a4a6f, #2c5282);
+            color: white;
+            padding: 0.7rem 0.8rem;
+            text-align: left;
+            font-weight: 700;
+        }
+        td {
+            padding: 0.7rem 0.8rem;
+            text-align: left;
+            border-bottom: 1px solid #e2e8f0;
+        }
+        tr:hover td {
+            background: #f7fafc;
+        }
+        .highlight {
+            background: linear-gradient(135deg, #e6f7ff, #ebf8ff);
+            font-weight: 600;
+        }
+        .vs-tag {
+            display: inline-block;
+            background: #fed7d7;
+            color: #c53030;
+            padding: 0.15rem 0.5rem;
+            border-radius: 20px;
+            font-size: 0.6rem;
+            font-weight: 700;
+            margin-right: 0.3rem;
+        }
+        .win-tag {
+            display: inline-block;
+            background: #c6f6d5;
+            color: #276749;
+            padding: 0.15rem 0.5rem;
+            border-radius: 20px;
+            font-size: 0.6rem;
+            font-weight: 700;
+            margin-right: 0.3rem;
+        }
+
+        /* 客户案例 */
+        .case-section {
+            background: linear-gradient(145deg, #fff9e6, #fff4d5);
+            border-radius: 1rem;
+            padding: 1.2rem;
+            margin-bottom: 1rem;
+            border: 1px solid #f5c842;
+        }
+        .case-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1rem;
+        }
+        .case-card {
+            background: white;
+            border-radius: 0.8rem;
+            padding: 1rem;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+            text-align: center;
+        }
+        .case-icon {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+        }
+        .case-title {
+            font-weight: 800;
+            font-size: 0.8rem;
+            color: #1e3a5f;
+            margin-bottom: 0.3rem;
+        }
+        .case-desc {
+            font-size: 0.65rem;
+            color: #4a5568;
+            line-height: 1.5;
+        }
+        .case-result {
+            margin-top: 0.5rem;
+            padding-top: 0.5rem;
+            border-top: 1px dashed #f5c842;
+            font-size: 0.65rem;
+            color: #c2410c;
+            font-weight: 700;
+        }
+
+        /* 适用场景 */
+        .scenario-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+        .scenario-card {
+            background: linear-gradient(135deg, #fff9e6, #fff4d5);
+            border-radius: 1rem;
+            padding: 1.2rem;
+            text-align: center;
+            border: 1px solid #f5c842;
+            transition: all 0.3s;
+        }
+        .scenario-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(245,158,11,0.2);
+        }
+        .scenario-icon {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+            display: block;
+        }
+        .scenario-title {
+            font-weight: 800;
+            font-size: 0.85rem;
+            color: #c2410c;
+            margin-bottom: 0.4rem;
+        }
+        .scenario-desc {
+            font-size: 0.7rem;
+            color: #9b4a0e;
+            line-height: 1.5;
+        }
+
+        /* 底部CTA */
+        .cta {
+            background: linear-gradient(115deg, #0b2b44, #1a4a6f);
+            border-radius: 1rem;
+            padding: 1.5rem;
+            text-align: center;
+            color: white;
+            margin-top: 1rem;
+            position: relative;
+            overflow: hidden;
+        }
+        .cta::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -10%;
+            width: 300px;
+            height: 300px;
+            background: rgba(99, 179, 237, 0.1);
+            border-radius: 50%;
+        }
+        .cta-content {
+            position: relative;
+            z-index: 1;
+        }
+        .cta .main-text {
+            font-weight: 800;
+            font-size: 1.2rem;
+            margin-bottom: 0.4rem;
+        }
+        .cta .sub-text {
+            font-size: 0.8rem;
+            margin-bottom: 0.8rem;
+            opacity: 0.9;
+        }
+        .btn {
+            display: inline-block;
+            background: linear-gradient(135deg, #f6ad55, #ed8936);
+            color: #1a2c3e;
+            font-weight: 800;
+            padding: 0.5rem 1.5rem;
+            border-radius: 40px;
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: all 0.3s;
+            box-shadow: 0 4px 12px rgba(246, 173, 85, 0.4);
+        }
+        .btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 6px 20px rgba(246, 173, 85, 0.6);
+        }
+        .contact {
+            font-size: 0.7rem;
+            margin-top: 0.8rem;
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+        }
+
+        footer {
+            text-align: center;
+            font-size: 0.6rem;
+            margin-top: 0.8rem;
+            color: #718096;
+        }
+
+        @media print {
+            body { background: white; padding: 0; }
+            .page-container { box-shadow: none; max-width: 100%; }
+        }
+        @media (max-width: 700px) {
+            .value-grid { grid-template-columns: 1fr; }
+            .data-highlights { grid-template-columns: repeat(2, 1fr); }
+            .feature-grid { grid-template-columns: 1fr; }
+            .case-grid { grid-template-columns: 1fr; }
+            .scenario-grid { grid-template-columns: 1fr; }
+            .flow-steps { flex-direction: column; }
+            .flow-arrow { transform: rotate(90deg); }
+        }
+    </style>
+</head>
+<body>
+<div class="page-container">
+    <!-- 顶部导航 -->
+    <div class="top-nav">
+        <a href="样例清单v6.HTML" class="back-home">← 返回产品清单</a>
+        <span class="nav-brand">DataCenter V3.2 智慧校园数字基座</span>
+    </div>
+
+    <!-- 产品头部 -->
+    <div class="product-hero">
+        <div class="hero-content">
+            <span class="hero-badge">🔷 对标级能力产品</span>
+            <h1>🍽️ 后勤管理</h1>
+            <div class="subtitle">水电表自动采集+告警，报修全流程，场馆统一调度。让后勤服务从"被动响应"变为"主动服务"，师生满意度大幅提升</div>
+            <div class="hero-stats">
+                <div class="hero-stat"><strong>6</strong> 大核心模块</div>
+                <div class="hero-stat"><strong>自动</strong> 能耗采集</div>
+                <div class="hero-stat"><strong>全流程</strong> 在线报修</div>
+                <div class="hero-stat"><strong>统一</strong> 场馆调度</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 数据亮点 -->
+    <div class="section-title"><span class="icon">📊</span> 产品数据亮点</div>
+    <div class="data-highlights">
+        <div class="data-card">
+            <div class="data-number">100%</div>
+            <div class="data-label">能耗自动采集</div>
+        </div>
+        <div class="data-card">
+            <div class="data-number">80%</div>
+            <div class="data-label">报修效率提升</div>
+        </div>
+        <div class="data-card">
+            <div class="data-number">24h</div>
+            <div class="data-label">在线接单响应</div>
+        </div>
+        <div class="data-card">
+            <div class="data-number">0</div>
+            <div class="data-label">场馆冲突</div>
+        </div>
+    </div>
+
+    <!-- 核心价值 -->
+    <div class="section-title"><span class="icon">💎</span> 三大核心价值</div>
+    <div class="value-section">
+        <div class="value-grid">
+            <div class="value-item">
+                <span class="value-icon-big">⚡</span>
+                <h4>能耗智能管控</h4>
+                <p>水电表数据自动采集，异常用量实时告警，能耗趋势可视化分析，助力绿色校园建设</p>
+            </div>
+            <div class="value-item">
+                <span class="value-icon-big">🔧</span>
+                <h4>报修全流程闭环</h4>
+                <p>从报修提交到工单派单、维修处理、验收评价全流程在线化，进度透明可追溯</p>
+            </div>
+            <div class="value-item">
+                <span class="value-icon-big">🏟️</span>
+                <h4>场馆统一调度</h4>
+                <p>会议室、体育馆、报告厅等场馆资源在线预约与审批，避免冲突，提升利用率</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- 业务流程 -->
+    <div class="section-title"><span class="icon">🔄</span> 业务流程闭环</div>
+    <div class="flow-section">
+        <div class="flow-steps">
+            <div class="flow-step">
+                <span class="flow-step-icon">📡</span>
+                <div class="flow-step-title">自动采集</div>
+                <div class="flow-step-desc">水电表数据实时读取</div>
+            </div>
+            <div class="flow-arrow">→</div>
+            <div class="flow-step">
+                <span class="flow-step-icon">🚨</span>
+                <div class="flow-step-title">智能告警</div>
+                <div class="flow-step-desc">异常用量自动预警</div>
+            </div>
+            <div class="flow-arrow">→</div>
+            <div class="flow-step">
+                <span class="flow-step-icon">🔧</span>
+                <div class="flow-step-title">在线报修</div>
+                <div class="flow-step-desc">工单自动派单处理</div>
+            </div>
+            <div class="flow-arrow">→</div>
+            <div class="flow-step">
+                <span class="flow-step-icon">🏟️</span>
+                <div class="flow-step-title">场馆调度</div>
+                <div class="flow-step-desc">资源统一预约管理</div>
+            </div>
+            <div class="flow-arrow">→</div>
+            <div class="flow-step">
+                <span class="flow-step-icon">📊</span>
+                <div class="flow-step-title">数据分析</div>
+                <div class="flow-step-desc">服务效能持续优化</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 功能模块 -->
+    <div class="section-title"><span class="icon">📦</span> 六大核心功能模块</div>
+    <div class="feature-grid">
+        <div class="feature-card">
+            <div class="feature-header">
+                <span class="feature-icon">💧</span>
+                <span class="feature-title">水电能耗管理</span>
+            </div>
+            <div class="feature-desc">水电表数据自动采集与监控，异常用量实时告警，能耗趋势可视化分析</div>
+            <ul class="feature-list">
+                <li>智能水电表数据自动采集</li>
+                <li>用量异常自动告警通知</li>
+                <li>分楼栋/楼层能耗统计</li>
+                <li>能耗同比环比趋势分析</li>
+            </ul>
+        </div>
+        <div class="feature-card">
+            <div class="feature-header">
+                <span class="feature-icon">🔧</span>
+                <span class="feature-title">在线报修系统</span>
+            </div>
+            <div class="feature-desc">师生在线提交报修，工单自动流转，维修进度实时追踪，评价闭环</div>
+            <ul class="feature-list">
+                <li>扫码/APP多渠道报修入口</li>
+                <li>工单智能分类与自动派单</li>
+                <li>维修进度实时推送通知</li>
+                <li>服务评价与满意度统计</li>
+            </ul>
+        </div>
+        <div class="feature-card">
+            <div class="feature-header">
+                <span class="feature-icon">🏟️</span>
+                <span class="feature-title">场馆预约调度</span>
+            </div>
+            <div class="feature-desc">会议室、体育馆等场馆在线预约，审批流程自动化，冲突自动检测</div>
+            <ul class="feature-list">
+                <li>场馆资源在线查询与预约</li>
+                <li>预约审批流程灵活配置</li>
+                <li>时间冲突自动检测拦截</li>
+                <li>场馆使用率统计分析</li>
+            </ul>
+        </div>
+        <div class="feature-card">
+            <div class="feature-header">
+                <span class="feature-icon">🍽️</span>
+                <span class="feature-title">餐饮服务管理</span>
+            </div>
+            <div class="feature-desc">食堂消费数据监控，菜品满意度调查，餐饮服务质量持续提升</div>
+            <ul class="feature-list">
+                <li>食堂消费数据实时统计</li>
+                <li>菜品评价与满意度调查</li>
+                <li>供应商管理与考核</li>
+                <li>食品安全溯源记录</li>
+            </ul>
+        </div>
+        <div class="feature-card">
+            <div class="feature-header">
+                <span class="feature-icon">🚌</span>
+                <span class="feature-title">车辆通勤管理</span>
+            </div>
+            <div class="feature-desc">校车/班车线路管理，通勤数据统计，车辆调度优化</div>
+            <ul class="feature-list">
+                <li>班车线路与时刻表管理</li>
+                <li>乘车预约与签到统计</li>
+                <li>车辆维保记录跟踪</li>
+                <li>通勤成本分析报表</li>
+            </ul>
+        </div>
+        <div class="feature-card">
+            <div class="feature-header">
+                <span class="feature-icon">📊</span>
+                <span class="feature-title">后勤数据大屏</span>
+            </div>
+            <div class="feature-desc">后勤服务数据一屏掌握，服务效能量化分析，辅助管理决策</div>
+            <ul class="feature-list">
+                <li>报修工单状态实时看板</li>
+                <li>能耗数据可视化展示</li>
+                <li>场馆预约热度分析</li>
+                <li>后勤服务满意度趋势</li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- 优势对比 -->
+    <div class="section-title"><span class="icon">⚖️</span> 与传统方案对比</div>
+    <div class="compare-section">
+        <div class="compare-table">
+            <table>
+                <thead>
+                    <tr>
+                        <th style="width:18%">对比维度</th>
+                        <th style="width:41%">传统后勤管理</th>
+                        <th style="width:41%">DataCenter 后勤管理</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>能耗采集</strong></td>
+                        <td><span class="vs-tag">人工抄表</span>每月人工抄录，数据滞后，异常难发现</td>
+                        <td class="highlight"><span class="win-tag">自动采集</span>实时读取数据，异常即时告警</td>
+                    </tr>
+                    <tr>
+                        <td><strong>报修流程</strong></td>
+                        <td><span class="vs-tag">电话/纸质</span>报修渠道单一，进度不透明，易遗漏</td>
+                        <td class="highlight"><span class="win-tag">在线闭环</span>多渠道报修，进度实时追踪，评价闭环</td>
+                    </tr>
+                    <tr>
+                        <td><strong>场馆管理</strong></td>
+                        <td><span class="vs-tag">手工登记</span>纸质预约本，冲突频发，利用率低</td>
+                        <td class="highlight"><span class="win-tag">智能调度</span>在线预约，冲突自动检测，利用率提升</td>
+                    </tr>
+                    <tr>
+                        <td><strong>数据决策</strong></td>
+                        <td><span class="vs-tag">无数据</span>凭经验管理，缺乏数据支撑</td>
+                        <td class="highlight"><span class="win-tag">数据驱动</span>多维度分析报表，科学决策</td>
+                    </tr>
+                    <tr>
+                        <td><strong>服务评价</strong></td>
+                        <td><span class="vs-tag">无反馈</span>服务质量难量化，改进无方向</td>
+                        <td class="highlight"><span class="win-tag">评价闭环</span>每次服务可评价，满意度持续追踪</td>
+                    </tr>
+                    <tr>
+                        <td><strong>系统联动</strong></td>
+                        <td><span class="vs-tag">孤立运行</span>各业务系统独立，数据不互通</td>
+                        <td class="highlight"><span class="win-tag">原生一体</span>与资产、财务等模块数据互通</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- 客户案例 -->
+    <div class="section-title"><span class="icon">🏆</span> 客户成功案例</div>
+    <div class="case-section">
+        <div class="case-grid">
+            <div class="case-card">
+                <span class="case-icon">🏫</span>
+                <div class="case-title">某省属重点大学</div>
+                <div class="case-desc">后勤服务分散管理，报修响应慢，能耗数据缺失</div>
+                <div class="case-result">✅ 报修响应时间从2天缩短至4小时，能耗降低20%</div>
+            </div>
+            <div class="case-card">
+                <span class="case-icon">🔧</span>
+                <div class="case-title">某职业技术学院</div>
+                <div class="case-desc">场馆预约冲突频繁，会议室利用率不足50%</div>
+                <div class="case-result">✅ 智能调度后场馆利用率提升至85%</div>
+            </div>
+            <div class="case-card">
+                <span class="case-icon">📚</span>
+                <div class="case-title">某高级中学</div>
+                <div class="case-desc">水电费居高不下，跑冒滴漏难以发现</div>
+                <div class="case-result">✅ 自动告警发现多处漏水点，季度节水15%</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 适用场景 -->
+    <div class="section-title"><span class="icon">🎯</span> 适用场景</div>
+    <div class="scenario-grid">
+        <div class="scenario-card">
+            <span class="scenario-icon">🏫</span>
+            <div class="scenario-title">高等院校</div>
+            <div class="scenario-desc">多校区后勤统一管理，大规模能耗监控，复杂场馆调度需求</div>
+        </div>
+        <div class="scenario-card">
+            <span class="scenario-icon">🔧</span>
+            <div class="scenario-title">职业院校</div>
+            <div class="scenario-desc">实训场地预约管理，食堂消费监控，校车通勤调度</div>
+        </div>
+        <div class="scenario-card">
+            <span class="scenario-icon">📚</span>
+            <div class="scenario-title">中小学</div>
+            <div class="scenario-desc">校园设施报修管理，食堂安全监管，能耗节约管控</div>
+        </div>
+    </div>
+
+    <!-- 底部CTA -->
+    <div class="cta">
+        <div class="cta-content">
+            <div class="main-text">获取后勤管理完整方案</div>
+            <div class="sub-text">了解如何用数字化升级后勤服务，实现主动服务与降本增效<br>数据零丢失 · 功能越用越精简 · 五年向前兼容承诺</div>
+            <a href="contact.html" class="btn">立即咨询 ｜ 获取方案</a>
+            <div class="contact">
+                <span>📞 15102940626</span>
+                <span>💬 微信 18392084341</span>
+            </div>
+        </div>
+    </div>
+    <footer>
+        DataCenter V3.2 智慧校园数字基座 · 统一配置中心驱动 · 本地/云原生部署
+    </footer>
+</div>
+</body>
+</html>

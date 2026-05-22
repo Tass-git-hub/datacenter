@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>一卡通 - DataCenter V3.2 智慧校园数字基座</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { background: #eef2f5; font-family: 'Segoe UI', 'Roboto', 'Noto Sans', system-ui, -apple-system, sans-serif; min-height: 100vh; padding: 0.8rem; }
+        .page-container { max-width: 231mm; width: 100%; margin: 0 auto; background: white; box-shadow: 0 20px 30px rgba(0,0,0,0.1); border-radius: 6px; padding: 6mm 7mm 7mm 7mm; }
+        .top-nav { display: flex; justify-content: space-between; align-items: center; padding: 0.5rem 0; margin-bottom: 0.5rem; border-bottom: 1px solid #e2e8f0; }
+        .back-home { display: inline-flex; align-items: center; gap: 0.3rem; color: #3182ce; text-decoration: none; font-size: 0.7rem; font-weight: 600; padding: 0.3rem 0.8rem; border-radius: 20px; background: #ebf8ff; transition: all 0.2s; }
+        .back-home:hover { background: #bee3f8; transform: translateX(-3px); }
+        .nav-brand { font-size: 0.65rem; color: #718096; font-weight: 600; }
+        .product-hero { background: linear-gradient(135deg, #0b2b44 0%, #1a4a6f 50%, #2c5282 100%); border-radius: 1rem; padding: 2rem 1.5rem; color: white; margin-bottom: 1rem; position: relative; overflow: hidden; }
+        .product-hero::before { content: ''; position: absolute; top: -30%; right: -5%; width: 400px; height: 400px; background: rgba(99, 179, 237, 0.08); border-radius: 50%; }
+        .product-hero::after { content: ''; position: absolute; bottom: -20%; left: -10%; width: 300px; height: 300px; background: rgba(246, 173, 85, 0.06); border-radius: 50%; }
+        .hero-content { position: relative; z-index: 1; }
+        .hero-badge { display: inline-block; background: linear-gradient(135deg, #63b3ed, #4299e1); color: #1a2c3e; font-weight: 800; font-size: 0.65rem; padding: 0.25rem 0.8rem; border-radius: 20px; margin-bottom: 0.8rem; }
+        .product-hero h1 { font-size: 2rem; font-weight: 800; margin-bottom: 0.5rem; }
+        .product-hero .subtitle { font-size: 0.9rem; opacity: 0.95; margin-bottom: 1rem; line-height: 1.5; max-width: 80%; }
+        .hero-stats { display: flex; flex-wrap: wrap; gap: 0.6rem; }
+        .hero-stat { background: rgba(255,255,255,0.12); border-radius: 1.5rem; padding: 0.3rem 0.8rem; font-size: 0.7rem; }
+        .hero-stat strong { font-size: 1rem; font-weight: 800; }
+        .section-title { font-size: 1.1rem; font-weight: 700; margin: 1.2rem 0 0.8rem 0; border-left: 4px solid #2b6cb0; padding-left: 0.6rem; color: #1e3a5f; display: flex; align-items: center; gap: 0.4rem; }
+        .section-title .icon { font-size: 1.2rem; }
+        .value-section { background: linear-gradient(145deg, #f7fafc, #edf2f7); border-radius: 1rem; padding: 1.2rem; margin-bottom: 1rem; }
+        .value-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; }
+        .value-item { background: white; border-radius: 1rem; padding: 1.2rem; box-shadow: 0 4px 12px rgba(0,0,0,0.08); border-top: 4px solid #3182ce; transition: all 0.3s; position: relative; overflow: hidden; }
+        .value-item:hover { transform: translateY(-5px); box-shadow: 0 8px 24px rgba(0,0,0,0.12); }
+        .value-item::before { content: ''; position: absolute; top: 0; right: 0; width: 60px; height: 60px; background: linear-gradient(135deg, rgba(49,130,206,0.08), transparent); border-radius: 0 0 0 60px; }
+        .value-icon-big { font-size: 2rem; margin-bottom: 0.6rem; display: block; }
+        .value-item h4 { font-size: 0.85rem; color: #1e3a5f; margin-bottom: 0.5rem; font-weight: 800; }
+        .value-item p { font-size: 0.7rem; color: #4a5568; line-height: 1.6; }
+        .data-highlights { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0.8rem; margin-bottom: 1rem; }
+        .data-card { background: linear-gradient(135deg, #0b2b44, #1a4a6f); border-radius: 1rem; padding: 1rem; text-align: center; color: white; transition: all 0.3s; }
+        .data-card:hover { transform: scale(1.03); }
+        .data-number { font-size: 1.8rem; font-weight: 800; background: linear-gradient(135deg, #f6ad55, #ed8936); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+        .data-label { font-size: 0.65rem; opacity: 0.9; margin-top: 0.2rem; }
+        .flow-section { background: linear-gradient(145deg, #0f2b3d, #1a4a6f); border-radius: 1rem; padding: 1.5rem; margin-bottom: 1rem; color: white; position: relative; overflow: hidden; }
+        .flow-section::before { content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.03'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E"); opacity: 0.5; }
+        .flow-steps { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.5rem; position: relative; z-index: 1; }
+        .flow-step { text-align: center; flex: 1; min-width: 100px; background: rgba(255,255,255,0.08); border-radius: 1rem; padding: 1rem 0.5rem; transition: all 0.3s; }
+        .flow-step:hover { background: rgba(255,255,255,0.15); transform: translateY(-3px); }
+        .flow-step-icon { font-size: 2rem; margin-bottom: 0.5rem; display: block; }
+        .flow-step-title { font-size: 0.75rem; font-weight: 700; margin-bottom: 0.2rem; }
+        .flow-step-desc { font-size: 0.6rem; opacity: 0.8; }
+        .flow-arrow { font-size: 1.5rem; color: #f6ad55; font-weight: 800; }
+        .feature-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1rem; margin-bottom: 1rem; }
+        .feature-card { background: white; border-radius: 1rem; padding: 1.2rem; box-shadow: 0 2px 8px rgba(0,0,0,0.06); border: 1px solid #e2e8f0; transition: all 0.3s; position: relative; overflow: hidden; }
+        .feature-card:hover { transform: translateY(-3px); box-shadow: 0 8px 20px rgba(0,0,0,0.1); border-color: #3182ce; }
+        .feature-card::before { content: ''; position: absolute; top: 0; left: 0; width: 4px; height: 100%; background: linear-gradient(180deg, #3182ce, #2b6cb0); }
+        .feature-header { display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.6rem; }
+        .feature-icon { font-size: 1.5rem; }
+        .feature-title { font-size: 0.9rem; font-weight: 800; color: #1e3a5f; }
+        .feature-desc { font-size: 0.7rem; color: #4a5568; line-height: 1.6; margin-bottom: 0.5rem; }
+        .feature-list { padding-left: 1.2rem; }
+        .feature-list li { font-size: 0.65rem; color: #718096; margin-bottom: 0.2rem; line-height: 1.4; }
+        .feature-list li::marker { color: #3182ce; }
+        .compare-section { margin-bottom: 1rem; }
+        .compare-table { background: #f1f5f9; border-radius: 1rem; overflow: hidden; box-shadow: 0 2px 8px rgba(0,0,0,0.06); }
+        table { width: 100%; border-collapse: collapse; font-size: 0.7rem; }
+        th { background: linear-gradient(135deg, #1a4a6f, #2c5282); color: white; padding: 0.7rem 0.8rem; text-align: left; font-weight: 700; }
+        td { padding: 0.7rem 0.8rem; text-align: left; border-bottom: 1px solid #e2e8f0; }
+        tr:hover td { background: #f7fafc; }
+        .highlight { background: linear-gradient(135deg, #e6f7ff, #ebf8ff); font-weight: 600; }
+        .vs-tag { display: inline-block; background: #fed7d7; color: #c53030; padding: 0.15rem 0.5rem; border-radius: 20px; font-size: 0.6rem; font-weight: 700; margin-right: 0.3rem; }
+        .win-tag { display: inline-block; background: #c6f6d5; color: #276749; padding: 0.15rem 0.5rem; border-radius: 20px; font-size: 0.6rem; font-weight: 700; margin-right: 0.3rem; }
+        .case-section { background: linear-gradient(145deg, #fff9e6, #fff4d5); border-radius: 1rem; padding: 1.2rem; margin-bottom: 1rem; border: 1px solid #f5c842; }
+        .case-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; }
+        .case-card { background: white; border-radius: 0.8rem; padding: 1rem; box-shadow: 0 2px 8px rgba(0,0,0,0.06); text-align: center; }
+        .case-icon { font-size: 2rem; margin-bottom: 0.5rem; }
+        .case-title { font-weight: 800; font-size: 0.8rem; color: #1e3a5f; margin-bottom: 0.3rem; }
+        .case-desc { font-size: 0.65rem; color: #4a5568; line-height: 1.5; }
+        .case-result { margin-top: 0.5rem; padding-top: 0.5rem; border-top: 1px dashed #f5c842; font-size: 0.65rem; color: #c2410c; font-weight: 700; }
+        .scenario-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; margin-bottom: 1rem; }
+        .scenario-card { background: linear-gradient(135deg, #fff9e6, #fff4d5); border-radius: 1rem; padding: 1.2rem; text-align: center; border: 1px solid #f5c842; transition: all 0.3s; }
+        .scenario-card:hover { transform: translateY(-5px); box-shadow: 0 8px 20px rgba(245,158,11,0.2); }
+        .scenario-icon { font-size: 2.5rem; margin-bottom: 0.5rem; display: block; }
+        .scenario-title { font-weight: 800; font-size: 0.85rem; color: #c2410c; margin-bottom: 0.4rem; }
+        .scenario-desc { font-size: 0.7rem; color: #9b4a0e; line-height: 1.5; }
+        .cta { background: linear-gradient(115deg, #0b2b44, #1a4a6f); border-radius: 1rem; padding: 1.5rem; text-align: center; color: white; margin-top: 1rem; position: relative; overflow: hidden; }
+        .cta::before { content: ''; position: absolute; top: -50%; right: -10%; width: 300px; height: 300px; background: rgba(99, 179, 237, 0.1); border-radius: 50%; }
+        .cta-content { position: relative; z-index: 1; }
+        .cta .main-text { font-weight: 800; font-size: 1.2rem; margin-bottom: 0.4rem; }
+        .cta .sub-text { font-size: 0.8rem; margin-bottom: 0.8rem; opacity: 0.9; }
+        .btn { display: inline-block; background: linear-gradient(135deg, #f6ad55, #ed8936); color: #1a2c3e; font-weight: 800; padding: 0.5rem 1.5rem; border-radius: 40px; text-decoration: none; font-size: 0.9rem; transition: all 0.3s; box-shadow: 0 4px 12px rgba(246, 173, 85, 0.4); }
+        .btn:hover { transform: scale(1.05); box-shadow: 0 6px 20px rgba(246, 173, 85, 0.6); }
+        .contact { font-size: 0.7rem; margin-top: 0.8rem; display: flex; justify-content: center; gap: 1.5rem; }
+        footer { text-align: center; font-size: 0.6rem; margin-top: 0.8rem; color: #718096; }
+        @media print { body { background: white; padding: 0; } .page-container { box-shadow: none; max-width: 100%; } }
+        @media (max-width: 700px) { .value-grid { grid-template-columns: 1fr; } .data-highlights { grid-template-columns: repeat(2, 1fr); } .feature-grid { grid-template-columns: 1fr; } .case-grid { grid-template-columns: 1fr; } .scenario-grid { grid-template-columns: 1fr; } .flow-steps { flex-direction: column; } .flow-arrow { transform: rotate(90deg); } }
+    </style>
+</head>
+<body>
+<div class="page-container">
+    <div class="top-nav">
+        <a href="样例清单v6.HTML" class="back-home">← 返回产品清单</a>
+        <span class="nav-brand">DataCenter V3.2 智慧校园数字基座</span>
+    </div>
+    <div class="product-hero">
+        <div class="hero-content">
+            <span class="hero-badge">🔷 对标级能力产品</span>
+            <h1>💳 一卡通</h1>
+            <div class="subtitle">实体卡+虚拟卡双模式，支付渠道可插拔，门禁联动安防。让校园通行消费从"多卡多账"变为"一卡通用"，师生体验全面升级</div>
+            <div class="hero-stats">
+                <div class="hero-stat"><strong>6</strong> 大核心模块</div>
+                <div class="hero-stat"><strong>双模式</strong> 实体+虚拟</div>
+                <div class="hero-stat"><strong>可插拔</strong> 支付渠道</div>
+                <div class="hero-stat"><strong>联动</strong> 门禁安防</div>
+            </div>
+        </div>
+    </div>
+    <div class="section-title"><span class="icon">📊</span> 产品数据亮点</div>
+    <div class="data-highlights">
+        <div class="data-card"><div class="data-number">双模式</div><div class="data-label">实体卡+虚拟卡</div></div>
+        <div class="data-card"><div class="data-number">100%</div><div class="data-label">支付渠道覆盖</div></div>
+        <div class="data-card"><div class="data-number">毫秒级</div><div class="data-label">门禁响应</div></div>
+        <div class="data-card"><div class="data-number">0</div><div class="data-label">重复办卡</div></div>
+    </div>
+    <div class="section-title"><span class="icon">💎</span> 三大核心价值</div>
+    <div class="value-section">
+        <div class="value-grid">
+            <div class="value-item">
+                <span class="value-icon-big">💳</span>
+                <h4>双模式灵活适配</h4>
+                <p>实体卡+虚拟卡（手机NFC/二维码）双模式并行，满足不同场景需求，师生可自由选择</p>
+            </div>
+            <div class="value-item">
+                <span class="value-icon-big">🔌</span>
+                <h4>支付渠道可插拔</h4>
+                <p>支持银行卡、微信、支付宝等多种支付渠道接入，渠道扩展无需改代码，即插即用</p>
+            </div>
+            <div class="value-item">
+                <span class="value-icon-big">🔗</span>
+                <h4>安防深度联动</h4>
+                <p>与门禁、访客、安防系统深度联动，刷卡即验证身份，异常行为自动告警</p>
+            </div>
+        </div>
+    </div>
+    <div class="section-title"><span class="icon">🔄</span> 业务流程闭环</div>
+    <div class="flow-section">
+        <div class="flow-steps">
+            <div class="flow-step"><span class="flow-step-icon">🆔</span><div class="flow-step-title">身份认证</div><div class="flow-step-desc">实名注册绑卡</div></div>
+            <div class="flow-arrow">→</div>
+            <div class="flow-step"><span class="flow-step-icon">💳</span><div class="flow-step-title">充值消费</div><div class="flow-step-desc">多渠道充值支付</div></div>
+            <div class="flow-arrow">→</div>
+            <div class="flow-step"><span class="flow-step-icon">🚪</span><div class="flow-step-title">门禁通行</div><div class="flow-step-desc">刷卡验证通行</div></div>
+            <div class="flow-arrow">→</div>
+            <div class="flow-step"><span class="flow-step-icon">📊</span><div class="flow-step-title">数据分析</div><div class="flow-step-desc">消费行为洞察</div></div>
+            <div class="flow-arrow">→</div>
+            <div class="flow-step"><span class="flow-step-icon">🛡️</span><div class="flow-step-title">安全风控</div><div class="flow-step-desc">异常交易监控</div></div>
+        </div>
+    </div>
+    <div class="section-title"><span class="icon">📦</span> 六大核心功能模块</div>
+    <div class="feature-grid">
+        <div class="feature-card">
+            <div class="feature-header"><span class="feature-icon">💳</span><span class="feature-title">卡片管理</span></div>
+            <div class="feature-desc">实体卡与虚拟卡统一管理，开卡、挂失、补办、注销全流程在线化</div>
+            <ul class="feature-list">
+                <li>实体卡/虚拟卡双模式管理</li>
+                <li>在线挂失与即时冻结</li>
+                <li>补卡换卡流程自动化</li>
+                <li>卡片状态实时查询</li>
+            </ul>
+        </div>
+        <div class="feature-card">
+            <div class="feature-header"><span class="feature-icon">💰</span><span class="feature-title">电子钱包</span></div>
+            <div class="feature-desc">校园电子钱包充值、消费、退款全流程管理，余额实时查询</div>
+            <ul class="feature-list">
+                <li>多渠道在线充值（银行卡/微信/支付宝）</li>
+                <li>消费记录实时查询</li>
+                <li>余额不足自动提醒</li>
+                <li>退款申请在线审批</li>
+            </ul>
+        </div>
+        <div class="feature-card">
+            <div class="feature-header"><span class="feature-icon">🍽️</span><span class="feature-title">消费支付</span></div>
+            <div class="feature-desc">食堂、超市、水电等场景统一支付，消费数据实时统计</div>
+            <ul class="feature-list">
+                <li>食堂/超市/水电统一支付</li>
+                <li>消费限额灵活配置</li>
+                <li>消费明细实时推送</li>
+                <li>消费报表自动生成</li>
+            </ul>
+        </div>
+        <div class="feature-card">
+            <div class="feature-header"><span class="feature-icon">🚪</span><span class="feature-title">门禁通行</span></div>
+            <div class="feature-desc">刷卡/扫码开门，权限分时段分区域管控，通行记录完整追溯</div>
+            <ul class="feature-list">
+                <li>刷卡/扫码/NFC开门</li>
+                <li>分时段分区域权限管控</li>
+                <li>通行记录完整追溯</li>
+                <li>异常通行自动告警</li>
+            </ul>
+        </div>
+        <div class="feature-card">
+            <div class="feature-header"><span class="feature-icon">📚</span><span class="feature-title">图书借阅</span></div>
+            <div class="feature-desc">一卡通替代借书证，图书馆借还书、逾期提醒、积分管理一体化</div>
+            <ul class="feature-list">
+                <li>一卡通替代借书证</li>
+                <li>借还书记录自动同步</li>
+                <li>逾期提醒自动推送</li>
+                <li>借阅积分统一管理</li>
+            </ul>
+        </div>
+        <div class="feature-card">
+            <div class="feature-header"><span class="feature-icon">🛡️</span><span class="feature-title">安全风控</span></div>
+            <div class="feature-desc">交易异常监控，盗刷风险预警，账户安全多重保障</div>
+            <ul class="feature-list">
+                <li>异常交易实时监控</li>
+                <li>盗刷风险自动预警</li>
+                <li>账户安全多重验证</li>
+                <li>消费限额与黑名单</li>
+            </ul>
+        </div>
+    </div>
+    <div class="section-title"><span class="icon">⚖️</span> 与传统方案对比</div>
+    <div class="compare-section">
+        <div class="compare-table">
+            <table>
+                <thead><tr><th style="width:18%">对比维度</th><th style="width:41%">传统一卡通</th><th style="width:41%">DataCenter 一卡通</th></tr></thead>
+                <tbody>
+                    <tr><td><strong>卡片模式</strong></td><td><span class="vs-tag">单实体卡</span>易丢失、补办麻烦，忘带卡无法使用</td><td class="highlight"><span class="win-tag">双模式</span>实体卡+虚拟卡，手机即卡，永不丢失</td></tr>
+                    <tr><td><strong>支付渠道</strong></td><td><span class="vs-tag">封闭渠道</span>仅支持现金/银行卡充值，渠道单一</td><td class="highlight"><span class="win-tag">可插拔</span>微信/支付宝/银行卡多渠道，即插即用</td></tr>
+                    <tr><td><strong>系统联动</strong></td><td><span class="vs-tag">孤立运行</span>消费、门禁、图书各自独立</td><td class="highlight"><span class="win-tag">原生一体</span>与门禁、安防、图书馆、财务联动</td></tr>
+                    <tr><td><strong>风控能力</strong></td><td><span class="vs-tag">无风控</span>盗刷、异常消费难以发现</td><td class="highlight"><span class="win-tag">智能风控</span>异常交易实时监控，风险自动预警</td></tr>
+                    <tr><td><strong>数据价值</strong></td><td><span class="vs-tag">无分析</span>仅记录流水，无法挖掘价值</td><td class="highlight"><span class="win-tag">行为洞察</span>消费画像、习惯分析，精准服务</td></tr>
+                    <tr><td><strong>扩展能力</strong></td><td><span class="vs-tag">封闭架构</span>新增场景需重新开发对接</td><td class="highlight"><span class="win-tag">开放生态</span>标准接口，新场景快速接入</td></tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="section-title"><span class="icon">🏆</span> 客户成功案例</div>
+    <div class="case-section">
+        <div class="case-grid">
+            <div class="case-card"><span class="case-icon">🏫</span><div class="case-title">某省属重点大学</div><div class="case-desc">传统一卡通仅支持食堂消费，门禁、图书各自独立</div><div class="case-result">✅ 统一平台后，一卡通用全校，师生满意度提升60%</div></div>
+            <div class="case-card"><span class="case-icon">🔧</span><div class="case-title">某职业技术学院</div><div class="case-desc">实体卡易丢失，补办周期长，充值渠道单一</div><div class="case-result">✅ 虚拟卡上线后，补卡即时生效，充值渠道扩展3倍</div></div>
+            <div class="case-card"><span class="case-icon">📚</span><div class="case-title">某高级中学</div><div class="case-desc">消费数据缺失，无法了解学生消费行为</div><div class="case-result">✅ 消费画像分析后，食堂菜品调整更精准，浪费减少30%</div></div>
+        </div>
+    </div>
+    <div class="section-title"><span class="icon">🎯</span> 适用场景</div>
+    <div class="scenario-grid">
+        <div class="scenario-card"><span class="scenario-icon">🏫</span><div class="scenario-title">高等院校</div><div class="scenario-desc">大规模师生一卡通管理，多校区账户互通，复杂门禁权限管控</div></div>
+        <div class="scenario-card"><span class="scenario-icon">🔧</span><div class="scenario-title">职业院校</div><div class="scenario-desc">实训工位刷卡使用，实训耗材消费管理，考勤签到联动</div></div>
+        <div class="scenario-card"><span class="scenario-icon">📚</span><div class="scenario-title">中小学</div><div class="scenario-desc">校园消费统一管理，家长充值监管，学生安全出入管控</div></div>
+    </div>
+    <div class="cta">
+        <div class="cta-content">
+            <div class="main-text">获取一卡通完整方案</div>
+            <div class="sub-text">了解如何实现一卡通用全校，让通行消费体验全面升级<br>数据零丢失 · 功能越用越精简 · 五年向前兼容承诺</div>
+            <a href="contact.html" class="btn">立即咨询 ｜ 获取方案</a>
+            <div class="contact"><span>📞 15102940626</span><span>💬 微信 18392084341</span></div>
+        </div>
+    </div>
+    <footer>DataCenter V3.2 智慧校园数字基座 · 统一配置中心驱动 · 本地/云原生部署</footer>
+</div>
+</body>
+</html>

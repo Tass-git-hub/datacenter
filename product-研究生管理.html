@@ -1,0 +1,873 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>研究生管理 - DataCenter V3.2 智慧校园数字基座</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: #eef2f5;
+            font-family: 'Segoe UI', 'Roboto', 'Noto Sans', system-ui, -apple-system, sans-serif;
+            min-height: 100vh;
+            padding: 0.8rem;
+        }
+
+        .page-container {
+            max-width: 231mm;
+            width: 100%;
+            margin: 0 auto;
+            background: white;
+            box-shadow: 0 20px 30px rgba(0,0,0,0.1);
+            border-radius: 6px;
+            padding: 6mm 7mm 7mm 7mm;
+        }
+
+        /* 顶部导航栏 */
+        .top-nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.5rem 0;
+            margin-bottom: 0.5rem;
+            border-bottom: 1px solid #e2e8f0;
+        }
+        .back-home {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.3rem;
+            color: #3182ce;
+            text-decoration: none;
+            font-size: 0.7rem;
+            font-weight: 600;
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            background: #ebf8ff;
+            transition: all 0.2s;
+        }
+        .back-home:hover {
+            background: #bee3f8;
+            transform: translateX(-3px);
+        }
+        .nav-brand {
+            font-size: 0.65rem;
+            color: #718096;
+            font-weight: 600;
+        }
+
+        /* 产品头部 */
+        .product-hero {
+            background: linear-gradient(135deg, #0b2b44 0%, #1a4a6f 50%, #2c5282 100%);
+            border-radius: 1rem;
+            padding: 2rem 1.5rem;
+            color: white;
+            margin-bottom: 1rem;
+            position: relative;
+            overflow: hidden;
+        }
+        .product-hero::before {
+            content: '';
+            position: absolute;
+            top: -30%;
+            right: -5%;
+            width: 400px;
+            height: 400px;
+            background: rgba(99, 179, 237, 0.08);
+            border-radius: 50%;
+        }
+        .product-hero::after {
+            content: '';
+            position: absolute;
+            bottom: -20%;
+            left: -10%;
+            width: 300px;
+            height: 300px;
+            background: rgba(246, 173, 85, 0.06);
+            border-radius: 50%;
+        }
+        .hero-content {
+            position: relative;
+            z-index: 1;
+        }
+        .hero-badge {
+            display: inline-block;
+            background: linear-gradient(135deg, #f6ad55, #ed8936);
+            color: #1a2c3e;
+            font-weight: 800;
+            font-size: 0.65rem;
+            padding: 0.25rem 0.8rem;
+            border-radius: 20px;
+            margin-bottom: 0.8rem;
+        }
+        .product-hero h1 {
+            font-size: 2rem;
+            font-weight: 800;
+            margin-bottom: 0.5rem;
+        }
+        .product-hero .subtitle {
+            font-size: 0.9rem;
+            opacity: 0.95;
+            margin-bottom: 1rem;
+            line-height: 1.5;
+            max-width: 80%;
+        }
+        .hero-stats {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.6rem;
+        }
+        .hero-stat {
+            background: rgba(255,255,255,0.12);
+            border-radius: 1.5rem;
+            padding: 0.3rem 0.8rem;
+            font-size: 0.7rem;
+        }
+        .hero-stat strong {
+            font-size: 1rem;
+            font-weight: 800;
+        }
+
+        /* 区块标题 */
+        .section-title {
+            font-size: 1.1rem;
+            font-weight: 700;
+            margin: 1.2rem 0 0.8rem 0;
+            border-left: 4px solid #2b6cb0;
+            padding-left: 0.6rem;
+            color: #1e3a5f;
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+        }
+        .section-title .icon {
+            font-size: 1.2rem;
+        }
+
+        /* 核心价值 - 大卡片 */
+        .value-section {
+            background: linear-gradient(145deg, #f7fafc, #edf2f7);
+            border-radius: 1rem;
+            padding: 1.2rem;
+            margin-bottom: 1rem;
+        }
+        .value-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1rem;
+        }
+        .value-item {
+            background: white;
+            border-radius: 1rem;
+            padding: 1.2rem;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+            border-top: 4px solid #3182ce;
+            transition: all 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+        .value-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 24px rgba(0,0,0,0.12);
+        }
+        .value-item::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, rgba(49,130,206,0.08), transparent);
+            border-radius: 0 0 0 60px;
+        }
+        .value-icon-big {
+            font-size: 2rem;
+            margin-bottom: 0.6rem;
+            display: block;
+        }
+        .value-item h4 {
+            font-size: 0.85rem;
+            color: #1e3a5f;
+            margin-bottom: 0.5rem;
+            font-weight: 800;
+        }
+        .value-item p {
+            font-size: 0.7rem;
+            color: #4a5568;
+            line-height: 1.6;
+        }
+
+        /* 数据亮点 */
+        .data-highlights {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 0.8rem;
+            margin-bottom: 1rem;
+        }
+        .data-card {
+            background: linear-gradient(135deg, #0b2b44, #1a4a6f);
+            border-radius: 1rem;
+            padding: 1rem;
+            text-align: center;
+            color: white;
+            transition: all 0.3s;
+        }
+        .data-card:hover {
+            transform: scale(1.03);
+        }
+        .data-number {
+            font-size: 1.8rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #f6ad55, #ed8936);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .data-label {
+            font-size: 0.65rem;
+            opacity: 0.9;
+            margin-top: 0.2rem;
+        }
+
+        /* 业务流程 */
+        .flow-section {
+            background: linear-gradient(145deg, #0f2b3d, #1a4a6f);
+            border-radius: 1rem;
+            padding: 1.5rem;
+            margin-bottom: 1rem;
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+        .flow-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.03'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+            opacity: 0.5;
+        }
+        .flow-steps {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            position: relative;
+            z-index: 1;
+        }
+        .flow-step {
+            text-align: center;
+            flex: 1;
+            min-width: 100px;
+            background: rgba(255,255,255,0.08);
+            border-radius: 1rem;
+            padding: 1rem 0.5rem;
+            transition: all 0.3s;
+        }
+        .flow-step:hover {
+            background: rgba(255,255,255,0.15);
+            transform: translateY(-3px);
+        }
+        .flow-step-icon {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+            display: block;
+        }
+        .flow-step-title {
+            font-size: 0.75rem;
+            font-weight: 700;
+            margin-bottom: 0.2rem;
+        }
+        .flow-step-desc {
+            font-size: 0.6rem;
+            opacity: 0.8;
+        }
+        .flow-arrow {
+            font-size: 1.5rem;
+            color: #f6ad55;
+            font-weight: 800;
+        }
+
+        /* 功能模块 */
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+        .feature-card {
+            background: white;
+            border-radius: 1rem;
+            padding: 1.2rem;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+            border: 1px solid #e2e8f0;
+            transition: all 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+        .feature-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+            border-color: #3182ce;
+        }
+        .feature-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 4px;
+            height: 100%;
+            background: linear-gradient(180deg, #3182ce, #2b6cb0);
+        }
+        .feature-header {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 0.6rem;
+        }
+        .feature-icon {
+            font-size: 1.5rem;
+        }
+        .feature-title {
+            font-size: 0.9rem;
+            font-weight: 800;
+            color: #1e3a5f;
+        }
+        .feature-desc {
+            font-size: 0.7rem;
+            color: #4a5568;
+            line-height: 1.6;
+            margin-bottom: 0.5rem;
+        }
+        .feature-list {
+            padding-left: 1.2rem;
+        }
+        .feature-list li {
+            font-size: 0.65rem;
+            color: #718096;
+            margin-bottom: 0.2rem;
+            line-height: 1.4;
+        }
+        .feature-list li::marker {
+            color: #3182ce;
+        }
+
+        /* 优势对比 */
+        .compare-section {
+            margin-bottom: 1rem;
+        }
+        .compare-table {
+            background: #f1f5f9;
+            border-radius: 1rem;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.7rem;
+        }
+        th {
+            background: linear-gradient(135deg, #1a4a6f, #2c5282);
+            color: white;
+            padding: 0.7rem 0.8rem;
+            text-align: left;
+            font-weight: 700;
+        }
+        td {
+            padding: 0.7rem 0.8rem;
+            text-align: left;
+            border-bottom: 1px solid #e2e8f0;
+        }
+        tr:hover td {
+            background: #f7fafc;
+        }
+        .highlight {
+            background: linear-gradient(135deg, #e6f7ff, #ebf8ff);
+            font-weight: 600;
+        }
+        .vs-tag {
+            display: inline-block;
+            background: #fed7d7;
+            color: #c53030;
+            padding: 0.15rem 0.5rem;
+            border-radius: 20px;
+            font-size: 0.6rem;
+            font-weight: 700;
+            margin-right: 0.3rem;
+        }
+        .win-tag {
+            display: inline-block;
+            background: #c6f6d5;
+            color: #276749;
+            padding: 0.15rem 0.5rem;
+            border-radius: 20px;
+            font-size: 0.6rem;
+            font-weight: 700;
+            margin-right: 0.3rem;
+        }
+
+        /* 客户案例 */
+        .case-section {
+            background: linear-gradient(145deg, #fff9e6, #fff4d5);
+            border-radius: 1rem;
+            padding: 1.2rem;
+            margin-bottom: 1rem;
+            border: 1px solid #f5c842;
+        }
+        .case-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1rem;
+        }
+        .case-card {
+            background: white;
+            border-radius: 0.8rem;
+            padding: 1rem;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+            text-align: center;
+        }
+        .case-icon {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+        }
+        .case-title {
+            font-weight: 800;
+            font-size: 0.8rem;
+            color: #1e3a5f;
+            margin-bottom: 0.3rem;
+        }
+        .case-desc {
+            font-size: 0.65rem;
+            color: #4a5568;
+            line-height: 1.5;
+        }
+        .case-result {
+            margin-top: 0.5rem;
+            padding-top: 0.5rem;
+            border-top: 1px dashed #f5c842;
+            font-size: 0.65rem;
+            color: #c2410c;
+            font-weight: 700;
+        }
+
+        /* 适用场景 */
+        .scenario-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+        .scenario-card {
+            background: linear-gradient(135deg, #fff9e6, #fff4d5);
+            border-radius: 1rem;
+            padding: 1.2rem;
+            text-align: center;
+            border: 1px solid #f5c842;
+            transition: all 0.3s;
+        }
+        .scenario-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(245,158,11,0.2);
+        }
+        .scenario-icon {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+            display: block;
+        }
+        .scenario-title {
+            font-weight: 800;
+            font-size: 0.85rem;
+            color: #c2410c;
+            margin-bottom: 0.4rem;
+        }
+        .scenario-desc {
+            font-size: 0.7rem;
+            color: #9b4a0e;
+            line-height: 1.5;
+        }
+
+        /* 底部CTA */
+        .cta {
+            background: linear-gradient(115deg, #0b2b44, #1a4a6f);
+            border-radius: 1rem;
+            padding: 1.5rem;
+            text-align: center;
+            color: white;
+            margin-top: 1rem;
+            position: relative;
+            overflow: hidden;
+        }
+        .cta::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -10%;
+            width: 300px;
+            height: 300px;
+            background: rgba(99, 179, 237, 0.1);
+            border-radius: 50%;
+        }
+        .cta-content {
+            position: relative;
+            z-index: 1;
+        }
+        .cta .main-text {
+            font-weight: 800;
+            font-size: 1.2rem;
+            margin-bottom: 0.4rem;
+        }
+        .cta .sub-text {
+            font-size: 0.8rem;
+            margin-bottom: 0.8rem;
+            opacity: 0.9;
+        }
+        .btn {
+            display: inline-block;
+            background: linear-gradient(135deg, #f6ad55, #ed8936);
+            color: #1a2c3e;
+            font-weight: 800;
+            padding: 0.5rem 1.5rem;
+            border-radius: 40px;
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: all 0.3s;
+            box-shadow: 0 4px 12px rgba(246, 173, 85, 0.4);
+        }
+        .btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 6px 20px rgba(246, 173, 85, 0.6);
+        }
+        .contact {
+            font-size: 0.7rem;
+            margin-top: 0.8rem;
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+        }
+
+        footer {
+            text-align: center;
+            font-size: 0.6rem;
+            margin-top: 0.8rem;
+            color: #718096;
+        }
+
+        @media print {
+            body { background: white; padding: 0; }
+            .page-container { box-shadow: none; max-width: 100%; }
+        }
+        @media (max-width: 700px) {
+            .value-grid { grid-template-columns: 1fr; }
+            .data-highlights { grid-template-columns: repeat(2, 1fr); }
+            .feature-grid { grid-template-columns: 1fr; }
+            .case-grid { grid-template-columns: 1fr; }
+            .scenario-grid { grid-template-columns: 1fr; }
+            .flow-steps { flex-direction: column; }
+            .flow-arrow { transform: rotate(90deg); }
+        }
+    </style>
+</head>
+<body>
+<div class="page-container">
+    <!-- 顶部导航 -->
+    <div class="top-nav">
+        <a href="样例清单v6.HTML" class="back-home">← 返回产品清单</a>
+        <span class="nav-brand">DataCenter V3.2 智慧校园数字基座</span>
+    </div>
+
+    <!-- 产品头部 -->
+    <div class="product-hero">
+        <div class="hero-content">
+            <span class="hero-badge">🏆 超越级能力产品</span>
+            <h1>🎓 研究生管理</h1>
+            <div class="subtitle">导师双选+论文盲审+学位校验原生支持，与科研数据互通。覆盖研究生培养全生命周期，从招生到学位授予一站式管理</div>
+            <div class="hero-stats">
+                <div class="hero-stat"><strong>全周期</strong> 培养管理</div>
+                <div class="hero-stat"><strong>盲审</strong> 原生支持</div>
+                <div class="hero-stat"><strong>科研</strong> 数据互通</div>
+                <div class="hero-stat"><strong>学位</strong> 自动校验</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 数据亮点 -->
+    <div class="section-title"><span class="icon">📊</span> 产品数据亮点</div>
+    <div class="data-highlights">
+        <div class="data-card">
+            <div class="data-number">100%</div>
+            <div class="data-label">盲审流程覆盖</div>
+        </div>
+        <div class="data-card">
+            <div class="data-number">0</div>
+            <div class="data-label">科研数据孤岛</div>
+        </div>
+        <div class="data-card">
+            <div class="data-number">自动</div>
+            <div class="data-label">学位条件校验</div>
+        </div>
+        <div class="data-card">
+            <div class="data-number">双选</div>
+            <div class="data-label">导师智能匹配</div>
+        </div>
+    </div>
+
+    <!-- 核心价值 -->
+    <div class="section-title"><span class="icon">💎</span> 三大核心价值</div>
+    <div class="value-section">
+        <div class="value-grid">
+            <div class="value-item">
+                <span class="value-icon-big">🤝</span>
+                <h4>导师双选智能匹配</h4>
+                <p>支持导师招生资格动态管理、师生互选、志愿匹配算法，自动平衡导师负载，提升匹配满意度</p>
+            </div>
+            <div class="value-item">
+                <span class="value-icon-big">📑</span>
+                <h4>论文盲审原生闭环</h4>
+                <p>从论文提交、格式检测、盲审送审、评阅回收到答辩安排全流程线上化，支持单盲/双盲模式</p>
+            </div>
+            <div class="value-item">
+                <span class="value-icon-big">🔗</span>
+                <h4>科研数据深度互通</h4>
+                <p>研究生科研成果自动对接科研管理系统，论文、专利、项目数据实时同步，学位条件自动校验</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- 业务流程 -->
+    <div class="section-title"><span class="icon">🔄</span> 业务流程闭环</div>
+    <div class="flow-section">
+        <div class="flow-steps">
+            <div class="flow-step">
+                <span class="flow-step-icon">📝</span>
+                <div class="flow-step-title">招生录取</div>
+                <div class="flow-step-desc">推免/统考管理</div>
+            </div>
+            <div class="flow-arrow">→</div>
+            <div class="flow-step">
+                <span class="flow-step-icon">🤝</span>
+                <div class="flow-step-title">导师双选</div>
+                <div class="flow-step-desc">智能匹配</div>
+            </div>
+            <div class="flow-arrow">→</div>
+            <div class="flow-step">
+                <span class="flow-step-icon">📚</span>
+                <div class="flow-step-title">培养过程</div>
+                <div class="flow-step-desc">课程/开题/中期</div>
+            </div>
+            <div class="flow-arrow">→</div>
+            <div class="flow-step">
+                <span class="flow-step-icon">📑</span>
+                <div class="flow-step-title">论文盲审</div>
+                <div class="flow-step-desc">送审/评阅闭环</div>
+            </div>
+            <div class="flow-arrow">→</div>
+            <div class="flow-step">
+                <span class="flow-step-icon">🎓</span>
+                <div class="flow-step-title">学位授予</div>
+                <div class="flow-step-desc">自动校验</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 功能模块 -->
+    <div class="section-title"><span class="icon">📦</span> 六大核心功能模块</div>
+    <div class="feature-grid">
+        <div class="feature-card">
+            <div class="feature-header">
+                <span class="feature-icon">📝</span>
+                <span class="feature-title">招生与学籍</span>
+            </div>
+            <div class="feature-desc">推免生、统考生招生管理，学籍注册、异动、毕业全流程跟踪，与本科生数据互通</div>
+            <ul class="feature-list">
+                <li>推免资格管理与复试安排</li>
+                <li>统考报名、成绩、录取一体化</li>
+                <li>学籍异动在线审批</li>
+                <li>学籍数据自动同步教务</li>
+            </ul>
+        </div>
+        <div class="feature-card">
+            <div class="feature-header">
+                <span class="feature-icon">🤝</span>
+                <span class="feature-title">导师双选管理</span>
+            </div>
+            <div class="feature-desc">导师招生资格动态管理，师生互选志愿匹配，负载均衡算法自动优化分配结果</div>
+            <ul class="feature-list">
+                <li>导师招生资格年度审核</li>
+                <li>学生志愿填报与导师确认</li>
+                <li>智能匹配算法平衡负载</li>
+                <li>双选结果公示与调整</li>
+            </ul>
+        </div>
+        <div class="feature-card">
+            <div class="feature-header">
+                <span class="feature-icon">📚</span>
+                <span class="feature-title">培养过程管理</span>
+            </div>
+            <div class="feature-desc">培养方案、课程学习、开题报告、中期考核、学术活动全过程记录与预警</div>
+            <ul class="feature-list">
+                <li>个性化培养方案制定</li>
+                <li>学分修读进度实时追踪</li>
+                <li>开题/中期节点自动提醒</li>
+                <li>学术活动参与记录</li>
+            </ul>
+        </div>
+        <div class="feature-card">
+            <div class="feature-header">
+                <span class="feature-icon">📑</span>
+                <span class="feature-title">论文与盲审</span>
+            </div>
+            <div class="feature-desc">论文提交、格式检测、盲审送审、评阅回收、答辩安排全流程闭环管理</div>
+            <ul class="feature-list">
+                <li>论文格式自动检测</li>
+                <li>单盲/双盲模式灵活切换</li>
+                <li>评阅专家库智能抽取</li>
+                <li>答辩安排与结果录入</li>
+            </ul>
+        </div>
+        <div class="feature-card">
+            <div class="feature-header">
+                <span class="feature-icon">🎓</span>
+                <span class="feature-title">学位授予管理</span>
+            </div>
+            <div class="feature-desc">学位申请、条件自动校验、学位委员会审议、证书管理一站式完成</div>
+            <ul class="feature-list">
+                <li>学位申请条件自动校验</li>
+                <li>科研成果数据自动拉取</li>
+                <li>学位委员会审议流程</li>
+                <li>学位证书编号与打印</li>
+            </ul>
+        </div>
+        <div class="feature-card">
+            <div class="feature-header">
+                <span class="feature-icon">📊</span>
+                <span class="feature-title">科研数据互通</span>
+            </div>
+            <div class="feature-desc">研究生科研成果自动对接科研管理系统，论文、专利、项目数据实时同步</div>
+            <ul class="feature-list">
+                <li>科研成果自动归集</li>
+                <li>科研积分自动计算</li>
+                <li>学位条件智能校验</li>
+                <li>科研绩效对接人事考核</li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- 优势对比 -->
+    <div class="section-title"><span class="icon">⚖️</span> 与传统方案对比</div>
+    <div class="compare-section">
+        <div class="compare-table">
+            <table>
+                <thead>
+                    <tr>
+                        <th style="width:18%">对比维度</th>
+                        <th style="width:41%">传统研究生系统（金智等）</th>
+                        <th style="width:41%">DataCenter 研究生管理</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>盲审流程</strong></td>
+                        <td><span class="vs-tag">半人工</span>盲审送审、回收依赖线下操作，流程断裂</td>
+                        <td class="highlight"><span class="win-tag">全闭环</span>从提交到评阅回收全流程线上化，支持单盲/双盲</td>
+                    </tr>
+                    <tr>
+                        <td><strong>科研数据</strong></td>
+                        <td><span class="vs-tag">孤立系统</span>科研成果需人工录入，与科研系统无联动</td>
+                        <td class="highlight"><span class="win-tag">深度互通</span>与科研管理系统数据实时同步，自动校验学位条件</td>
+                    </tr>
+                    <tr>
+                        <td><strong>导师双选</strong></td>
+                        <td><span class="vs-tag">人工分配</span>导师负载不均，学生满意度低</td>
+                        <td class="highlight"><span class="win-tag">智能匹配</span>志愿匹配算法+负载均衡，提升师生满意度</td>
+                    </tr>
+                    <tr>
+                        <td><strong>学位校验</strong></td>
+                        <td><span class="vs-tag">人工核对</span>学分、论文、科研成果需逐项人工核对</td>
+                        <td class="highlight"><span class="win-tag">自动校验</span>学位条件规则引擎自动校验，异常实时预警</td>
+                    </tr>
+                    <tr>
+                        <td><strong>数据打通</strong></td>
+                        <td><span class="vs-tag">接口开发</span>与教务、科研等系统需额外对接</td>
+                        <td class="highlight"><span class="win-tag">原生一体</span>与23个模块数据实时互通，一次录入全局复用</td>
+                    </tr>
+                    <tr>
+                        <td><strong>系统升级</strong></td>
+                        <td><span class="vs-tag">功能缩水</span>升级后功能反而减少，兼容性差</td>
+                        <td class="highlight"><span class="win-tag">只增不减</span>五年向前兼容承诺，功能持续迭代增强</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- 客户案例 -->
+    <div class="section-title"><span class="icon">🏆</span> 客户成功案例</div>
+    <div class="case-section">
+        <div class="case-grid">
+            <div class="case-card">
+                <span class="case-icon">🏫</span>
+                <div class="case-title">某双一流高校</div>
+                <div class="case-desc">原有金智研究生系统盲审流程线下操作多，评阅回收周期长，学位审核耗时2个月</div>
+                <div class="case-result">✅ 盲审全流程线上化，学位审核周期缩短至2周</div>
+            </div>
+            <div class="case-card">
+                <span class="case-icon">🔬</span>
+                <div class="case-title">某理工科大学</div>
+                <div class="case-desc">研究生科研成果分散在各系统，学位条件校验需人工汇总，出错率高</div>
+                <div class="case-result">✅ 科研数据自动同步，学位校验准确率100%</div>
+            </div>
+            <div class="case-card">
+                <span class="case-icon">📚</span>
+                <div class="case-title">某综合性大学</div>
+                <div class="case-desc">导师双选依赖人工分配，热门导师超载，部分导师招不到学生</div>
+                <div class="case-result">✅ 智能匹配算法上线，师生满意度提升60%</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 适用场景 -->
+    <div class="section-title"><span class="icon">🎯</span> 适用场景</div>
+    <div class="scenario-grid">
+        <div class="scenario-card">
+            <span class="scenario-icon">🏫</span>
+            <div class="scenario-title">双一流高校</div>
+            <div class="scenario-desc">满足高水平研究生培养管理需求，支持学术学位与专业学位分类管理</div>
+        </div>
+        <div class="scenario-card">
+            <span class="scenario-icon">🔬</span>
+            <div class="scenario-title">科研型高校</div>
+            <div class="scenario-desc">科研成果与学位条件深度绑定，科研数据自动归集与校验</div>
+        </div>
+        <div class="scenario-card">
+            <span class="scenario-icon">📖</span>
+            <div class="scenario-title">综合性大学</div>
+            <div class="scenario-desc">多学院、多学科研究生统一管理，支持跨学科培养方案</div>
+        </div>
+    </div>
+
+    <!-- 底部CTA -->
+    <div class="cta">
+        <div class="cta-content">
+            <div class="main-text">获取研究生管理完整方案</div>
+            <div class="sub-text">了解如何替换现有研究生系统，实现培养管理数字化转型<br>数据零丢失 · 功能越用越精简 · 五年向前兼容承诺</div>
+            <a href="contact.html" class="btn">立即咨询 ｜ 获取方案</a>
+            <div class="contact">
+                <span>📞 15102940626</span>
+                <span>💬 微信 18392084341</span>
+            </div>
+        </div>
+    </div>
+    <footer>
+        DataCenter V3.2 智慧校园数字基座 · 统一配置中心驱动 · 本地/云原生部署
+    </footer>
+</div>
+</body>
+</html>

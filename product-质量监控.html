@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>质量监控 - DataCenter V3.2 智慧校园数字基座</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { background: #eef2f5; font-family: 'Segoe UI', 'Roboto', 'Noto Sans', system-ui, -apple-system, sans-serif; min-height: 100vh; padding: 0.8rem; }
+        .page-container { max-width: 231mm; width: 100%; margin: 0 auto; background: white; box-shadow: 0 20px 30px rgba(0,0,0,0.1); border-radius: 6px; padding: 6mm 7mm 7mm 7mm; }
+        .top-nav { display: flex; justify-content: space-between; align-items: center; padding: 0.5rem 0; margin-bottom: 0.5rem; border-bottom: 1px solid #e2e8f0; }
+        .back-home { display: inline-flex; align-items: center; gap: 0.3rem; color: #3182ce; text-decoration: none; font-size: 0.7rem; font-weight: 600; padding: 0.3rem 0.8rem; border-radius: 20px; background: #ebf8ff; transition: all 0.2s; }
+        .back-home:hover { background: #bee3f8; transform: translateX(-3px); }
+        .nav-brand { font-size: 0.65rem; color: #718096; font-weight: 600; }
+        .product-hero { background: linear-gradient(135deg, #0b2b44 0%, #1a4a6f 50%, #2c5282 100%); border-radius: 1rem; padding: 2rem 1.5rem; color: white; margin-bottom: 1rem; position: relative; overflow: hidden; }
+        .product-hero::before { content: ''; position: absolute; top: -30%; right: -5%; width: 400px; height: 400px; background: rgba(99, 179, 237, 0.08); border-radius: 50%; }
+        .product-hero::after { content: ''; position: absolute; bottom: -20%; left: -10%; width: 300px; height: 300px; background: rgba(246, 173, 85, 0.06); border-radius: 50%; }
+        .hero-content { position: relative; z-index: 1; }
+        .hero-badge { display: inline-block; background: linear-gradient(135deg, #f6ad55, #ed8936); color: #1a2c3e; font-weight: 800; font-size: 0.65rem; padding: 0.25rem 0.8rem; border-radius: 20px; margin-bottom: 0.8rem; }
+        .product-hero h1 { font-size: 2rem; font-weight: 800; margin-bottom: 0.5rem; }
+        .product-hero .subtitle { font-size: 0.9rem; opacity: 0.95; margin-bottom: 1rem; line-height: 1.5; max-width: 80%; }
+        .hero-stats { display: flex; flex-wrap: wrap; gap: 0.6rem; }
+        .hero-stat { background: rgba(255,255,255,0.12); border-radius: 1.5rem; padding: 0.3rem 0.8rem; font-size: 0.7rem; }
+        .hero-stat strong { font-size: 1rem; font-weight: 800; }
+        .section-title { font-size: 1.1rem; font-weight: 700; margin: 1.2rem 0 0.8rem 0; border-left: 4px solid #2b6cb0; padding-left: 0.6rem; color: #1e3a5f; display: flex; align-items: center; gap: 0.4rem; }
+        .section-title .icon { font-size: 1.2rem; }
+        .value-section { background: linear-gradient(145deg, #f7fafc, #edf2f7); border-radius: 1rem; padding: 1.2rem; margin-bottom: 1rem; }
+        .value-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; }
+        .value-item { background: white; border-radius: 1rem; padding: 1.2rem; box-shadow: 0 4px 12px rgba(0,0,0,0.08); border-top: 4px solid #3182ce; transition: all 0.3s; position: relative; overflow: hidden; }
+        .value-item:hover { transform: translateY(-5px); box-shadow: 0 8px 24px rgba(0,0,0,0.12); }
+        .value-item::before { content: ''; position: absolute; top: 0; right: 0; width: 60px; height: 60px; background: linear-gradient(135deg, rgba(49,130,206,0.08), transparent); border-radius: 0 0 0 60px; }
+        .value-icon-big { font-size: 2rem; margin-bottom: 0.6rem; display: block; }
+        .value-item h4 { font-size: 0.85rem; color: #1e3a5f; margin-bottom: 0.5rem; font-weight: 800; }
+        .value-item p { font-size: 0.7rem; color: #4a5568; line-height: 1.6; }
+        .data-highlights { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0.8rem; margin-bottom: 1rem; }
+        .data-card { background: linear-gradient(135deg, #0b2b44, #1a4a6f); border-radius: 1rem; padding: 1rem; text-align: center; color: white; transition: all 0.3s; }
+        .data-card:hover { transform: scale(1.03); }
+        .data-number { font-size: 1.8rem; font-weight: 800; background: linear-gradient(135deg, #f6ad55, #ed8936); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+        .data-label { font-size: 0.65rem; opacity: 0.9; margin-top: 0.2rem; }
+        .flow-section { background: linear-gradient(145deg, #0f2b3d, #1a4a6f); border-radius: 1rem; padding: 1.5rem; margin-bottom: 1rem; color: white; position: relative; overflow: hidden; }
+        .flow-section::before { content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.03'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E"); opacity: 0.5; }
+        .flow-steps { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.5rem; position: relative; z-index: 1; }
+        .flow-step { text-align: center; flex: 1; min-width: 100px; background: rgba(255,255,255,0.08); border-radius: 1rem; padding: 1rem 0.5rem; transition: all 0.3s; }
+        .flow-step:hover { background: rgba(255,255,255,0.15); transform: translateY(-3px); }
+        .flow-step-icon { font-size: 2rem; margin-bottom: 0.5rem; display: block; }
+        .flow-step-title { font-size: 0.75rem; font-weight: 700; margin-bottom: 0.2rem; }
+        .flow-step-desc { font-size: 0.6rem; opacity: 0.8; }
+        .flow-arrow { font-size: 1.5rem; color: #f6ad55; font-weight: 800; }
+        .feature-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1rem; margin-bottom: 1rem; }
+        .feature-card { background: white; border-radius: 1rem; padding: 1.2rem; box-shadow: 0 2px 8px rgba(0,0,0,0.06); border: 1px solid #e2e8f0; transition: all 0.3s; position: relative; overflow: hidden; }
+        .feature-card:hover { transform: translateY(-3px); box-shadow: 0 8px 20px rgba(0,0,0,0.1); border-color: #3182ce; }
+        .feature-card::before { content: ''; position: absolute; top: 0; left: 0; width: 4px; height: 100%; background: linear-gradient(180deg, #3182ce, #2b6cb0); }
+        .feature-header { display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.6rem; }
+        .feature-icon { font-size: 1.5rem; }
+        .feature-title { font-size: 0.9rem; font-weight: 800; color: #1e3a5f; }
+        .feature-desc { font-size: 0.7rem; color: #4a5568; line-height: 1.6; margin-bottom: 0.5rem; }
+        .feature-list { padding-left: 1.2rem; }
+        .feature-list li { font-size: 0.65rem; color: #718096; margin-bottom: 0.2rem; line-height: 1.4; }
+        .feature-list li::marker { color: #3182ce; }
+        .compare-section { margin-bottom: 1rem; }
+        .compare-table { background: #f1f5f9; border-radius: 1rem; overflow: hidden; box-shadow: 0 2px 8px rgba(0,0,0,0.06); }
+        table { width: 100%; border-collapse: collapse; font-size: 0.7rem; }
+        th { background: linear-gradient(135deg, #1a4a6f, #2c5282); color: white; padding: 0.7rem 0.8rem; text-align: left; font-weight: 700; }
+        td { padding: 0.7rem 0.8rem; text-align: left; border-bottom: 1px solid #e2e8f0; }
+        tr:hover td { background: #f7fafc; }
+        .highlight { background: linear-gradient(135deg, #e6f7ff, #ebf8ff); font-weight: 600; }
+        .vs-tag { display: inline-block; background: #fed7d7; color: #c53030; padding: 0.15rem 0.5rem; border-radius: 20px; font-size: 0.6rem; font-weight: 700; margin-right: 0.3rem; }
+        .win-tag { display: inline-block; background: #c6f6d5; color: #276749; padding: 0.15rem 0.5rem; border-radius: 20px; font-size: 0.6rem; font-weight: 700; margin-right: 0.3rem; }
+        .case-section { background: linear-gradient(145deg, #fff9e6, #fff4d5); border-radius: 1rem; padding: 1.2rem; margin-bottom: 1rem; border: 1px solid #f5c842; }
+        .case-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; }
+        .case-card { background: white; border-radius: 0.8rem; padding: 1rem; box-shadow: 0 2px 8px rgba(0,0,0,0.06); text-align: center; }
+        .case-icon { font-size: 2rem; margin-bottom: 0.5rem; }
+        .case-title { font-weight: 800; font-size: 0.8rem; color: #1e3a5f; margin-bottom: 0.3rem; }
+        .case-desc { font-size: 0.65rem; color: #4a5568; line-height: 1.5; }
+        .case-result { margin-top: 0.5rem; padding-top: 0.5rem; border-top: 1px dashed #f5c842; font-size: 0.65rem; color: #c2410c; font-weight: 700; }
+        .scenario-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; margin-bottom: 1rem; }
+        .scenario-card { background: linear-gradient(135deg, #fff9e6, #fff4d5); border-radius: 1rem; padding: 1.2rem; text-align: center; border: 1px solid #f5c842; transition: all 0.3s; }
+        .scenario-card:hover { transform: translateY(-5px); box-shadow: 0 8px 20px rgba(245,158,11,0.2); }
+        .scenario-icon { font-size: 2.5rem; margin-bottom: 0.5rem; display: block; }
+        .scenario-title { font-weight: 800; font-size: 0.85rem; color: #c2410c; margin-bottom: 0.4rem; }
+        .scenario-desc { font-size: 0.7rem; color: #9b4a0e; line-height: 1.5; }
+        .cta { background: linear-gradient(115deg, #0b2b44, #1a4a6f); border-radius: 1rem; padding: 1.5rem; text-align: center; color: white; margin-top: 1rem; position: relative; overflow: hidden; }
+        .cta::before { content: ''; position: absolute; top: -50%; right: -10%; width: 300px; height: 300px; background: rgba(99, 179, 237, 0.1); border-radius: 50%; }
+        .cta-content { position: relative; z-index: 1; }
+        .cta .main-text { font-weight: 800; font-size: 1.2rem; margin-bottom: 0.4rem; }
+        .cta .sub-text { font-size: 0.8rem; margin-bottom: 0.8rem; opacity: 0.9; }
+        .btn { display: inline-block; background: linear-gradient(135deg, #f6ad55, #ed8936); color: #1a2c3e; font-weight: 800; padding: 0.5rem 1.5rem; border-radius: 40px; text-decoration: none; font-size: 0.9rem; transition: all 0.3s; box-shadow: 0 4px 12px rgba(246, 173, 85, 0.4); }
+        .btn:hover { transform: scale(1.05); box-shadow: 0 6px 20px rgba(246, 173, 85, 0.6); }
+        .contact { font-size: 0.7rem; margin-top: 0.8rem; display: flex; justify-content: center; gap: 1.5rem; }
+        footer { text-align: center; font-size: 0.6rem; margin-top: 0.8rem; color: #718096; }
+        @media print { body { background: white; padding: 0; } .page-container { box-shadow: none; max-width: 100%; } }
+        @media (max-width: 700px) { .value-grid { grid-template-columns: 1fr; } .data-highlights { grid-template-columns: repeat(2, 1fr); } .feature-grid { grid-template-columns: 1fr; } .case-grid { grid-template-columns: 1fr; } .scenario-grid { grid-template-columns: 1fr; } .flow-steps { flex-direction: column; } .flow-arrow { transform: rotate(90deg); } }
+    </style>
+</head>
+<body>
+<div class="page-container">
+    <div class="top-nav">
+        <a href="样例清单v6.HTML" class="back-home">← 返回产品清单</a>
+        <span class="nav-brand">DataCenter V3.2 智慧校园数字基座</span>
+    </div>
+
+    <div class="product-hero">
+        <div class="hero-content">
+            <span class="hero-badge">🔷 对标级能力产品</span>
+            <h1>📋 质量监控</h1>
+            <div class="subtitle">听评课在线化，督导任务分配+评价反馈+改进跟踪，教学质量持续提升</div>
+            <div class="hero-stats">
+                <div class="hero-stat"><strong>4</strong> 大督导维度</div>
+                <div class="hero-stat"><strong>100%</strong> 在线化评课</div>
+                <div class="hero-stat"><strong>闭环</strong> 改进跟踪</div>
+                <div class="hero-stat"><strong>实时</strong> 质量预警</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="section-title"><span class="icon">📊</span> 产品数据亮点</div>
+    <div class="data-highlights">
+        <div class="data-card"><div class="data-number">100%</div><div class="data-label">评课在线化率</div></div>
+        <div class="data-card"><div class="data-number">3x</div><div class="data-label">督导效率提升</div></div>
+        <div class="data-card"><div class="data-number">0</div><div class="data-label">评价数据遗漏</div></div>
+        <div class="data-card"><div class="data-number">实时</div><div class="data-label">教学质量预警</div></div>
+    </div>
+
+    <div class="section-title"><span class="icon">💎</span> 三大核心价值</div>
+    <div class="value-section">
+        <div class="value-grid">
+            <div class="value-item">
+                <span class="value-icon-big">🎯</span>
+                <h4>督导任务智能分配</h4>
+                <p>根据督导专家专业领域、空闲时间自动匹配听课任务，避免人工安排的遗漏与冲突，督导覆盖率提升至100%</p>
+            </div>
+            <div class="value-item">
+                <span class="value-icon-big">📊</span>
+                <h4>评价数据多维分析</h4>
+                <p>课堂教学评价数据自动汇总分析，生成教师教学质量画像，支持按学院、专业、课程类型多维度对比</p>
+            </div>
+            <div class="value-item">
+                <span class="value-icon-big">🔄</span>
+                <h4>改进闭环跟踪</h4>
+                <p>评价发现问题自动推送改进任务，跟踪整改进度与效果，形成"评价-反馈-改进-复核"的质量提升闭环</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="section-title"><span class="icon">🔄</span> 业务流程闭环</div>
+    <div class="flow-section">
+        <div class="flow-steps">
+            <div class="flow-step"><span class="flow-step-icon">📋</span><div class="flow-step-title">任务分配</div><div class="flow-step-desc">智能匹配督导</div></div>
+            <div class="flow-arrow">→</div>
+            <div class="flow-step"><span class="flow-step-icon">👂</span><div class="flow-step-title">在线听课</div><div class="flow-step-desc">移动端评课</div></div>
+            <div class="flow-arrow">→</div>
+            <div class="flow-step"><span class="flow-step-icon">⭐</span><div class="flow-step-title">多维评价</div><div class="flow-step-desc">量化+质性</div></div>
+            <div class="flow-arrow">→</div>
+            <div class="flow-step"><span class="flow-step-icon">📊</span><div class="flow-step-title">数据分析</div><div class="flow-step-desc">质量画像</div></div>
+            <div class="flow-arrow">→</div>
+            <div class="flow-step"><span class="flow-step-icon">🔄</span><div class="flow-step-title">改进跟踪</div><div class="flow-step-desc">闭环提升</div></div>
+        </div>
+    </div>
+
+    <div class="section-title"><span class="icon">📦</span> 六大核心功能模块</div>
+    <div class="feature-grid">
+        <div class="feature-card">
+            <div class="feature-header"><span class="feature-icon">📋</span><span class="feature-title">督导任务管理</span></div>
+            <div class="feature-desc">学期督导计划在线制定，任务自动分配与提醒，支持随机听课与专项听课双模式</div>
+            <ul class="feature-list">
+                <li>督导专家库与专业领域标签管理</li>
+                <li>智能任务分配算法，避免冲突遗漏</li>
+                <li>任务进度实时追踪与逾期预警</li>
+                <li>学期计划一键复制与历史对比</li>
+            </ul>
+        </div>
+        <div class="feature-card">
+            <div class="feature-header"><span class="feature-icon">👂</span><span class="feature-title">在线听评课</span></div>
+            <div class="feature-desc">督导专家通过移动端完成听课记录与评价，支持现场拍照、语音备注、量化评分</div>
+            <ul class="feature-list">
+                <li>移动端评课，随听随评无需纸笔</li>
+                <li>量化评分表与质性评语双轨记录</li>
+                <li>课堂照片与语音备注附件上传</li>
+                <li>评价提交后自动通知任课教师</li>
+            </ul>
+        </div>
+        <div class="feature-card">
+            <div class="feature-header"><span class="feature-icon">📊</span><span class="feature-title">评价数据分析</span></div>
+            <div class="feature-desc">评价数据自动汇总统计，生成教师、课程、学院多维度教学质量报告</div>
+            <ul class="feature-list">
+                <li>教师教学质量综合画像生成</li>
+                <li>学院/专业/课程类型横向对比</li>
+                <li>评价趋势分析与学期环比</li>
+                <li>异常评分自动标记与复核提醒</li>
+            </ul>
+        </div>
+        <div class="feature-card">
+            <div class="feature-header"><span class="feature-icon">🔄</span><span class="feature-title">改进跟踪管理</span></div>
+            <div class="feature-desc">评价发现的问题自动转化为改进任务，跟踪整改进度，复核改进效果</div>
+            <ul class="feature-list">
+                <li>问题自动归类与优先级判定</li>
+                <li>改进任务推送与进度跟踪</li>
+                <li>整改效果复核与二次评价</li>
+                <li>改进闭环完成率统计</li>
+            </ul>
+        </div>
+        <div class="feature-card">
+            <div class="feature-header"><span class="feature-icon">⚠️</span><span class="feature-title">质量预警中心</span></div>
+            <div class="feature-desc">基于评价数据与教学运行数据，自动识别教学质量风险并推送预警</div>
+            <ul class="feature-list">
+                <li>教学质量异常自动预警规则配置</li>
+                <li>多层级预警推送（教师/学院/校级）</li>
+                <li>预警处理流程在线化跟踪</li>
+                <li>预警趋势分析与预警库积累</li>
+            </ul>
+        </div>
+        <div class="feature-card">
+            <div class="feature-header"><span class="feature-icon">📈</span><span class="feature-title">质量报告中心</span></div>
+            <div class="feature-desc">自动生成学期/学年教学质量报告，支持自定义报告模板与导出格式</div>
+            <ul class="feature-list">
+                <li>学期/学年质量报告自动生成</li>
+                <li>报告模板可视化配置</li>
+                <li>多格式导出（PDF/Word/Excel）</li>
+                <li>历史报告归档与对比分析</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="section-title"><span class="icon">⚖️</span> 与传统方案对比</div>
+    <div class="compare-section">
+        <div class="compare-table">
+            <table>
+                <thead><tr><th style="width:18%">对比维度</th><th style="width:41%">传统督导评价</th><th style="width:41%">DataCenter 质量监控</th></tr></thead>
+                <tbody>
+                    <tr><td><strong>评课方式</strong></td><td><span class="vs-tag">纸质评课</span>纸质表格填写，汇总耗时，易丢失</td><td class="highlight"><span class="win-tag">在线评课</span>移动端随听随评，数据实时汇总</td></tr>
+                    <tr><td><strong>任务分配</strong></td><td><span class="vs-tag">人工安排</span>Excel排期，易遗漏冲突，效率低</td><td class="highlight"><span class="win-tag">智能分配</span>自动匹配专家与课程，覆盖率100%</td></tr>
+                    <tr><td><strong>数据分析</strong></td><td><span class="vs-tag">手工统计</span>人工汇总计算，周期长，维度少</td><td class="highlight"><span class="win-tag">自动分析</span>多维度画像自动生成，实时可查</td></tr>
+                    <tr><td><strong>改进跟踪</strong></td><td><span class="vs-tag">无闭环</span>评价结束即终止，改进无跟踪</td><td class="highlight"><span class="win-tag">闭环跟踪</span>问题→任务→整改→复核全流程</td></tr>
+                    <tr><td><strong>质量预警</strong></td><td><span class="vs-tag">事后发现</span>问题暴露滞后，干预时机错失</td><td class="highlight"><span class="win-tag">实时预警</span>数据驱动自动预警，提前干预</td></tr>
+                    <tr><td><strong>报告生成</strong></td><td><span class="vs-tag">人工编写</span>报告编写耗时数周，格式不统一</td><td class="highlight"><span class="win-tag">自动生成</span>模板化报告一键生成，多格式导出</td></tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div class="section-title"><span class="icon">🏆</span> 客户成功案例</div>
+    <div class="case-section">
+        <div class="case-grid">
+            <div class="case-card">
+                <span class="case-icon">🏫</span>
+                <div class="case-title">某省属师范大学</div>
+                <div class="case-desc">原有督导评价依赖纸质表格，汇总分析耗时2周，改进无跟踪</div>
+                <div class="case-result">✅ 评课全面在线化，分析报告实时生成，督导效率提升3倍</div>
+            </div>
+            <div class="case-card">
+                <span class="case-icon">🔧</span>
+                <div class="case-title">某职业技术学院</div>
+                <div class="case-desc">教学质量数据分散，无法形成有效质量监控与预警机制</div>
+                <div class="case-result">✅ 建立质量预警体系，提前发现教学问题，学生满意度提升25%</div>
+            </div>
+            <div class="case-card">
+                <span class="case-icon">📚</span>
+                <div class="case-title">某理工类高校</div>
+                <div class="case-desc">多校区督导管理困难，评价标准不统一，数据难以横向对比</div>
+                <div class="case-result">✅ 统一评价标准，多校区数据汇聚，教学质量画像全覆盖</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="section-title"><span class="icon">🎯</span> 适用场景</div>
+    <div class="scenario-grid">
+        <div class="scenario-card">
+            <span class="scenario-icon">🏫</span>
+            <div class="scenario-title">高等院校</div>
+            <div class="scenario-desc">本科教学督导、专业认证评估支撑、教学质量年度报告自动生成</div>
+        </div>
+        <div class="scenario-card">
+            <span class="scenario-icon">🔧</span>
+            <div class="scenario-title">职业院校</div>
+            <div class="scenario-desc">工学结合课程质量监控、实训教学评价、技能培养效果跟踪</div>
+        </div>
+        <div class="scenario-card">
+            <span class="scenario-icon">📚</span>
+            <div class="scenario-title">教学诊改</div>
+            <div class="scenario-desc">对接教学诊改平台，为8字质量改进螺旋提供数据支撑与预警</div>
+        </div>
+    </div>
+
+    <div class="cta">
+        <div class="cta-content">
+            <div class="main-text">获取质量监控完整方案</div>
+            <div class="sub-text">了解如何实现教学质量监控全面在线化<br>数据零丢失 · 功能越用越精简 · 五年向前兼容承诺</div>
+            <a href="contact.html" class="btn">立即咨询 ｜ 获取方案</a>
+            <div class="contact"><span>📞 15102940626</span><span>💬 微信 18392084341</span></div>
+        </div>
+    </div>
+    <footer>DataCenter V3.2 智慧校园数字基座 · 统一配置中心驱动 · 本地/云原生部署</footer>
+</div>
+</body>
+</html>

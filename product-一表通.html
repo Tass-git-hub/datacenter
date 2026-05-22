@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>一表通 - DataCenter V3.2 智慧校园数字基座</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { background: #eef2f5; font-family: 'Segoe UI', 'Roboto', 'Noto Sans', system-ui, -apple-system, sans-serif; min-height: 100vh; padding: 0.8rem; }
+        .page-container { max-width: 231mm; width: 100%; margin: 0 auto; background: white; box-shadow: 0 20px 30px rgba(0,0,0,0.1); border-radius: 6px; padding: 6mm 7mm 7mm 7mm; }
+        .top-nav { display: flex; justify-content: space-between; align-items: center; padding: 0.5rem 0; margin-bottom: 0.5rem; border-bottom: 1px solid #e2e8f0; }
+        .back-home { display: inline-flex; align-items: center; gap: 0.3rem; color: #3182ce; text-decoration: none; font-size: 0.7rem; font-weight: 600; padding: 0.3rem 0.8rem; border-radius: 20px; background: #ebf8ff; transition: all 0.2s; }
+        .back-home:hover { background: #bee3f8; transform: translateX(-3px); }
+        .nav-brand { font-size: 0.65rem; color: #718096; font-weight: 600; }
+        .product-hero { background: linear-gradient(135deg, #0b2b44 0%, #1a4a6f 50%, #2c5282 100%); border-radius: 1rem; padding: 2rem 1.5rem; color: white; margin-bottom: 1rem; position: relative; overflow: hidden; }
+        .product-hero::before { content: ''; position: absolute; top: -30%; right: -5%; width: 400px; height: 400px; background: rgba(99, 179, 237, 0.08); border-radius: 50%; }
+        .product-hero::after { content: ''; position: absolute; bottom: -20%; left: -10%; width: 300px; height: 300px; background: rgba(246, 173, 85, 0.06); border-radius: 50%; }
+        .hero-content { position: relative; z-index: 1; }
+        .hero-badge { display: inline-block; background: linear-gradient(135deg, #f6ad55, #ed8936); color: #1a2c3e; font-weight: 800; font-size: 0.65rem; padding: 0.25rem 0.8rem; border-radius: 20px; margin-bottom: 0.8rem; }
+        .product-hero h1 { font-size: 2rem; font-weight: 800; margin-bottom: 0.5rem; }
+        .product-hero .subtitle { font-size: 0.9rem; opacity: 0.95; margin-bottom: 1rem; line-height: 1.5; max-width: 80%; }
+        .hero-stats { display: flex; flex-wrap: wrap; gap: 0.6rem; }
+        .hero-stat { background: rgba(255,255,255,0.12); border-radius: 1.5rem; padding: 0.3rem 0.8rem; font-size: 0.7rem; }
+        .hero-stat strong { font-size: 1rem; font-weight: 800; }
+        .section-title { font-size: 1.1rem; font-weight: 700; margin: 1.2rem 0 0.8rem 0; border-left: 4px solid #2b6cb0; padding-left: 0.6rem; color: #1e3a5f; display: flex; align-items: center; gap: 0.4rem; }
+        .section-title .icon { font-size: 1.2rem; }
+        .value-section { background: linear-gradient(145deg, #f7fafc, #edf2f7); border-radius: 1rem; padding: 1.2rem; margin-bottom: 1rem; }
+        .value-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; }
+        .value-item { background: white; border-radius: 1rem; padding: 1.2rem; box-shadow: 0 4px 12px rgba(0,0,0,0.08); border-top: 4px solid #3182ce; transition: all 0.3s; position: relative; overflow: hidden; }
+        .value-item:hover { transform: translateY(-5px); box-shadow: 0 8px 24px rgba(0,0,0,0.12); }
+        .value-item::before { content: ''; position: absolute; top: 0; right: 0; width: 60px; height: 60px; background: linear-gradient(135deg, rgba(49,130,206,0.08), transparent); border-radius: 0 0 0 60px; }
+        .value-icon-big { font-size: 2rem; margin-bottom: 0.6rem; display: block; }
+        .value-item h4 { font-size: 0.85rem; color: #1e3a5f; margin-bottom: 0.5rem; font-weight: 800; }
+        .value-item p { font-size: 0.7rem; color: #4a5568; line-height: 1.6; }
+        .data-highlights { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0.8rem; margin-bottom: 1rem; }
+        .data-card { background: linear-gradient(135deg, #0b2b44, #1a4a6f); border-radius: 1rem; padding: 1rem; text-align: center; color: white; transition: all 0.3s; }
+        .data-card:hover { transform: scale(1.03); }
+        .data-number { font-size: 1.8rem; font-weight: 800; background: linear-gradient(135deg, #f6ad55, #ed8936); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+        .data-label { font-size: 0.65rem; opacity: 0.9; margin-top: 0.2rem; }
+        .flow-section { background: linear-gradient(145deg, #0f2b3d, #1a4a6f); border-radius: 1rem; padding: 1.5rem; margin-bottom: 1rem; color: white; position: relative; overflow: hidden; }
+        .flow-section::before { content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.03'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E"); opacity: 0.5; }
+        .flow-steps { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.5rem; position: relative; z-index: 1; }
+        .flow-step { text-align: center; flex: 1; min-width: 100px; background: rgba(255,255,255,0.08); border-radius: 1rem; padding: 1rem 0.5rem; transition: all 0.3s; }
+        .flow-step:hover { background: rgba(255,255,255,0.15); transform: translateY(-3px); }
+        .flow-step-icon { font-size: 2rem; margin-bottom: 0.5rem; display: block; }
+        .flow-step-title { font-size: 0.75rem; font-weight: 700; margin-bottom: 0.2rem; }
+        .flow-step-desc { font-size: 0.6rem; opacity: 0.8; }
+        .flow-arrow { font-size: 1.5rem; color: #f6ad55; font-weight: 800; }
+        .feature-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1rem; margin-bottom: 1rem; }
+        .feature-card { background: white; border-radius: 1rem; padding: 1.2rem; box-shadow: 0 2px 8px rgba(0,0,0,0.06); border: 1px solid #e2e8f0; transition: all 0.3s; position: relative; overflow: hidden; }
+        .feature-card:hover { transform: translateY(-3px); box-shadow: 0 8px 20px rgba(0,0,0,0.1); border-color: #3182ce; }
+        .feature-card::before { content: ''; position: absolute; top: 0; left: 0; width: 4px; height: 100%; background: linear-gradient(180deg, #3182ce, #2b6cb0); }
+        .feature-header { display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.6rem; }
+        .feature-icon { font-size: 1.5rem; }
+        .feature-title { font-size: 0.9rem; font-weight: 800; color: #1e3a5f; }
+        .feature-desc { font-size: 0.7rem; color: #4a5568; line-height: 1.6; margin-bottom: 0.5rem; }
+        .feature-list { padding-left: 1.2rem; }
+        .feature-list li { font-size: 0.65rem; color: #718096; margin-bottom: 0.2rem; line-height: 1.4; }
+        .feature-list li::marker { color: #3182ce; }
+        .compare-section { margin-bottom: 1rem; }
+        .compare-table { background: #f1f5f9; border-radius: 1rem; overflow: hidden; box-shadow: 0 2px 8px rgba(0,0,0,0.06); }
+        table { width: 100%; border-collapse: collapse; font-size: 0.7rem; }
+        th { background: linear-gradient(135deg, #1a4a6f, #2c5282); color: white; padding: 0.7rem 0.8rem; text-align: left; font-weight: 700; }
+        td { padding: 0.7rem 0.8rem; text-align: left; border-bottom: 1px solid #e2e8f0; }
+        tr:hover td { background: #f7fafc; }
+        .highlight { background: linear-gradient(135deg, #e6f7ff, #ebf8ff); font-weight: 600; }
+        .vs-tag { display: inline-block; background: #fed7d7; color: #c53030; padding: 0.15rem 0.5rem; border-radius: 20px; font-size: 0.6rem; font-weight: 700; margin-right: 0.3rem; }
+        .win-tag { display: inline-block; background: #c6f6d5; color: #276749; padding: 0.15rem 0.5rem; border-radius: 20px; font-size: 0.6rem; font-weight: 700; margin-right: 0.3rem; }
+        .case-section { background: linear-gradient(145deg, #fff9e6, #fff4d5); border-radius: 1rem; padding: 1.2rem; margin-bottom: 1rem; border: 1px solid #f5c842; }
+        .case-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; }
+        .case-card { background: white; border-radius: 0.8rem; padding: 1rem; box-shadow: 0 2px 8px rgba(0,0,0,0.06); text-align: center; }
+        .case-icon { font-size: 2rem; margin-bottom: 0.5rem; }
+        .case-title { font-weight: 800; font-size: 0.8rem; color: #1e3a5f; margin-bottom: 0.3rem; }
+        .case-desc { font-size: 0.65rem; color: #4a5568; line-height: 1.5; }
+        .case-result { margin-top: 0.5rem; padding-top: 0.5rem; border-top: 1px dashed #f5c842; font-size: 0.65rem; color: #c2410c; font-weight: 700; }
+        .scenario-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; margin-bottom: 1rem; }
+        .scenario-card { background: linear-gradient(135deg, #fff9e6, #fff4d5); border-radius: 1rem; padding: 1.2rem; text-align: center; border: 1px solid #f5c842; transition: all 0.3s; }
+        .scenario-card:hover { transform: translateY(-5px); box-shadow: 0 8px 20px rgba(245,158,11,0.2); }
+        .scenario-icon { font-size: 2.5rem; margin-bottom: 0.5rem; display: block; }
+        .scenario-title { font-weight: 800; font-size: 0.85rem; color: #c2410c; margin-bottom: 0.4rem; }
+        .scenario-desc { font-size: 0.7rem; color: #9b4a0e; line-height: 1.5; }
+        .cta { background: linear-gradient(115deg, #0b2b44, #1a4a6f); border-radius: 1rem; padding: 1.5rem; text-align: center; color: white; margin-top: 1rem; position: relative; overflow: hidden; }
+        .cta::before { content: ''; position: absolute; top: -50%; right: -10%; width: 300px; height: 300px; background: rgba(99, 179, 237, 0.1); border-radius: 50%; }
+        .cta-content { position: relative; z-index: 1; }
+        .cta .main-text { font-weight: 800; font-size: 1.2rem; margin-bottom: 0.4rem; }
+        .cta .sub-text { font-size: 0.8rem; margin-bottom: 0.8rem; opacity: 0.9; }
+        .btn { display: inline-block; background: linear-gradient(135deg, #f6ad55, #ed8936); color: #1a2c3e; font-weight: 800; padding: 0.5rem 1.5rem; border-radius: 40px; text-decoration: none; font-size: 0.9rem; transition: all 0.3s; box-shadow: 0 4px 12px rgba(246, 173, 85, 0.4); }
+        .btn:hover { transform: scale(1.05); box-shadow: 0 6px 20px rgba(246, 173, 85, 0.6); }
+        .contact { font-size: 0.7rem; margin-top: 0.8rem; display: flex; justify-content: center; gap: 1.5rem; }
+        footer { text-align: center; font-size: 0.6rem; margin-top: 0.8rem; color: #718096; }
+        @media print { body { background: white; padding: 0; } .page-container { box-shadow: none; max-width: 100%; } }
+        @media (max-width: 700px) { .value-grid { grid-template-columns: 1fr; } .data-highlights { grid-template-columns: repeat(2, 1fr); } .feature-grid { grid-template-columns: 1fr; } .case-grid { grid-template-columns: 1fr; } .scenario-grid { grid-template-columns: 1fr; } .flow-steps { flex-direction: column; } .flow-arrow { transform: rotate(90deg); } }
+    </style>
+</head>
+<body>
+<div class="page-container">
+    <div class="top-nav">
+        <a href="样例清单v6.HTML" class="back-home">← 返回产品清单</a>
+        <span class="nav-brand">DataCenter V3.2 智慧校园数字基座</span>
+    </div>
+    <div class="product-hero">
+        <div class="hero-content">
+            <span class="hero-badge">🏆 超越级能力产品</span>
+            <h1>📑 一表通</h1>
+            <div class="subtitle">全校数据一张表，教师/学生个人数据一次维护、全局复用，跨部门自动同步。让数据从"各自为政"变为"一表通全校"，彻底消除信息孤岛</div>
+            <div class="hero-stats">
+                <div class="hero-stat"><strong>6</strong> 大核心模块</div>
+                <div class="hero-stat"><strong>一张表</strong> 全校数据</div>
+                <div class="hero-stat"><strong>一次</strong> 维护全局复用</div>
+                <div class="hero-stat"><strong>自动</strong> 跨部门同步</div>
+            </div>
+        </div>
+    </div>
+    <div class="section-title"><span class="icon">📊</span> 产品数据亮点</div>
+    <div class="data-highlights">
+        <div class="data-card"><div class="data-number">1张表</div><div class="data-label">全校数据统一</div></div>
+        <div class="data-card"><div class="data-number">100%</div><div class="data-label">数据全局复用</div></div>
+        <div class="data-card"><div class="data-number">实时</div><div class="data-label">跨部门同步</div></div>
+        <div class="data-card"><div class="data-number">0</div><div class="data-label">重复维护</div></div>
+    </div>
+    <div class="section-title"><span class="icon">💎</span> 三大核心价值</div>
+    <div class="value-section">
+        <div class="value-grid">
+            <div class="value-item">
+                <span class="value-icon-big">📑</span>
+                <h4>全校数据一张表</h4>
+                <p>构建全校统一的个人数据中心，教师/学生基础信息、履历、成果等数据集中管理，一表通览</p>
+            </div>
+            <div class="value-item">
+                <span class="value-icon-big">🔄</span>
+                <h4>一次维护全局复用</h4>
+                <p>个人数据一次录入，全校各业务系统按需调用，数据变更一处更新、全局同步</p>
+            </div>
+            <div class="value-item">
+                <span class="value-icon-big">⚡</span>
+                <h4>跨部门自动同步</h4>
+                <p>打破部门数据壁垒，教务、学工、人事、科研等部门数据实时互通，告别重复录入</p>
+            </div>
+        </div>
+    </div>
+    <div class="section-title"><span class="icon">🔄</span> 业务流程闭环</div>
+    <div class="flow-section">
+        <div class="flow-steps">
+            <div class="flow-step"><span class="flow-step-icon">📝</span><div class="flow-step-title">数据采集</div><div class="flow-step-desc">个人一次维护</div></div>
+            <div class="flow-arrow">→</div>
+            <div class="flow-step"><span class="flow-step-icon">📑</span><div class="flow-step-title">数据整合</div><div class="flow-step-desc">全校一张表</div></div>
+            <div class="flow-arrow">→</div>
+            <div class="flow-step"><span class="flow-step-icon">🔄</span><div class="flow-step-title">自动同步</div><div class="flow-step-desc">跨部门实时更新</div></div>
+            <div class="flow-arrow">→</div>
+            <div class="flow-step"><span class="flow-step-icon">📊</span><div class="flow-step-title">数据服务</div><div class="flow-step-desc">按需调用复用</div></div>
+            <div class="flow-arrow">→</div>
+            <div class="flow-step"><span class="flow-step-icon">📈</span><div class="flow-step-title">质量监控</div><div class="flow-step-desc">持续优化提升</div></div>
+        </div>
+    </div>
+    <div class="section-title"><span class="icon">📦</span> 六大核心功能模块</div>
+    <div class="feature-grid">
+        <div class="feature-card">
+            <div class="feature-header"><span class="feature-icon">📑</span><span class="feature-title">个人数据中心</span></div>
+            <div class="feature-desc">教师/学生个人数据统一维护，基础信息、教育背景、工作经历、科研成果一表管理</div>
+            <ul class="feature-list">
+                <li>个人基础信息统一管理</li>
+                <li>教育背景与工作经历维护</li>
+                <li>科研成果与获奖记录归档</li>
+                <li>家庭成员与紧急联系人管理</li>
+            </ul>
+        </div>
+        <div class="feature-card">
+            <div class="feature-header"><span class="feature-icon">🔄</span><span class="feature-title">数据自动同步</span></div>
+            <div class="feature-desc">个人数据变更自动同步至各业务系统，教务、学工、人事、科研实时更新</div>
+            <ul class="feature-list">
+                <li>数据变更自动推送通知</li>
+                <li>跨系统数据实时同步</li>
+                <li>同步日志完整可追溯</li>
+                <li>冲突检测与自动合并</li>
+            </ul>
+        </div>
+        <div class="feature-card">
+            <div class="feature-header"><span class="feature-icon">✅</span><span class="feature-title">数据质量管控</span></div>
+            <div class="feature-desc">数据完整性、准确性、一致性自动检测，质量问题实时预警，数据治理持续优化</div>
+            <ul class="feature-list">
+                <li>数据完整性自动检测</li>
+                <li>重复数据智能去重</li>
+                <li>数据质量评分看板</li>
+                <li>问题数据修复指引</li>
+            </ul>
+        </div>
+        <div class="feature-card">
+            <div class="feature-header"><span class="feature-icon">🔐</span><span class="feature-title">数据权限管理</span></div>
+            <div class="feature-desc">细粒度数据权限控制，谁可以看什么数据、可以修改什么字段，精准授权</div>
+            <ul class="feature-list">
+                <li>字段级权限精细控制</li>
+                <li>部门数据访问范围配置</li>
+                <li>敏感数据脱敏展示</li>
+                <li>数据操作审计日志</li>
+            </ul>
+        </div>
+        <div class="feature-card">
+            <div class="feature-header"><span class="feature-icon">📊</span><span class="feature-title">数据服务开放</span></div>
+            <div class="feature-desc">标准API数据服务，各业务系统按需调用个人数据，开发对接简单高效</div>
+            <ul class="feature-list">
+                <li>标准REST API数据服务</li>
+                <li>数据调用权限申请审批</li>
+                <li>调用频率与配额管理</li>
+                <li>数据服务监控看板</li>
+            </ul>
+        </div>
+        <div class="feature-card">
+            <div class="feature-header"><span class="feature-icon">📈</span><span class="feature-title">数据资产大屏</span></div>
+            <div class="feature-desc">全校数据资产一屏掌握，数据分布、质量状况、使用情况可视化呈现</div>
+            <ul class="feature-list">
+                <li>全校数据资产总量统计</li>
+                <li>数据质量状况可视化</li>
+                <li>数据使用热度分析</li>
+                <li>数据治理成效评估</li>
+            </ul>
+        </div>
+    </div>
+    <div class="section-title"><span class="icon">⚖️</span> 与传统方案对比</div>
+    <div class="compare-section">
+        <div class="compare-table">
+            <table>
+                <thead><tr><th style="width:18%">对比维度</th><th style="width:41%">传统数据管理</th><th style="width:41%">DataCenter 一表通</th></tr></thead>
+                <tbody>
+                    <tr><td><strong>数据管理</strong></td><td><span class="vs-tag">分散存储</span>各系统各自维护，数据重复录入</td><td class="highlight"><span class="win-tag">统一中心</span>全校一张表，一次维护全局复用</td></tr>
+                    <tr><td><strong>数据同步</strong></td><td><span class="vs-tag">人工导出</span>Excel导入导出，滞后易出错</td><td class="highlight"><span class="win-tag">自动同步</span>变更实时推送，跨部门自动更新</td></tr>
+                    <tr><td><strong>数据质量</strong></td><td><span class="vs-tag">无管控</span>数据混乱，同名不同人等问题频发</td><td class="highlight"><span class="win-tag">智能治理</span>完整性/准确性/一致性自动检测</td></tr>
+                    <tr><td><strong>数据服务</strong></td><td><span class="vs-tag">无服务</span>各系统数据封闭，无法共享</td><td class="highlight"><span class="win-tag">标准API</span>数据服务开放，按需调用</td></tr>
+                    <tr><td><strong>数据安全</strong></td><td><span class="vs-tag">粗放管理</span>数据权限控制粗粒度，泄露风险高</td><td class="highlight"><span class="win-tag">精细授权</span>字段级权限控制，操作全程审计</td></tr>
+                    <tr><td><strong>数据价值</strong></td><td><span class="vs-tag">沉睡数据</span>数据分散沉睡，无法发挥价值</td><td class="highlight"><span class="win-tag">资产活化</span>数据资产一屏掌握，驱动决策</td></tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="section-title"><span class="icon">🏆</span> 客户成功案例</div>
+    <div class="case-section">
+        <div class="case-grid">
+            <div class="case-card"><span class="case-icon">🏫</span><div class="case-title">某省属重点大学</div><div class="case-desc">各系统数据分散，教师信息在人事、教务、科研重复录入</div><div class="case-result">✅ 一表通后，教师信息维护工作量减少90%，数据一致性100%</div></div>
+            <div class="case-card"><span class="case-icon">🔧</span><div class="case-title">某职业技术学院</div><div class="case-desc">学生信息在学工、教务、就业、图书馆各自维护，版本混乱</div><div class="case-result">✅ 统一数据中心后，信息更新效率提升10倍，错误率归零</div></div>
+            <div class="case-card"><span class="case-icon">📚</span><div class="case-title">某高级中学</div><div class="case-desc">家长信息、学生档案分散在多个Excel中，查找困难</div><div class="case-result">✅ 一表通全校后，信息查询秒级响应，数据准确率99.9%</div></div>
+        </div>
+    </div>
+    <div class="section-title"><span class="icon">🎯</span> 适用场景</div>
+    <div class="scenario-grid">
+        <div class="scenario-card"><span class="scenario-icon">🏫</span><div class="scenario-title">高等院校</div><div class="scenario-desc">教师信息全校统一，科研成果跨部门共享，学生数据一站式管理</div></div>
+        <div class="scenario-card"><span class="scenario-icon">🔧</span><div class="scenario-title">职业院校</div><div class="scenario-desc">学生实习就业信息联动，技能证书统一管理，校企数据互通</div></div>
+        <div class="scenario-card"><span class="scenario-icon">📚</span><div class="scenario-title">中小学</div><div class="scenario-desc">学生档案统一管理，家校信息同步，教育数据规范化</div></div>
+    </div>
+    <div class="cta">
+        <div class="cta-content">
+            <div class="main-text">获取一表通完整方案</div>
+            <div class="sub-text">了解如何实现全校数据一张表，一次维护全局复用，彻底消除信息孤岛<br>数据零丢失 · 功能越用越精简 · 五年向前兼容承诺</div>
+            <a href="contact.html" class="btn">立即咨询 ｜ 获取方案</a>
+            <div class="contact"><span>📞 15102940626</span><span>💬 微信 18392084341</span></div>
+        </div>
+    </div>
+    <footer>DataCenter V3.2 智慧校园数字基座 · 统一配置中心驱动 · 本地/云原生部署</footer>
+</div>
+</body>
+</html>

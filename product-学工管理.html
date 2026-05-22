@@ -1,0 +1,873 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>学工管理 - DataCenter V3.2 智慧校园数字基座</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: #eef2f5;
+            font-family: 'Segoe UI', 'Roboto', 'Noto Sans', system-ui, -apple-system, sans-serif;
+            min-height: 100vh;
+            padding: 0.8rem;
+        }
+
+        .page-container {
+            max-width: 231mm;
+            width: 100%;
+            margin: 0 auto;
+            background: white;
+            box-shadow: 0 20px 30px rgba(0,0,0,0.1);
+            border-radius: 6px;
+            padding: 6mm 7mm 7mm 7mm;
+        }
+
+        /* 顶部导航栏 */
+        .top-nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.5rem 0;
+            margin-bottom: 0.5rem;
+            border-bottom: 1px solid #e2e8f0;
+        }
+        .back-home {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.3rem;
+            color: #3182ce;
+            text-decoration: none;
+            font-size: 0.7rem;
+            font-weight: 600;
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            background: #ebf8ff;
+            transition: all 0.2s;
+        }
+        .back-home:hover {
+            background: #bee3f8;
+            transform: translateX(-3px);
+        }
+        .nav-brand {
+            font-size: 0.65rem;
+            color: #718096;
+            font-weight: 600;
+        }
+
+        /* 产品头部 */
+        .product-hero {
+            background: linear-gradient(135deg, #0b2b44 0%, #1a4a6f 50%, #2c5282 100%);
+            border-radius: 1rem;
+            padding: 2rem 1.5rem;
+            color: white;
+            margin-bottom: 1rem;
+            position: relative;
+            overflow: hidden;
+        }
+        .product-hero::before {
+            content: '';
+            position: absolute;
+            top: -30%;
+            right: -5%;
+            width: 400px;
+            height: 400px;
+            background: rgba(99, 179, 237, 0.08);
+            border-radius: 50%;
+        }
+        .product-hero::after {
+            content: '';
+            position: absolute;
+            bottom: -20%;
+            left: -10%;
+            width: 300px;
+            height: 300px;
+            background: rgba(246, 173, 85, 0.06);
+            border-radius: 50%;
+        }
+        .hero-content {
+            position: relative;
+            z-index: 1;
+        }
+        .hero-badge {
+            display: inline-block;
+            background: linear-gradient(135deg, #f6ad55, #ed8936);
+            color: #1a2c3e;
+            font-weight: 800;
+            font-size: 0.65rem;
+            padding: 0.25rem 0.8rem;
+            border-radius: 20px;
+            margin-bottom: 0.8rem;
+        }
+        .product-hero h1 {
+            font-size: 2rem;
+            font-weight: 800;
+            margin-bottom: 0.5rem;
+        }
+        .product-hero .subtitle {
+            font-size: 0.9rem;
+            opacity: 0.95;
+            margin-bottom: 1rem;
+            line-height: 1.5;
+            max-width: 80%;
+        }
+        .hero-stats {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.6rem;
+        }
+        .hero-stat {
+            background: rgba(255,255,255,0.12);
+            border-radius: 1.5rem;
+            padding: 0.3rem 0.8rem;
+            font-size: 0.7rem;
+        }
+        .hero-stat strong {
+            font-size: 1rem;
+            font-weight: 800;
+        }
+
+        /* 区块标题 */
+        .section-title {
+            font-size: 1.1rem;
+            font-weight: 700;
+            margin: 1.2rem 0 0.8rem 0;
+            border-left: 4px solid #2b6cb0;
+            padding-left: 0.6rem;
+            color: #1e3a5f;
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+        }
+        .section-title .icon {
+            font-size: 1.2rem;
+        }
+
+        /* 核心价值 - 大卡片 */
+        .value-section {
+            background: linear-gradient(145deg, #f7fafc, #edf2f7);
+            border-radius: 1rem;
+            padding: 1.2rem;
+            margin-bottom: 1rem;
+        }
+        .value-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1rem;
+        }
+        .value-item {
+            background: white;
+            border-radius: 1rem;
+            padding: 1.2rem;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+            border-top: 4px solid #3182ce;
+            transition: all 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+        .value-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 24px rgba(0,0,0,0.12);
+        }
+        .value-item::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, rgba(49,130,206,0.08), transparent);
+            border-radius: 0 0 0 60px;
+        }
+        .value-icon-big {
+            font-size: 2rem;
+            margin-bottom: 0.6rem;
+            display: block;
+        }
+        .value-item h4 {
+            font-size: 0.85rem;
+            color: #1e3a5f;
+            margin-bottom: 0.5rem;
+            font-weight: 800;
+        }
+        .value-item p {
+            font-size: 0.7rem;
+            color: #4a5568;
+            line-height: 1.6;
+        }
+
+        /* 数据亮点 */
+        .data-highlights {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 0.8rem;
+            margin-bottom: 1rem;
+        }
+        .data-card {
+            background: linear-gradient(135deg, #0b2b44, #1a4a6f);
+            border-radius: 1rem;
+            padding: 1rem;
+            text-align: center;
+            color: white;
+            transition: all 0.3s;
+        }
+        .data-card:hover {
+            transform: scale(1.03);
+        }
+        .data-number {
+            font-size: 1.8rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #f6ad55, #ed8936);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .data-label {
+            font-size: 0.65rem;
+            opacity: 0.9;
+            margin-top: 0.2rem;
+        }
+
+        /* 业务流程 */
+        .flow-section {
+            background: linear-gradient(145deg, #0f2b3d, #1a4a6f);
+            border-radius: 1rem;
+            padding: 1.5rem;
+            margin-bottom: 1rem;
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+        .flow-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.03'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+            opacity: 0.5;
+        }
+        .flow-steps {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            position: relative;
+            z-index: 1;
+        }
+        .flow-step {
+            text-align: center;
+            flex: 1;
+            min-width: 100px;
+            background: rgba(255,255,255,0.08);
+            border-radius: 1rem;
+            padding: 1rem 0.5rem;
+            transition: all 0.3s;
+        }
+        .flow-step:hover {
+            background: rgba(255,255,255,0.15);
+            transform: translateY(-3px);
+        }
+        .flow-step-icon {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+            display: block;
+        }
+        .flow-step-title {
+            font-size: 0.75rem;
+            font-weight: 700;
+            margin-bottom: 0.2rem;
+        }
+        .flow-step-desc {
+            font-size: 0.6rem;
+            opacity: 0.8;
+        }
+        .flow-arrow {
+            font-size: 1.5rem;
+            color: #f6ad55;
+            font-weight: 800;
+        }
+
+        /* 功能模块 */
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+        .feature-card {
+            background: white;
+            border-radius: 1rem;
+            padding: 1.2rem;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+            border: 1px solid #e2e8f0;
+            transition: all 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+        .feature-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+            border-color: #3182ce;
+        }
+        .feature-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 4px;
+            height: 100%;
+            background: linear-gradient(180deg, #3182ce, #2b6cb0);
+        }
+        .feature-header {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 0.6rem;
+        }
+        .feature-icon {
+            font-size: 1.5rem;
+        }
+        .feature-title {
+            font-size: 0.9rem;
+            font-weight: 800;
+            color: #1e3a5f;
+        }
+        .feature-desc {
+            font-size: 0.7rem;
+            color: #4a5568;
+            line-height: 1.6;
+            margin-bottom: 0.5rem;
+        }
+        .feature-list {
+            padding-left: 1.2rem;
+        }
+        .feature-list li {
+            font-size: 0.65rem;
+            color: #718096;
+            margin-bottom: 0.2rem;
+            line-height: 1.4;
+        }
+        .feature-list li::marker {
+            color: #3182ce;
+        }
+
+        /* 优势对比 */
+        .compare-section {
+            margin-bottom: 1rem;
+        }
+        .compare-table {
+            background: #f1f5f9;
+            border-radius: 1rem;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.7rem;
+        }
+        th {
+            background: linear-gradient(135deg, #1a4a6f, #2c5282);
+            color: white;
+            padding: 0.7rem 0.8rem;
+            text-align: left;
+            font-weight: 700;
+        }
+        td {
+            padding: 0.7rem 0.8rem;
+            text-align: left;
+            border-bottom: 1px solid #e2e8f0;
+        }
+        tr:hover td {
+            background: #f7fafc;
+        }
+        .highlight {
+            background: linear-gradient(135deg, #e6f7ff, #ebf8ff);
+            font-weight: 600;
+        }
+        .vs-tag {
+            display: inline-block;
+            background: #fed7d7;
+            color: #c53030;
+            padding: 0.15rem 0.5rem;
+            border-radius: 20px;
+            font-size: 0.6rem;
+            font-weight: 700;
+            margin-right: 0.3rem;
+        }
+        .win-tag {
+            display: inline-block;
+            background: #c6f6d5;
+            color: #276749;
+            padding: 0.15rem 0.5rem;
+            border-radius: 20px;
+            font-size: 0.6rem;
+            font-weight: 700;
+            margin-right: 0.3rem;
+        }
+
+        /* 客户案例 */
+        .case-section {
+            background: linear-gradient(145deg, #fff9e6, #fff4d5);
+            border-radius: 1rem;
+            padding: 1.2rem;
+            margin-bottom: 1rem;
+            border: 1px solid #f5c842;
+        }
+        .case-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1rem;
+        }
+        .case-card {
+            background: white;
+            border-radius: 0.8rem;
+            padding: 1rem;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+            text-align: center;
+        }
+        .case-icon {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+        }
+        .case-title {
+            font-weight: 800;
+            font-size: 0.8rem;
+            color: #1e3a5f;
+            margin-bottom: 0.3rem;
+        }
+        .case-desc {
+            font-size: 0.65rem;
+            color: #4a5568;
+            line-height: 1.5;
+        }
+        .case-result {
+            margin-top: 0.5rem;
+            padding-top: 0.5rem;
+            border-top: 1px dashed #f5c842;
+            font-size: 0.65rem;
+            color: #c2410c;
+            font-weight: 700;
+        }
+
+        /* 适用场景 */
+        .scenario-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+        .scenario-card {
+            background: linear-gradient(135deg, #fff9e6, #fff4d5);
+            border-radius: 1rem;
+            padding: 1.2rem;
+            text-align: center;
+            border: 1px solid #f5c842;
+            transition: all 0.3s;
+        }
+        .scenario-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(245,158,11,0.2);
+        }
+        .scenario-icon {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+            display: block;
+        }
+        .scenario-title {
+            font-weight: 800;
+            font-size: 0.85rem;
+            color: #c2410c;
+            margin-bottom: 0.4rem;
+        }
+        .scenario-desc {
+            font-size: 0.7rem;
+            color: #9b4a0e;
+            line-height: 1.5;
+        }
+
+        /* 底部CTA */
+        .cta {
+            background: linear-gradient(115deg, #0b2b44, #1a4a6f);
+            border-radius: 1rem;
+            padding: 1.5rem;
+            text-align: center;
+            color: white;
+            margin-top: 1rem;
+            position: relative;
+            overflow: hidden;
+        }
+        .cta::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -10%;
+            width: 300px;
+            height: 300px;
+            background: rgba(99, 179, 237, 0.1);
+            border-radius: 50%;
+        }
+        .cta-content {
+            position: relative;
+            z-index: 1;
+        }
+        .cta .main-text {
+            font-weight: 800;
+            font-size: 1.2rem;
+            margin-bottom: 0.4rem;
+        }
+        .cta .sub-text {
+            font-size: 0.8rem;
+            margin-bottom: 0.8rem;
+            opacity: 0.9;
+        }
+        .btn {
+            display: inline-block;
+            background: linear-gradient(135deg, #f6ad55, #ed8936);
+            color: #1a2c3e;
+            font-weight: 800;
+            padding: 0.5rem 1.5rem;
+            border-radius: 40px;
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: all 0.3s;
+            box-shadow: 0 4px 12px rgba(246, 173, 85, 0.4);
+        }
+        .btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 6px 20px rgba(246, 173, 85, 0.6);
+        }
+        .contact {
+            font-size: 0.7rem;
+            margin-top: 0.8rem;
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+        }
+
+        footer {
+            text-align: center;
+            font-size: 0.6rem;
+            margin-top: 0.8rem;
+            color: #718096;
+        }
+
+        @media print {
+            body { background: white; padding: 0; }
+            .page-container { box-shadow: none; max-width: 100%; }
+        }
+        @media (max-width: 700px) {
+            .value-grid { grid-template-columns: 1fr; }
+            .data-highlights { grid-template-columns: repeat(2, 1fr); }
+            .feature-grid { grid-template-columns: 1fr; }
+            .case-grid { grid-template-columns: 1fr; }
+            .scenario-grid { grid-template-columns: 1fr; }
+            .flow-steps { flex-direction: column; }
+            .flow-arrow { transform: rotate(90deg); }
+        }
+    </style>
+</head>
+<body>
+<div class="page-container">
+    <!-- 顶部导航 -->
+    <div class="top-nav">
+        <a href="样例清单v6.HTML" class="back-home">← 返回产品清单</a>
+        <span class="nav-brand">DataCenter V3.2 智慧校园数字基座</span>
+    </div>
+
+    <!-- 产品头部 -->
+    <div class="product-hero">
+        <div class="hero-content">
+            <span class="hero-badge">🏆 超越级能力产品</span>
+            <h1>🧑 学工管理</h1>
+            <div class="subtitle">32子模块原生一体，奖学金/综测零代码配置，辅导员一屏看全。从入学到毕业，学生成长全周期精细化管理</div>
+            <div class="hero-stats">
+                <div class="hero-stat"><strong>32</strong> 子模块</div>
+                <div class="hero-stat"><strong>100%</strong> 数据互通</div>
+                <div class="hero-stat"><strong>零代码</strong> 流程配置</div>
+                <div class="hero-stat"><strong>一屏</strong> 看全学生</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 数据亮点 -->
+    <div class="section-title"><span class="icon">📊</span> 产品数据亮点</div>
+    <div class="data-highlights">
+        <div class="data-card">
+            <div class="data-number">32</div>
+            <div class="data-label">原生一体子模块</div>
+        </div>
+        <div class="data-card">
+            <div class="data-number">0</div>
+            <div class="data-label">系统间数据孤岛</div>
+        </div>
+        <div class="data-card">
+            <div class="data-number">10x</div>
+            <div class="data-label">综测效率提升</div>
+        </div>
+        <div class="data-card">
+            <div class="data-number">1屏</div>
+            <div class="data-label">辅导员全景视图</div>
+        </div>
+    </div>
+
+    <!-- 核心价值 -->
+    <div class="section-title"><span class="icon">💎</span> 三大核心价值</div>
+    <div class="value-section">
+        <div class="value-grid">
+            <div class="value-item">
+                <span class="value-icon-big">🧩</span>
+                <h4>32子模块原生一体</h4>
+                <p>奖助贷补、心理健康、宿舍管理、第二课堂等32个子模块全部原生集成，数据天然互通，无需接口对接，告别多系统切换</p>
+            </div>
+            <div class="value-item">
+                <span class="value-icon-big">⚙️</span>
+                <h4>零代码灵活配置</h4>
+                <p>奖学金评定规则、综合素质测评指标、困难认定标准等全部通过统一配置中心可视化调整，无需厂商介入，分钟级生效</p>
+            </div>
+            <div class="value-item">
+                <span class="value-icon-big">👁️</span>
+                <h4>辅导员一屏看全</h4>
+                <p>学生画像全景视图，学业、心理、奖惩、资助、活动参与等数据一屏聚合，异常学生自动标红预警，精准帮扶</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- 业务流程 -->
+    <div class="section-title"><span class="icon">🔄</span> 业务流程闭环</div>
+    <div class="flow-section">
+        <div class="flow-steps">
+            <div class="flow-step">
+                <span class="flow-step-icon">📝</span>
+                <div class="flow-step-title">迎新报到</div>
+                <div class="flow-step-desc">线上预注册</div>
+            </div>
+            <div class="flow-arrow">→</div>
+            <div class="flow-step">
+                <span class="flow-step-icon">🎓</span>
+                <div class="flow-step-title">学籍管理</div>
+                <div class="flow-step-desc">异动全程跟踪</div>
+            </div>
+            <div class="flow-arrow">→</div>
+            <div class="flow-step">
+                <span class="flow-step-icon">🏆</span>
+                <div class="flow-step-title">奖助综测</div>
+                <div class="flow-step-desc">智能评定</div>
+            </div>
+            <div class="flow-arrow">→</div>
+            <div class="flow-step">
+                <span class="flow-step-icon">💡</span>
+                <div class="flow-step-title">心理预警</div>
+                <div class="flow-step-desc">AI风险识别</div>
+            </div>
+            <div class="flow-arrow">→</div>
+            <div class="flow-step">
+                <span class="flow-step-icon">🎉</span>
+                <div class="flow-step-title">离校服务</div>
+                <div class="flow-step-desc">手续一键办</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 功能模块 -->
+    <div class="section-title"><span class="icon">📦</span> 六大核心功能模块</div>
+    <div class="feature-grid">
+        <div class="feature-card">
+            <div class="feature-header">
+                <span class="feature-icon">🏆</span>
+                <span class="feature-title">奖学金与资助</span>
+            </div>
+            <div class="feature-desc">国家奖学金、助学金、助学贷款、勤工助学等全场景覆盖，评定规则零代码配置</div>
+            <ul class="feature-list">
+                <li>多维度评定指标可视化配置</li>
+                <li>成绩/综测/贫困数据自动拉取</li>
+                <li>评定结果公示与申诉流程</li>
+                <li>资金发放与财务系统自动对接</li>
+            </ul>
+        </div>
+        <div class="feature-card">
+            <div class="feature-header">
+                <span class="feature-icon">📊</span>
+                <span class="feature-title">综合素质测评</span>
+            </div>
+            <div class="feature-desc">德智体美劳多维度综测体系，指标权重、加分项、减分项灵活配置，自动计算排名</div>
+            <ul class="feature-list">
+                <li>测评指标体系零代码搭建</li>
+                <li>活动参与、竞赛获奖自动计分</li>
+                <li>班级/专业/学院多级排名</li>
+                <li>测评结果与奖学金自动挂钩</li>
+            </ul>
+        </div>
+        <div class="feature-card">
+            <div class="feature-header">
+                <span class="feature-icon">🧠</span>
+                <span class="feature-title">心理健康管理</span>
+            </div>
+            <div class="feature-desc">心理测评、咨询预约、危机预警、干预跟踪全流程管理，AI辅助风险识别</div>
+            <ul class="feature-list">
+                <li>标准化心理量表在线测评</li>
+                <li>高危学生自动标红预警</li>
+                <li>咨询师排班与预约管理</li>
+                <li>干预方案与跟踪记录</li>
+            </ul>
+        </div>
+        <div class="feature-card">
+            <div class="feature-header">
+                <span class="feature-icon">🏠</span>
+                <span class="feature-title">宿舍管理</span>
+            </div>
+            <div class="feature-desc">宿舍分配、调宿、退宿、卫生检查、晚归管理一体化，与门禁、水电系统联动</div>
+            <ul class="feature-list">
+                <li>智能分配算法（按班级/习惯）</li>
+                <li>在线调宿申请与审批</li>
+                <li>卫生检查评分与公示</li>
+                <li>晚归/未归自动预警推送</li>
+            </ul>
+        </div>
+        <div class="feature-card">
+            <div class="feature-header">
+                <span class="feature-icon">🎯</span>
+                <span class="feature-title">第二课堂</span>
+            </div>
+            <div class="feature-desc">社团活动、志愿服务、社会实践、创新创业等第二课堂活动管理与学分认定</div>
+            <ul class="feature-list">
+                <li>活动发布、报名、签到、评价</li>
+                <li>志愿服务时长自动累计</li>
+                <li>第二课堂学分自动认定</li>
+                <li>活动数据纳入综测计算</li>
+            </ul>
+        </div>
+        <div class="feature-card">
+            <div class="feature-header">
+                <span class="feature-icon">👁️</span>
+                <span class="feature-title">学生画像</span>
+            </div>
+            <div class="feature-desc">聚合学业、心理、行为、奖惩等多维数据，生成学生全景画像，辅助精准管理</div>
+            <ul class="feature-list">
+                <li>学业成绩趋势分析</li>
+                <li>消费行为异常预警</li>
+                <li>挂科/学业预警自动推送</li>
+                <li>辅导员工作台一屏聚合</li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- 优势对比 -->
+    <div class="section-title"><span class="icon">⚖️</span> 与传统方案对比</div>
+    <div class="compare-section">
+        <div class="compare-table">
+            <table>
+                <thead>
+                    <tr>
+                        <th style="width:18%">对比维度</th>
+                        <th style="width:41%">传统学工系统（正方等）</th>
+                        <th style="width:41%">DataCenter 学工管理</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>模块集成</strong></td>
+                        <td><span class="vs-tag">分散孤立</span>奖助、心理、宿舍等分属不同系统，数据割裂</td>
+                        <td class="highlight"><span class="win-tag">32子一体</span>32个子模块原生集成，数据天然互通</td>
+                    </tr>
+                    <tr>
+                        <td><strong>综测配置</strong></td>
+                        <td><span class="vs-tag">改代码</span>指标调整需厂商排期，周期以月计</td>
+                        <td class="highlight"><span class="win-tag">零代码</span>统一配置中心可视化调整，分钟级生效</td>
+                    </tr>
+                    <tr>
+                        <td><strong>数据打通</strong></td>
+                        <td><span class="vs-tag">接口对接</span>与教务、人事等系统需额外开发接口</td>
+                        <td class="highlight"><span class="win-tag">原生互通</span>与23个模块数据实时共享，一次录入全局复用</td>
+                    </tr>
+                    <tr>
+                        <td><strong>辅导员视图</strong></td>
+                        <td><span class="vs-tag">多系统切换</span>需在多个系统间反复查询学生信息</td>
+                        <td class="highlight"><span class="win-tag">一屏看全</span>学生全景画像聚合展示，异常自动预警</td>
+                    </tr>
+                    <tr>
+                        <td><strong>奖学金评定</strong></td>
+                        <td><span class="vs-tag">人工核算</span>成绩、综测、贫困数据需人工汇总核对</td>
+                        <td class="highlight"><span class="win-tag">自动评定</span>多维度数据自动拉取，规则引擎智能计算</td>
+                    </tr>
+                    <tr>
+                        <td><strong>系统升级</strong></td>
+                        <td><span class="vs-tag">功能缩水</span>升级后功能反而减少，兼容性差</td>
+                        <td class="highlight"><span class="win-tag">只增不减</span>五年向前兼容承诺，功能持续迭代增强</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- 客户案例 -->
+    <div class="section-title"><span class="icon">🏆</span> 客户成功案例</div>
+    <div class="case-section">
+        <div class="case-grid">
+            <div class="case-card">
+                <span class="case-icon">🏫</span>
+                <div class="case-title">某省属重点大学</div>
+                <div class="case-desc">原有正方学工系统模块分散，辅导员需在5个系统间切换，综测算定耗时2周</div>
+                <div class="case-result">✅ 一屏聚合学生数据，综测评定缩短至2天</div>
+            </div>
+            <div class="case-card">
+                <span class="case-icon">🔧</span>
+                <div class="case-title">某职业技术学院</div>
+                <div class="case-desc">奖学金评定规则复杂，每年调整需厂商支持，学生投诉率高</div>
+                <div class="case-result">✅ 零代码配置评定规则，学生满意度提升50%</div>
+            </div>
+            <div class="case-card">
+                <span class="case-icon">📚</span>
+                <div class="case-title">某中等职业学校</div>
+                <div class="case-desc">宿舍管理依赖Excel，调宿流程混乱，卫生检查数据无法追溯</div>
+                <div class="case-result">✅ 宿舍全流程线上化，管理效率提升3倍</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 适用场景 -->
+    <div class="section-title"><span class="icon">🎯</span> 适用场景</div>
+    <div class="scenario-grid">
+        <div class="scenario-card">
+            <span class="scenario-icon">🏫</span>
+            <div class="scenario-title">高等院校</div>
+            <div class="scenario-desc">满足复杂的学生管理需求，支持研究生、本科生、留学生等多类学生群体统一管理</div>
+        </div>
+        <div class="scenario-card">
+            <span class="scenario-icon">🔧</span>
+            <div class="scenario-title">职业院校</div>
+            <div class="scenario-desc">工学结合、顶岗实习等特殊场景灵活适配，技能竞赛、证书认定纳入综测</div>
+        </div>
+        <div class="scenario-card">
+            <span class="scenario-icon">📚</span>
+            <div class="scenario-title">中等职业学校</div>
+            <div class="scenario-desc">简化操作流程，降低管理门槛，让辅导员从繁琐事务中解放出来专注育人</div>
+        </div>
+    </div>
+
+    <!-- 底部CTA -->
+    <div class="cta">
+        <div class="cta-content">
+            <div class="main-text">获取学工管理完整方案</div>
+            <div class="sub-text">了解如何替换现有学工系统，实现学生管理数字化转型<br>数据零丢失 · 功能越用越精简 · 五年向前兼容承诺</div>
+            <a href="contact.html" class="btn">立即咨询 ｜ 获取方案</a>
+            <div class="contact">
+                <span>📞 15102940626</span>
+                <span>💬 微信 18392084341</span>
+            </div>
+        </div>
+    </div>
+    <footer>
+        DataCenter V3.2 智慧校园数字基座 · 统一配置中心驱动 · 本地/云原生部署
+    </footer>
+</div>
+</body>
+</html>
