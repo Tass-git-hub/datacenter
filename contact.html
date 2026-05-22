@@ -87,7 +87,7 @@
     <div class="contact-grid">
         <div class="form-card">
             <h3>📝 填写咨询信息</h3>
-            <form action="#" method="post">
+            <form id="consultForm" action="#" method="post" onsubmit="return handleSubmit(event)">
                 <div class="form-group">
                     <label for="school">学校名称 *</label>
                     <input type="text" id="school" name="school" placeholder="请输入学校全称" required>
@@ -123,8 +123,12 @@
                     <label for="message">需求描述</label>
                     <textarea id="message" name="message" placeholder="请描述您的具体需求或问题，我们将尽快与您联系"></textarea>
                 </div>
-                <button type="submit" class="btn-submit">提交咨询</button>
+                <button type="submit" class="btn-submit" id="submitBtn">提交咨询</button>
             </form>
+            <div id="successMsg" style="display:none; margin-top:1rem; padding:1rem; background:#c6f6d5; border-radius:0.8rem; color:#276749; text-align:center; font-weight:700;">
+                ✅ 提交成功！我们会尽快与您联系。<br>
+                <span style="font-size:0.7rem; font-weight:400;">联系电话：15102940626 | 微信：18392084341</span>
+            </div>
         </div>
 
         <div class="info-card">
@@ -198,5 +202,43 @@
     </div>
     <footer>DataCenter V3.2 智慧校园数字基座 · 统一配置中心驱动 · 本地/云原生部署</footer>
 </div>
+
+<script>
+    /**
+     * 处理表单提交
+     * @param {Event} event - 表单提交事件
+     * @returns {boolean} - 阻止默认提交行为
+     */
+    function handleSubmit(event) {
+        event.preventDefault();
+
+        var school = document.getElementById('school').value.trim();
+        var contact = document.getElementById('contact').value.trim();
+        var phone = document.getElementById('phone').value.trim();
+
+        if (!school || !contact || !phone) {
+            alert('请填写必填项：学校名称、联系人、联系电话');
+            return false;
+        }
+
+        var phoneRegex = /^1[3-9]\d{9}$/;
+        if (!phoneRegex.test(phone)) {
+            alert('请输入正确的手机号码');
+            return false;
+        }
+
+        var btn = document.getElementById('submitBtn');
+        btn.textContent = '提交中...';
+        btn.disabled = true;
+        btn.style.opacity = '0.6';
+
+        setTimeout(function() {
+            document.getElementById('consultForm').style.display = 'none';
+            document.getElementById('successMsg').style.display = 'block';
+        }, 800);
+
+        return false;
+    }
+</script>
 </body>
 </html>
